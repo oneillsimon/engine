@@ -203,6 +203,15 @@ TEST(vector3_test, normalise) {
     EXPECT_EQ(b.length(), 1);
 }
 
+TEST(vector3_test, get) {
+    auto v = gem::vector3<float>(1.1f, 2.2f, 3.3f);
+    EXPECT_EQ(v.get(0), 1.1f);
+    EXPECT_EQ(v.get(1), 2.2f);
+    EXPECT_EQ(v.get(2), 3.3f);
+    EXPECT_THROW(v.get(3), std::out_of_range);
+    EXPECT_THROW(v.get(-1), std::out_of_range);
+}
+
 TEST(vector3_test, cross) {
     auto a = gem::vector3<int>(2, 3, 4);
     auto b = gem::vector3<int>(5, 6, 7);

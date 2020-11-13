@@ -180,6 +180,16 @@ TEST(vector4_test, normalise) {
     EXPECT_FLOAT_EQ(an.length(), 1.0f);
 }
 
+TEST(vector4_test, get) {
+    auto v = gem::vector4<float>(1.1f, 2.2f, 3.3f, 4.4f);
+    EXPECT_EQ(v.get(0), 1.1f);
+    EXPECT_EQ(v.get(1), 2.2f);
+    EXPECT_EQ(v.get(2), 3.3f);
+    EXPECT_EQ(v.get(3), 4.4f);
+    EXPECT_THROW(v.get(4), std::out_of_range);
+    EXPECT_THROW(v.get(-1), std::out_of_range);
+}
+
 TEST(vector4_test, dot) {
     auto a = gem::vector4<int>(2, 4, 6, 8);
     auto b = gem::vector4<int>(1, 3, 5, 7);

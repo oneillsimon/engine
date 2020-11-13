@@ -187,6 +187,14 @@ TEST(vector2_test, normalise) {
     EXPECT_EQ(b.length(), 1);
 }
 
+TEST(vector2_test, get) {
+    auto v = gem::vector2<float>(10.2f, 3.333f);
+    EXPECT_EQ(v.get(0), 10.2f);
+    EXPECT_EQ(v.get(1), 3.333f);
+    EXPECT_THROW(v.get(2), std::out_of_range);
+    EXPECT_THROW(v.get(-1), std::out_of_range);
+}
+
 TEST(vector2_test, dot) {
     auto a = gem::vector2<int>(2, 4);
     auto b = gem::vector2<int>(1, 3);

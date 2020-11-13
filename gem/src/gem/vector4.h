@@ -65,22 +65,22 @@ public:
 
     template <typename U, size_t M>
     vector4<T> operator +(const vector<U, M>& v) const {
-        return vector3<T>(x + v.get(0), y + v.get(1), z + v.get(2), w + v.get(3));
+        return vector3<T>(x + v.get(0, 0), y + v.get(1, 0), z + v.get(2, 0), w + v.get(3, 0));
     }
 
     template <typename U, size_t M>
     vector4<T> operator -(const vector<U, M>& v) const {
-        return vector3<T>(x - v.get(0), y - v.get(1), z - v.get(2), w - v.get(3));
+        return vector3<T>(x - v.get(0, 0), y - v.get(1, 0), z - v.get(2, 0), w - v.get(3, 0));
     }
 
     template <typename U, size_t M>
     vector4<T> operator *(const vector<U, M>& v) const {
-        return vector3<T>(x * v.get(0), y * v.get(1), z * v.get(2), w * v.get(3));
+        return vector3<T>(x * v.get(0, 0), y * v.get(1, 0), z * v.get(2, 0), w * v.get(3, 0));
     }
 
     template <typename U, size_t M>
     vector4<T> operator /(const vector<U, M>& v) const {
-        return vector3<T>(x / v.get(0), y / v.get(1), z / v.get(2), w / v.get(3));
+        return vector3<T>(x / v.get(0, 0), y / v.get(1, 0), z / v.get(2, 0), w / v.get(3, 0));
     }
 
     template <typename U, size_t M>

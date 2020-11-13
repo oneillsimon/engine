@@ -74,11 +74,15 @@ public:
         return std::string(os.str());
     }
 
-    T get(const size_t& index, const T& default_value=0) const {
+    T get(const size_t& index) const {
+        return (*this)[index];
+    }
+
+    T get(const size_t& index, const T& default_value) const {
         if (index >= N) {
             return default_value;
         }
-        return (*this)[index];
+        return this->get(index);
     }
 
     void set(const size_t& index, T value) {

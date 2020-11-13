@@ -58,22 +58,22 @@ public:
 
     template <typename U, size_t M>
     vector2<T> operator +(const vector<U, M>& v) const {
-        return vector2<T>(x + v.get(0), y + v.get(1));
+        return vector2<T>(x + v.get(0, 0), y + v.get(1, 0));
     }
 
     template <typename U, size_t M>
     vector2<T> operator -(const vector<U, M>& v) const {
-        return vector2<T>(x - v.get(0), y - v.get(1));
+        return vector2<T>(x - v.get(0, 0), y - v.get(1, 0));
     }
 
     template <typename U, size_t M>
     vector2<T> operator *(const vector<U, M>& v) const {
-        return vector2<T>(x * v.get(0), y * v.get(1));
+        return vector2<T>(x * v.get(0, 0), y * v.get(1, 0));
     }
 
     template <typename U, size_t M>
     vector2<T> operator /(const vector<U, M>& v) const {
-        return vector2<T>(x / v.get(0), y / v.get(1));
+        return vector2<T>(x / v.get(0, 0), y / v.get(1, 0));
     }
 
     template <typename U, size_t M>

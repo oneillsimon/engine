@@ -3,7 +3,7 @@ project(tests)
 
 add_subdirectory(extern/googletest)
 
-SET(GCC_COVERAGE_COMPILE_FLAGS "-O0 --coverage -fno-inline -fno-inline-small-functions -fno-default-inline")
+SET(GCC_COVERAGE_COMPILE_FLAGS "-g -O0 --coverage -fno-inline -fno-inline-small-functions -fno-default-inline")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 
 include_directories(

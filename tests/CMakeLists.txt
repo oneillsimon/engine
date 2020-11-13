@@ -3,10 +3,8 @@ project(tests)
 
 add_subdirectory(extern/googletest)
 
-SET(GCC_COVERAGE_COMPILE_FLAGS "-g -O0 -coverage -fprofile-arcs -ftest-coverage")
-SET(GCC_COVERAGE_LINK_FLAGS    "-coverage -lgcov")
-SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
-SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
+SET(GCC_COVERAGE_COMPILE_FLAGS "-O0 --coverage -fno-inline -fno-inline-small-functions -fno-default-inline")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 
 include_directories(
         extern/googletest/googletest/include
@@ -25,7 +23,7 @@ set(
         engine_tests
         gem/angle_test.cpp
         gem/constants_test.cpp
-        gem/vector_test.h.cpp
+        gem/vector_test.cpp
         gem/vector2_test.cpp
         gem/vector3_test.cpp
         gem/vector4_test.cpp

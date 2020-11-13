@@ -34,7 +34,7 @@ public:
 
     vector2(): vector2<T>(0) {};
 
-    virtual T& operator [](size_t index) override {
+    T& operator [](size_t index) override {
         switch (index) {
             case 0:
                 return x;
@@ -45,7 +45,7 @@ public:
         }
     }
 
-    virtual const T& operator [](size_t index) const override {
+    const T& operator [](size_t index) const override {
         switch (index) {
             case 0:
                 return x;

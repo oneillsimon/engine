@@ -14,11 +14,6 @@ public:
 
     quaternion(const float& x, const float& y, const float& z, const float& w): vector4(x, y, z, w) {}
 
-    friend std::ostream& operator <<(std::ostream& os, const quaternion& q) {
-        os << "{ x: " << q.x << "f, y: " << q.y << "f, z: " << q.z << "f, w: " << q.w << "f }";
-        return os;
-    }
-
     quaternion operator *(const quaternion& q) const {
         auto x_ = (x * q.w) + (w * q.x) + (y * q.z) - (z * q.y);
         auto y_ = (y * q.w) + (w * q.y) + (z * q.x) - (x * q.z);

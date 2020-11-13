@@ -9,6 +9,7 @@ void error(lua_State* L, const char* message, ...)  {
     va_start(argp, message);
     vfprintf(stderr, message, argp);
     va_end(argp);
+    // TODO: rewrite to throw an exception instead of just exiting.
     exit(EXIT_FAILURE);
 }
 

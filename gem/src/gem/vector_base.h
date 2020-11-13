@@ -18,6 +18,10 @@ public:
     virtual T& operator [](size_t index) = 0;
     virtual const T& operator [](size_t index) const = 0;
 
+    friend std::ostream& operator <<(std::ostream& os, const vector_base<T, N>& v) {
+        return os << v.to_string();
+    }
+
     template <typename U>
     bool operator ==(const vector_base<U, N>& v) const {
         return std::equal(begin(), end(), v.begin());
@@ -62,7 +66,7 @@ public:
         os << "{ ";
 
         for (auto e : *this) {
-            os << e << " ";
+            os << e << typeid(T).name() << " ";
         }
 
         os << "}";
@@ -70,7 +74,10 @@ public:
         return std::string(os.str());
     }
 
-    T get(const size_t& index) const {
+    T get(const size_t& index, const T& default_value=0) const {
+        if (index >= N) {
+            return default_value;
+        }
         return (*this)[index];
     }
 

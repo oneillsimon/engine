@@ -13,6 +13,14 @@ TEST(vector3_test, default_initialisation) {
     EXPECT_EQ(v.z, 0);
 }
 
+TEST(vector3_test, list_initialisation) {
+    auto v = gem::vector3<int>{ 10, 9, 10 };
+
+    EXPECT_EQ(v.x, 10);
+    EXPECT_EQ(v.y, 9);
+    EXPECT_EQ(v.z, 10);
+}
+
 TEST(vector3_test, initialisation) {
     auto v = gem::vector3<int>(1, 2, 3);
 
@@ -50,6 +58,14 @@ TEST(vector3_test, square_brackets_operator) {
 
     v[0] -= 10;
     EXPECT_EQ(v.x, 0);
+}
+
+TEST(vector3_test, square_brackets_out_of_range) {
+    auto v = gem::vector3<int>(1, 2, 3);
+
+    EXPECT_THROW(auto _ = v[4], std::out_of_range);
+    EXPECT_THROW(v[4] = 0, std::out_of_range);
+
 }
 
 TEST(vector3_test, equality_operator) {
@@ -106,7 +122,7 @@ TEST(vector3_test, vector_multiplication_operators) {
     EXPECT_EQ(d, gem::vector3<int>(4, 16, 64));
 }
 
-TEST(vector3_test, vector_divisionion_operators) {
+TEST(vector3_test, vector_division_operators) {
     auto a = gem::vector3<int>(10, 15, 100);
     auto b = gem::vector3<int>(2, 5, 10);
 
@@ -204,4 +220,16 @@ TEST(vector3_test, dot) {
     auto dot = a.dot(b);
 
     EXPECT_EQ(dot, 44);
+}
+
+TEST(vector3_test, to_string) {
+    auto v = gem::vector3<int>(4, 5, 6);
+    EXPECT_EQ(v.to_string(), "{ 4i 5i 6i }");
+}
+
+TEST(vector3_test, stringstream_operator) {
+    auto v = gem::vector3<float>(10, 11, 7);
+    std::stringstream ss;
+    ss << v;
+    EXPECT_EQ(ss.str(), "{ 10f 11f 7f }");
 }

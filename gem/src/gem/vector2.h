@@ -34,11 +34,6 @@ public:
 
     vector2(): vector2<T>(0) {};
 
-    friend std::ostream& operator <<(std::ostream& os, const vector2& v) {
-        os << "{ x: " << v.x << typeid(T).name() << ", y: " << v.y << typeid(T).name() << " }";
-        return os;
-    }
-
     virtual T& operator [](size_t index) override {
         switch (index) {
             case 0:

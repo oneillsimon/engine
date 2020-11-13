@@ -53,10 +53,6 @@ public:
         return values[index];
     };
 
-//    const T& get(size_t index) const {
-//        return values[index];
-//    }
-
     template <typename U, size_t M>
     vector<T, N> operator +(const vector<U, M>& v) const {
         auto result = vector<T, N>();

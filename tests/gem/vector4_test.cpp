@@ -14,6 +14,15 @@ TEST(vector4_test, default_initialisation) {
     EXPECT_EQ(v.w, 0);
 }
 
+TEST(vector4_test, list_initialisation) {
+    auto v = gem::vector4<int>{ 0, 2, 1, 3 };
+
+    EXPECT_EQ(v.x, 0);
+    EXPECT_EQ(v.y, 2);
+    EXPECT_EQ(v.z, 1);
+    EXPECT_EQ(v.w, 3);
+}
+
 TEST(vector4_test, initialisation) {
     auto v = gem::vector4<int>(1, 2, 3, 4);
 
@@ -55,6 +64,14 @@ TEST(vector4_test, square_brackets_operator) {
 
     v[0] -= 10;
     EXPECT_EQ(v.x, 0);
+}
+
+TEST(vector4_test, square_brackets_out_of_range) {
+    auto v = gem::vector4<int>();
+
+    EXPECT_THROW(auto _ = v[4], std::out_of_range);
+    EXPECT_THROW(v[4] = 0, std::out_of_range);
+
 }
 
 TEST(vector4_test, equality_operator) {
@@ -170,4 +187,16 @@ TEST(vector4_test, dot) {
     auto dot = a.dot(b);
 
     EXPECT_EQ(dot, 100);
+}
+
+TEST(vector4_test, to_string) {
+    auto v = gem::vector4<int>(4, 5, 6, 0);
+    EXPECT_EQ(v.to_string(), "{ 4i 5i 6i 0i }");
+}
+
+TEST(vector4_test, stringstream_operator) {
+    auto v = gem::vector4<float>(10, 11, 7, 999);
+    std::stringstream ss;
+    ss << v;
+    EXPECT_EQ(ss.str(), "{ 10f 11f 7f 999f }");
 }

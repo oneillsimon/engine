@@ -7,7 +7,7 @@
 %ignore gem::vector::vector(std::array<T, N> const &);
 %ignore gem::vector::vector(std::initializer_list<T> const &);
 
-%include <gem/vector.h>
+%include "../src/gem/vector.h"
 
 //%template(vector2i) gem::vector<int, 2>;
 //%template(vector2f) gem::vector<float, 2>;

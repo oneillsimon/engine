@@ -9,30 +9,33 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 include_directories(
         extern/googletest/googletest/include
         extern/googletest/googletest
-        ../gem/src
         ../src
 )
 
 set(
         engine_srcs
+        ../src/rendering/window.h
+        ../src/rendering/window.cpp
         ../src/scripting/lua.h
         ../src/scripting/lua.cpp
-)
+        ../src/scripting/lua_exception.h
+        ../src/scripting/lua_exception.cpp)
 
 set(
         engine_tests
-        gem/angle_test.cpp
-        gem/constants_test.cpp
-        gem/vector_test.cpp
-        gem/vector2_test.cpp
-        gem/vector3_test.cpp
-        gem/vector4_test.cpp
-        gem/vector_base_test.cpp
-        gem/vector_iterator_test.cpp
-        gem/quaternion_test.cpp
-        gem/matrix_test.cpp
-        gem/matrix4_test.cpp
+        src/gem/angle_test.cpp
+        src/gem/constants_test.cpp
+        src/gem/vector_test.cpp
+        src/gem/vector2_test.cpp
+        src/gem/vector3_test.cpp
+        src/gem/vector4_test.cpp
+        src/gem/vector_base_test.cpp
+        src/gem/vector_iterator_test.cpp
+        src/gem/quaternion_test.cpp
+        src/gem/matrix_test.cpp
+        src/gem/matrix4_test.cpp
         src/scripting/lua_test.cpp
+        src/scripting/lua_exception_test.cpp
 )
 
 add_executable(

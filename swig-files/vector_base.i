@@ -7,7 +7,7 @@
 %include "std_string.i"
 %include "std_vector.i"
 
-%include <gem/vector_base.h>
+%include "../src/gem/vector_base.h"
 
 %extend gem::vector_base {
         std::string __str__() {

@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include <gem/vector2.h>
-#include <gem/vector4.h>
+#include "src/gem/vector2.h"
+#include "src/gem/vector4.h"
 
 #include "src/scripting/lua.h"
 
@@ -20,7 +20,11 @@ int main() {
 
     std::cout << v4<< std::endl;
 
-    load_file(L, "../example.lua");
+    try {
+        load_file(L, "../example.lua");
+    } catch (const std::exception& e) {
+        std::cerr << "Error running file " << e.what() << std::endl;
+    }
 
     lua_close(L);
 }

@@ -1,0 +1,15 @@
+project(extern)
+cmake_minimum_required(VERSION 3.16)
+
+add_library(glad glad/src/glad.c)
+target_include_directories(glad PUBLIC glad/include)
+
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+
+add_subdirectory(glfw-3.3.2)
+#include_directories(extern/glfw-3.3.2/include)
+
+#add_library(extern)
+#target_link_libraries(extern glad glfw)

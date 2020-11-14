@@ -23,12 +23,15 @@ function dump(o)
     end
 end
 
-v = gem.vector2i(17, 7)
-v3 = gem.vector3f(5, 6, 7)
-print(v)
-print(v3)
-print(v3.z, v3.y, v3.x)
+--v = gem.vector2i(17, 7)
+--v3 = gem.vector3f(5, 6, 7)
+--print(v)
+--print(v3)
+--print(v3.z, v3.y, v3.x)
+--
+--for a in v3 do
+--    print('A is ', a)
+--end
 
-for a in v3 do
-    print('A is ', a)
-end
+print(dump(gem))
+print(gem.PI)

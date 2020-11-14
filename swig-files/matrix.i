@@ -3,11 +3,12 @@
 #include <gem/matrix.h>
 %};
 
-%import <gem/matrix.h>
+%import "../src/gem/matrix.h"
 
 %include "std_string.i"
-%include <gem/vector.h>
-%include <gem/vector_iterator.h>
+
+%include "../src/gem/vector.h"
+%include "../src/gem/vector_iterator.h"
 
 %extend gem::matrix {
         std::string __str__() {

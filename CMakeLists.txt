@@ -7,5 +7,5 @@ add_subdirectory(tests)
 
 add_executable(engine-exe main.cpp)
 
-target_link_libraries(engine-exe PUBLIC glad glfw)
+target_link_libraries(engine PUBLIC extern)
 target_link_libraries(engine-exe PUBLIC engine)

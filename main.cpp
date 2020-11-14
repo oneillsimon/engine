@@ -5,6 +5,10 @@
 
 #include "src/scripting/lua.h"
 
+#include "application.h"
+#include "engine.h"
+#include "rendering/glfw_window.h"
+
 extern "C" int luaopen_gem(lua_State* L);
 
 int main() {
@@ -27,4 +31,9 @@ int main() {
     }
 
     lua_close(L);
+
+    auto window = new GlfwWindow("This is a window", 800, 600);
+    auto application = new Application();
+    auto engine = new Engine(application, window, 60);
+    engine->start();
 }

@@ -11,6 +11,10 @@ set(CMAKE_SWIG_FLAGS "")
 
 add_library(
         engine
+        application.h
+        application.cpp
+        engine.h
+        engine.cpp
         gem/angle.h
         gem/constants.h
         gem/matrix.h
@@ -22,6 +26,8 @@ add_library(
         gem/vector4.h
         gem/vector_base.h
         gem/vector_iterator.h
+        rendering/glfw_window.h
+        rendering/glfw_window.cpp
         rendering/window.h
         rendering/window.cpp
         scripting/lua.h

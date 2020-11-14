@@ -9,7 +9,7 @@ set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(glfw-3.3.2)
-#include_directories(extern/glfw-3.3.2/include)
+include_directories(glfw-3.3.2/include)
 
-#add_library(extern)
-#target_link_libraries(extern glad glfw)
+add_library(extern INTERFACE)
+target_link_libraries(extern INTERFACE glad glfw)

@@ -14,12 +14,19 @@ include_directories(
 
 set(
         engine_srcs
+        ../src/application.h
+        ../src/application.cpp
+        ../src/engine.h
+        ../src/engine.cpp
+        ../src/rendering/glfw_window.h
+        ../src/rendering/glfw_window.cpp
         ../src/rendering/window.h
         ../src/rendering/window.cpp
         ../src/scripting/lua.h
         ../src/scripting/lua.cpp
         ../src/scripting/lua_exception.h
-        ../src/scripting/lua_exception.cpp)
+        ../src/scripting/lua_exception.cpp
+)
 
 set(
         engine_tests

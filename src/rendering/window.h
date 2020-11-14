@@ -16,7 +16,7 @@ protected:
     void* window;
     bool close_requested;
 public:
-    Window(std::string  title, const unsigned int&, const unsigned int& height);
+    Window(std::string  title, const unsigned int& width, const unsigned int& height);
     virtual ~Window();
 
     virtual void update() = 0;

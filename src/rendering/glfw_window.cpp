@@ -4,12 +4,17 @@
 
 #include "glfw_window.h"
 
+#include <iostream>
 #include <utility>
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+    glViewport(0, 0, width, height);
+}
 
 GlfwWindow::GlfwWindow(std::string title, const unsigned int& width, const unsigned int& height) :
         Window(std::move(title), width, height) {
     if (!glfwInit()) {
-        fprintf(stderr, "Error in window initialisation");
+        std::cerr << "Failed to initialise GLFW" << std::endl;
     }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -18,7 +23,13 @@ GlfwWindow::GlfwWindow(std::string title, const unsigned int& width, const unsig
 
     this->window = glfwCreateWindow(this->width, this->height, this->title.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(static_cast<GLFWwindow*>(this->window));
-    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        std::cerr << "Failed to initialise GLAD" << std::endl;
+    }
+
+    glViewport(0, 0, this->width, this->height);
+    glfwSetFramebufferSizeCallback(static_cast<GLFWwindow*>(this->window), framebuffer_size_callback);
 }
 
 GlfwWindow::~GlfwWindow() {

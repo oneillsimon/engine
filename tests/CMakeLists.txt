@@ -20,6 +20,10 @@ set(
         ../src/engine.cpp
         ../src/rendering/glfw_window.h
         ../src/rendering/glfw_window.cpp
+        ../src/rendering/shader.h
+        ../src/rendering/shader.cpp
+        ../src/rendering/shader_program.h
+        ../src/rendering/shader_program.cpp
         ../src/rendering/window.h
         ../src/rendering/window.cpp
         ../src/scripting/lua.h

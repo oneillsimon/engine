@@ -10,6 +10,7 @@ public:
     Application();
 
     virtual void initialise();
+    virtual void input(const double& delta);
     virtual void update(const double& delta);
     virtual void render(const double& delta);
     virtual void stop();

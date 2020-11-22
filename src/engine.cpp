@@ -7,7 +7,7 @@
 
 Engine::Engine(Application* application, Window* window, const double& frame_rate) :
     application(application),
-    is_running(false),
+    running(false),
     window(window),
     frame_rate(1.0 / frame_rate) {
 }
@@ -18,13 +18,13 @@ Engine::~Engine() {
 }
 
 void Engine::run() {
-    this->is_running = true;
+    this->running = true;
     this->application->initialise();
 
     auto first_tick = std::chrono::steady_clock::now();
     double unprocessed_time = 0;
 
-    while (is_running) {
+    while (this->running) {
         bool should_render = false;
         auto next_tick = std::chrono::steady_clock::now();
         std::chrono::duration<double> elapsed_time = next_tick - first_tick;
@@ -52,13 +52,17 @@ void Engine::run() {
     }
 }
 
+bool Engine::is_running() const {
+    return this->running;
+}
+
 void Engine::start() {
-    if (!this->is_running) {
+    if (!this->is_running()) {
         this->run();
     }
 }
 
 void Engine::stop() {
-    this->is_running = false;
+    this->running = false;
     this->application->stop();
 }

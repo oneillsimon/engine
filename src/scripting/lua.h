@@ -9,8 +9,6 @@
 
 #include <lua.hpp>
 
-void error(lua_State* L, const char* message, ...);
-
 void load_file(lua_State* L, const std::string& filename);
 
 #endif //ENGINE_LUA_H

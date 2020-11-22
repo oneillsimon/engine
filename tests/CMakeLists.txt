@@ -47,7 +47,7 @@ set(
         src/gem/matrix4_test.cpp
         src/scripting/lua_test.cpp
         src/scripting/lua_exception_test.cpp
-)
+        src/engine_test.cpp)
 
 add_executable(
         tests

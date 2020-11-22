@@ -13,7 +13,7 @@
 
 class Engine {
 private:
-    bool is_running;
+    bool running;
     double frame_rate;
 
     Application* application;
@@ -26,6 +26,7 @@ public:
     Engine(Application* application, Window* window, const double& frame_rate);
     ~Engine();
 
+    bool is_running() const;
     void start();
     void stop();
 };

@@ -74,6 +74,11 @@ TEST(vector4_test, square_brackets_out_of_range) {
 
 }
 
+TEST(vector4_test, vector_negation) {
+    auto a = gem::vector4<int>(1, 2, -3, -4);
+    EXPECT_EQ(-a, gem::vector4<int>(-1, -2, 3, 4));
+}
+
 TEST(vector4_test, equality_operator) {
     auto a = gem::vector4<int>(1, 2, 3, 4);
     auto b = gem::vector4<int>(1, 2, 3, 4);

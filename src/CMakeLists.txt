@@ -40,7 +40,7 @@ add_library(
         scripting/lua_exception.cpp
         rendering/shader.h
         rendering/shader.cpp
-)
+        rendering/stb_image_implementation.cpp)
 
 set_source_files_properties("../swig-files/gem.i" PROPERTIES CPLUSPLUS ON)
 set_source_files_properties("../swig-files/gem.i" PROPERTIES SWIG_FLAGS "-verbose")
@@ -52,6 +52,7 @@ set_property(TARGET gem-swig-bindings PROPERTY SWIG_USE_LIBRARY_INCLUDE_DIRECTOR
 add_custom_target(
     copy-shaders
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/shaders ${CMAKE_CURRENT_BINARY_DIR}/../shaders
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/textures ${CMAKE_CURRENT_BINARY_DIR}/../textures
 )
 
 add_dependencies(engine copy-shaders)

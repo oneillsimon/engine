@@ -53,6 +53,12 @@ public:
         return values[index];
     };
 
+    vector<T, N> operator -() const {
+        auto result = vector<T, N>();
+        std::transform(this->begin(), this->end(), result.begin(), std::negate<T>());
+        return result;
+    }
+
     template <typename U, size_t M>
     vector<T, N> operator +(const vector<U, M>& v) const {
         auto result = vector<T, N>();

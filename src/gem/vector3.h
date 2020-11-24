@@ -59,6 +59,10 @@ public:
         }
     }
 
+    vector3<T> operator -() const {
+        return vector3<T>(-x, -y, -z);
+    }
+
     template <typename U, size_t M>
     vector3<T> operator +(const vector<U, M>& v) const {
         return vector3<T>(x + v.get(0, 0), y + v.get(1, 0), z + v.get(2, 0));

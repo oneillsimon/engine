@@ -11,5 +11,8 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 add_subdirectory(glfw-3.3.2)
 include_directories(glfw-3.3.2/include)
 
+add_library(stb_image INTERFACE)
+target_include_directories(stb_image INTERFACE stb_image)
+
 add_library(extern INTERFACE)
-target_link_libraries(extern INTERFACE glad glfw)
+target_link_libraries(extern INTERFACE glad glfw stb_image)

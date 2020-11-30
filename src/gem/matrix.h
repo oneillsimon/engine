@@ -128,6 +128,11 @@ public:
         *this = *this - m;
     }
 
+    template <typename U>
+    void operator *= (const matrix<U, Rows, Columns>& m) {
+        *this = *this * m;
+    }
+
     matrix<T, Rows, Columns> operator +(const T& scalar) const {
         auto result = matrix<T, Rows, Columns>();
         for (auto i = 0; i < Rows; ++i) {

@@ -8,6 +8,9 @@
 #include <vector>
 
 #include <glad/glad.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <GLFW/glfw3.h>
 
 #include "application.h"
@@ -18,11 +21,15 @@ class LearnOpenGlApp : public Application {
 public:
     unsigned int VBO;
     unsigned int VAO;
+    unsigned int EBO;
+    unsigned int textures[2];
     ShaderProgram shader_program;
+    glm::mat4 transform;
 
     LearnOpenGlApp();
 
     void initialise() override;
+    void update(const double& delta) override;
     void render(const double& delta) override;
 };
 

@@ -18,8 +18,8 @@ TEST(matrix4_test, translate) {
             { 0, 0, 0, 1 },
     };
 
-    EXPECT_EQ(gem::matrix4<float>::translate(v.x, v.y, v.z), expected);
-    EXPECT_EQ(gem::matrix4<float>::translate(v), expected);
+    EXPECT_EQ(gem::matrix4<float>::translation(v.x, v.y, v.z), expected);
+    EXPECT_EQ(gem::matrix4<float>::translation(v), expected);
 }
 
 TEST(matrix4_test, scale) {

@@ -2,12 +2,18 @@
 
 #include "src/gem/vector2.h"
 #include "src/gem/vector4.h"
+#include "src/gem/matrix.h"
+#include "src/gem/matrix4.h"
 
 #include "src/scripting/lua.h"
 
 #include "applications/logl/learn_opengl_application.h"
 #include "engine.h"
 #include "rendering/glfw_window.h"
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 extern "C" int luaopen_gem(lua_State* L);
 
@@ -36,4 +42,6 @@ int main() {
     auto application = new LearnOpenGlApp();
     auto engine = new Engine(application, window, 60);
     engine->start();
+    
+
 }

@@ -16,20 +16,20 @@ class matrix4 : public matrix<T, 4, 4> {
 public:
     using matrix<T, 4, 4>::matrix;
 
-    static matrix4<T> translate(const T& x, const T& y, const T& z) {
+    static matrix4<T> translation(const T& x, const T& y, const T& z) {
         return matrix4<T> { { 1, 0, 0, x }, { 0, 1, 0, y }, { 0, 0, 1, z }, { 0, 0, 0, 1 } };
     }
 
-    static matrix4<T> translate(const vector3<T>& v) {
-        return matrix4<T>::translate(v.x, v.y, v.z);
+    static matrix4<T> translation(const vector3<T>& v) {
+        return matrix4<T>::translation(v.x, v.y, v.z);
     }
 
-    static matrix4<T> rotate(const angle& angle, const T& x, const T& y, const T& z) {
+    static matrix4<T> rotation(const angle& angle, const T& x, const T& y, const T& z) {
         const T x2 = x * x;
         const T y2 = y * y;
         const T z2 = z * z;
 
-        const auto radians = angle.radians();
+        const auto radians = angle.radians;
         const auto cosine = std::cos(radians);
         const auto sine = std::sin(radians);
 
@@ -41,8 +41,8 @@ public:
         };
     }
 
-    static matrix4<T> rotate(const angle& angle, const vector3<T>& axis) {
-        return matrix4<T>::rotate(angle, axis.x, axis.y, axis.z);
+    static matrix4<T> rotation(const angle& angle, const vector3<T>& axis) {
+        return matrix4<T>::rotation(angle, axis.x, axis.y, axis.z);
     }
 
     static matrix4<T> scale(const T& x, const T& y, const T& z) {

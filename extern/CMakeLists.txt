@@ -14,5 +14,8 @@ include_directories(glfw-3.3.2/include)
 add_library(stb_image INTERFACE)
 target_include_directories(stb_image INTERFACE stb_image)
 
+add_library(glm INTERFACE)
+target_include_directories(glm INTERFACE glm)
+
 add_library(extern INTERFACE)
-target_link_libraries(extern INTERFACE glad glfw stb_image)
+target_link_libraries(extern INTERFACE glad glfw stb_image glm)

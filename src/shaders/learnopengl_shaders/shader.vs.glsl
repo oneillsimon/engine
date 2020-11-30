@@ -1,26 +1,17 @@
-//    const char* vertex_shader_source = "#version 330 core\n"
-//                                     "layout (location = 0) in vec3 aPos;\n"
-//                                     "layout (location = 1) in vec3 aColor;\n"
-//                                     "\n"
-//                                     "out vec3 vertexColor;\n"
-//                                     "void main()\n"
-//                                     "{\n"
-//                                     "    vertexColor = aColor;\n"
-//                                     "    gl_Position = vec4(aPos, 1.0);\n"
-//                                     "}\0";
-
 #version 330 core
 
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 colour;
+layout (location = 2) in vec2 t_coords;
 
 out vec4 vertex_colour;
+out vec2 texture_coords;
 
 uniform float x_offset;
+uniform mat4 transform;
 
 void main() {
     vertex_colour = vec4(colour, 1.0);
-    gl_Position = vec4(position.x + x_offset, position.y, position.z, 1.0);
+    texture_coords = t_coords;
+    gl_Position = transform * vec4(position.x + x_offset, position.y, position.z, 1.0);
 }
-
-// I've updated this file

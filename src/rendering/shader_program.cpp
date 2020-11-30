@@ -57,3 +57,27 @@ int ShaderProgram::get_uniform_location(const std::string& name) const {
     return glGetUniformLocation(this->ID, name.c_str());
 }
 
+void ShaderProgram::set_uniform(const std::string& name, const glm::vec2& value) const {
+    return glUniform2fv(this->get_uniform_location(name), 1, &value[0]);
+}
+
+void ShaderProgram::set_uniform(const std::string& name, const glm::vec3& value) const {
+    return glUniform3fv(this->get_uniform_location(name), 1, &value[0]);
+}
+
+void ShaderProgram::set_uniform(const std::string& name, const glm::vec4& value) const {
+    return glUniform4fv(this->get_uniform_location(name), 1, &value[0]);
+}
+
+void ShaderProgram::set_uniform(const std::string& name, const glm::mat2& value) const {
+    return glUniformMatrix2fv(this->get_uniform_location(name), 1, GL_FALSE, &value[0][0]);
+}
+
+void ShaderProgram::set_uniform(const std::string& name, const glm::mat3& value) const {
+    return glUniformMatrix3fv(this->get_uniform_location(name), 1, GL_FALSE, &value[0][0]);
+}
+
+void ShaderProgram::set_uniform(const std::string& name, const glm::mat4& value) const {
+    return glUniformMatrix4fv(this->get_uniform_location(name), 1, GL_FALSE, &value[0][0]);
+}
+

@@ -40,7 +40,7 @@ add_library(
         scripting/lua_exception.cpp
         rendering/shader.h
         rendering/shader.cpp
-        rendering/stb_image_implementation.cpp)
+        rendering/stb_image_implementation.cpp gem/gem.h)
 
 set_source_files_properties("../swig-files/gem.i" PROPERTIES CPLUSPLUS ON)
 set_source_files_properties("../swig-files/gem.i" PROPERTIES SWIG_FLAGS "-verbose")

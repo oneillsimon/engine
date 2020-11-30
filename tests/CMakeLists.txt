@@ -30,7 +30,7 @@ set(
         ../src/scripting/lua.cpp
         ../src/scripting/lua_exception.h
         ../src/scripting/lua_exception.cpp
-)
+        ../src/rendering/stb_image_implementation.cpp ../src/gem/gem.h)
 
 set(
         engine_tests

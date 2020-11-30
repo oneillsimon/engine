@@ -1,34 +1,29 @@
 #include <iostream>
 
-#include "src/gem/vector2.h"
-#include "src/gem/vector4.h"
-#include "src/gem/matrix.h"
-#include "src/gem/matrix4.h"
-
 #include "src/scripting/lua.h"
 
-#include "applications/logl/learn_opengl_application.h"
-#include "engine.h"
-#include "rendering/glfw_window.h"
+#include "src/applications/logl/learn_opengl_application.h"
+#include "src/engine.h"
+#include "src/rendering/glfw_window.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-extern "C" int luaopen_gem(lua_State* L);
+extern "C" int luaopen_engine(lua_State* L);
 
 int main() {
 //    auto v = gem::vector2<int> { 1, 2 };
 //    std::cout << v << std::endl;
 
-    auto v4 = gem::vector4<int>{ 101, 102, 304, 344 };
+//    auto v4 = gem::vector4<int>{ 101, 102, 304, 344 };
 //    std::cout << v4 << std::endl;
 
     lua_State* L = luaL_newstate();
     luaL_openlibs(L);
-    luaopen_gem(L);
+    luaopen_engine(L);
 
-    std::cout << v4<< std::endl;
+//    std::cout << v4<< std::endl;
 
     try {
         load_file(L, "../example.lua");

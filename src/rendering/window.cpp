@@ -20,3 +20,11 @@ Window::~Window() = default;
 bool Window::is_close_requested() const {
     return close_requested;
 }
+
+void Window::update() {
+
+}
+
+void Window::swap_buffers() {
+
+}

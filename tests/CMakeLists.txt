@@ -30,24 +30,14 @@ set(
         ../src/scripting/lua.cpp
         ../src/scripting/lua_exception.h
         ../src/scripting/lua_exception.cpp
-        ../src/rendering/stb_image_implementation.cpp ../src/gem/gem.h)
+        ../src/rendering/stb_image_implementation.cpp)
 
 set(
         engine_tests
-        src/gem/angle_test.cpp
-        src/gem/constants_test.cpp
-        src/gem/vector_test.cpp
-        src/gem/vector2_test.cpp
-        src/gem/vector3_test.cpp
-        src/gem/vector4_test.cpp
-        src/gem/vector_base_test.cpp
-        src/gem/vector_iterator_test.cpp
-        src/gem/quaternion_test.cpp
-        src/gem/matrix_test.cpp
-        src/gem/matrix4_test.cpp
+        src/engine_test.cpp
         src/scripting/lua_test.cpp
         src/scripting/lua_exception_test.cpp
-        src/engine_test.cpp)
+)
 
 add_executable(
         tests
@@ -71,7 +61,7 @@ add_custom_command(
         COMMAND lcov --directory . --capture --output-file ${COVERAGE_INFO_FILE}
 
         COMMAND lcov -a ${COVERAGE_BASE_INFO_FILE} -a ${COVERAGE_INFO_FILE} -o ${COVERAGE_TOTAL_INFO_FILE}
-        COMMAND lcov --remove ${COVERAGE_TOTAL_INFO_FILE} -o ${COVERAGE_TOTAL_INFO_FILE} '/usr/include/*' '/usr/lib/*' '*/tests/*'
+        COMMAND lcov --remove ${COVERAGE_TOTAL_INFO_FILE} -o ${COVERAGE_TOTAL_INFO_FILE} '/usr/include/*' '/usr/lib/*' '*/tests/*' '*/extern/*'
 
         COMMAND genhtml --legend ${COVERAGE_TOTAL_INFO_FILE} -o ${COVERAGE_DIR}/html
         DEPENDS tests

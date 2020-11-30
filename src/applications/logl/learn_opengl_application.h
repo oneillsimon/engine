@@ -13,9 +13,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <GLFW/glfw3.h>
 
-#include "application.h"
-#include "rendering/shader.h"
-#include "rendering/shader_program.h"
+#include "../../application.h"
+#include "../../rendering/shader.h"
+#include "../../rendering/shader_program.h"
 
 class LearnOpenGlApp : public Application {
 public:

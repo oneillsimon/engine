@@ -19,8 +19,8 @@ public:
     Window(std::string  title, const unsigned int& width, const unsigned int& height);
     virtual ~Window();
 
-    virtual void update() = 0;
-    virtual void swap_buffers() = 0;
+    virtual void update();
+    virtual void swap_buffers();
 
     bool is_close_requested() const;
 };

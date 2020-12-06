@@ -14,6 +14,7 @@
 #include <GLFW/glfw3.h>
 
 #include "../../application.h"
+#include "input_processor.h"
 #include "../../rendering/shader.h"
 #include "../../rendering/shader_program.h"
 
@@ -29,7 +30,7 @@ public:
     LearnOpenGlApp();
 
     void initialise() override;
-    void update(const double& delta) override;
+    void update(const double& delta, const InputProcessor& input) override;
     void render(const double& delta) override;
 };
 

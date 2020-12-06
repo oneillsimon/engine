@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "component.h"
+#include "input_processor.h"
 
 class Entity {
 private:
@@ -19,8 +20,8 @@ public:
     ~Entity();
 
     virtual void initialise();
-    virtual void update(float delta);
-    virtual void render(float delta);
+    virtual void update(double delta, const InputProcessor& input);
+    virtual void render(double delta);
 
     void add_child(Entity* entity);
     void add_component(Component* component);

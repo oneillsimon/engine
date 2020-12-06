@@ -30,7 +30,7 @@ set(
         ../src/scripting/lua.cpp
         ../src/scripting/lua_exception.h
         ../src/scripting/lua_exception.cpp
-        ../src/rendering/stb_image_implementation.cpp ../src/entity.cpp ../src/entity.h ../src/component.cpp ../src/component.h)
+        ../src/rendering/stb_image_implementation.cpp ../src/entity.cpp ../src/entity.h ../src/component.cpp ../src/component.h ../src/input_processor.cpp ../src/input_processor.h ../src/glfw_input_processor.cpp ../src/glfw_input_processor.h)
 
 set(
         engine_tests

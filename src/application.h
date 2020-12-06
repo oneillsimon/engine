@@ -6,16 +6,16 @@
 #define ENGINE_APPLICATION_H
 
 #include "entity.h"
+#include "input_processor.h"
 
 class Application {
 public:
     Application();
 
-    Entity* root;
+    Entity* root{};
 
     virtual void initialise();
-    virtual void input(const double& delta);
-    virtual void update(const double& delta);
+    virtual void update(const double& delta, const InputProcessor& input);
     virtual void render(const double& delta);
     virtual void stop();
 };

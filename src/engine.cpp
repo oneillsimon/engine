@@ -39,7 +39,7 @@ void Engine::run() {
                 this->stop();
             }
 
-            this->application->update(frame_rate);
+            this->application->update(frame_rate, *this->window->input_processor);
             this->window->update();
 
             unprocessed_time -= frame_rate;

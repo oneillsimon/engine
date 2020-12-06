@@ -7,8 +7,20 @@
 #include <stb_image.h>
 
 #include "learn_opengl_application.h"
+#include "component.h"
+
+class TestComponent : public Component {
+public:
+    void update(double delta, const InputProcessor& input) override {
+        if (input.get_key(GLFW_KEY_A, GLFW_PRESS)) {
+            std::cout << "A was pressed" << std::endl;
+        }
+    }
+};
 
 LearnOpenGlApp::LearnOpenGlApp() : shader_program(ShaderProgram()) {
+    auto tc = new TestComponent();
+    root->add_component(tc);
 }
 
 void LearnOpenGlApp::initialise() {
@@ -168,7 +180,8 @@ void LearnOpenGlApp::initialise() {
     glEnable(GL_DEPTH_TEST);
 }
 
-void LearnOpenGlApp::update(const double& delta) {
+void LearnOpenGlApp::update(const double& delta, const InputProcessor& input) {
+    Application::update(delta, input);
 //    transform = glm::mat4(1.0f);
 //    transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
 //    transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));

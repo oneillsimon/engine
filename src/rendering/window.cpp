@@ -7,11 +7,12 @@
 #include <utility>
 
 Window::Window(std::string  title, const unsigned int& width, const unsigned int& height) :
+        window(nullptr),
+        input_processor(nullptr),
         title(std::move(title)),
         width(width),
         height(height),
-        close_requested(false),
-        window(nullptr) {
+        close_requested(false) {
 
 }
 

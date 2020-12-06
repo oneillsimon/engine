@@ -2,10 +2,11 @@
 // Created by simon on 14/11/2020.
 //
 
-#include "glfw_window.h"
-
 #include <iostream>
 #include <utility>
+
+#include "glfw_input_processor.h"
+#include "glfw_window.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -30,6 +31,8 @@ GlfwWindow::GlfwWindow(std::string title, const unsigned int& width, const unsig
 
     glViewport(0, 0, this->width, this->height);
     glfwSetFramebufferSizeCallback(static_cast<GLFWwindow*>(this->window), framebuffer_size_callback);
+
+    this->input_processor = new GlfwInputProcessor(this->window);
 }
 
 GlfwWindow::~GlfwWindow() {

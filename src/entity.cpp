@@ -14,22 +14,32 @@ void Entity::initialise() {
     }
 }
 
-void Entity::update(float delta) {
+void Entity::update(double delta, const InputProcessor& input) {
     for (auto* component : this->components) {
-        component->update(delta);
+        component->update(delta, input);
     }
 }
 
-void Entity::render(float delta) {
+void Entity::render(double delta) {
     for (auto* component : this->components) {
         component->render(delta);
     }
 }
 
 void Entity::add_child(Entity* entity) {
+    if (!entity) {
+        return;
+    }
+
     this->children.push_back(entity);
+    int b = 0;
 }
 
 void Entity::add_component(Component* component) {
+    if (!component) {
+        return;
+    }
+
     this->components.push_back(component);
+    int b = 0;
 }

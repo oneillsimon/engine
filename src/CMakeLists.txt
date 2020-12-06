@@ -31,7 +31,7 @@ add_library(
         rendering/shader.h
         rendering/shader.cpp
         rendering/stb_image_implementation.cpp
-        entity.cpp entity.h component.cpp component.h)
+        entity.cpp entity.h component.cpp component.h input_processor.cpp input_processor.h glfw_input_processor.cpp glfw_input_processor.h)
 
 set_source_files_properties("swig/swig.i" PROPERTIES CPLUSPLUS ON)
 set_source_files_properties("swig/swig.i" PROPERTIES SWIG_FLAGS "-verbose")

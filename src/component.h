@@ -5,16 +5,17 @@
 #ifndef ENGINE_COMPONENT_H
 #define ENGINE_COMPONENT_H
 
+#include "input_processor.h"
 
 class Component {
 public:
     Component();
 
-    virtual ~Component() = 0;
+    virtual ~Component();
 
-    virtual void initialise() = 0;
-    virtual void update(float delta) = 0;
-    virtual void render(float delta) const = 0;
+    virtual void initialise();
+    virtual void update(double delta, const InputProcessor& input);
+    virtual void render(double delta) const;
 };
 
 

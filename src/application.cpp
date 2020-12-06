@@ -4,20 +4,21 @@
 
 #include "application.h"
 
-Application::Application() = default;
-
-void Application::initialise() {
+Application::Application() {
     this->root = new Entity();
 }
 
-void Application::update(const double& delta) {
+void Application::initialise() {
+    this->root->initialise();
+}
+
+void Application::update(const double& delta, const InputProcessor& input) {
+    this->root->update(delta, input);
 }
 
 void Application::render(const double& delta) {
+    this->root->render(delta);
 }
 
 void Application::stop() {
-}
-
-void Application::input(const double& delta) {
 }

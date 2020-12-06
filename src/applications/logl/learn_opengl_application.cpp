@@ -115,7 +115,7 @@ void LearnOpenGlApp::initialise() {
 
     int width, height, number_channels;
     stbi_set_flip_vertically_on_load(true);
-    unsigned char* data = stbi_load("textures/container.jpg", &width, &height, &number_channels, 0);
+    unsigned char* data = stbi_load("resources/textures/container.jpg", &width, &height, &number_channels, 0);
 
     if (data) {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -134,7 +134,7 @@ void LearnOpenGlApp::initialise() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     int width2, height2, number_channels2;
-    unsigned char* data2 = stbi_load("textures/awesomeface.png", &width2, &height2, &number_channels2, 0);
+    unsigned char* data2 = stbi_load("resources/textures/awesomeface.png", &width2, &height2, &number_channels2, 0);
     if (data2) {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width2, height2, 0, GL_RGBA, GL_UNSIGNED_BYTE, data2);
         glGenerateMipmap(GL_TEXTURE_2D);

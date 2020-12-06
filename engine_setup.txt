@@ -1,0 +1,3 @@
+-- Install LUA
+sudo apt install liblua5.4-dev
+

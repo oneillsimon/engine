@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 
 # Lua setup.
-find_package(Lua 5.3.5 REQUIRED)
+find_package(Lua 5.4.0 REQUIRED)
+
 include_directories(${LUA_INCLUDE_DIR})
 
 # SWIG setup.
@@ -38,13 +39,16 @@ swig_add_library(engine-swig-bindings TYPE SHARED LANGUAGE lua SOURCES "swig/swi
 target_include_directories(engine-swig-bindings PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 set_property(TARGET engine-swig-bindings PROPERTY SWIG_USE_LIBRARY_INCLUDE_DIRECTORIES TRUE)
 
+set(SHADERS_DIR shaders)
+set(TEXTURES_DIR resources/textures)
 
 add_custom_target(
     copy-resources
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/shaders ${CMAKE_CURRENT_BINARY_DIR}/../shaders
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/textures ${CMAKE_CURRENT_BINARY_DIR}/../textures
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/${SHADERS_DIR} ${CMAKE_CURRENT_BINARY_DIR}/../${SHADERS_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/${TEXTURES_DIR} ${CMAKE_CURRENT_BINARY_DIR}/../${TEXTURES_DIR}
 )
 
 add_dependencies(engine copy-resources)
 
+target_include_directories(engine PUBLIC ${LUA_INCLUDE_DIR})
 target_link_libraries(engine PUBLIC ${LUA_LIBRARIES} engine-swig-bindings)

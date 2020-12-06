@@ -5,9 +5,13 @@
 #ifndef ENGINE_APPLICATION_H
 #define ENGINE_APPLICATION_H
 
+#include "entity.h"
+
 class Application {
 public:
     Application();
+
+    Entity* root;
 
     virtual void initialise();
     virtual void input(const double& delta);

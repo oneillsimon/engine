@@ -7,6 +7,7 @@
 Application::Application() = default;
 
 void Application::initialise() {
+    this->root = new Entity();
 }
 
 void Application::update(const double& delta) {

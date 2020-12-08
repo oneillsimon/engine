@@ -2,6 +2,7 @@
 // Created by simon on 14/11/2020.
 //
 
+#include <algorithm>
 #include <iostream>
 
 #include <stb_image.h>
@@ -11,20 +12,78 @@
 
 class TestComponent : public Component {
 public:
-    void update(double delta, const InputProcessor& input) override {
-        if (input.get_key(GLFW_KEY_A, GLFW_PRESS)) {
-            std::cout << "A was pressed" << std::endl;
-        }
-    }
+//    void update(double delta, InputProcessor* input) override {
+//    }
 };
 
-LearnOpenGlApp::LearnOpenGlApp() : shader_program(ShaderProgram()) {
+LearnOpenGlApp::LearnOpenGlApp() : Application(), shader_program(ShaderProgram()) {
     auto tc = new TestComponent();
     root->add_component(tc);
 }
 
-void LearnOpenGlApp::initialise() {
-    Application::initialise();
+// Camera
+auto camera_pos = glm::vec3(0.0f, 0.0f, 3.0f);
+auto camera_front = glm::vec3(0.0f, 0.0f, -1.0f);
+auto camera_up = glm::vec3(0.0f, 1.0f, 0.0f);
+
+auto yaw = -90.0f;
+auto pitch = 0.0f;
+auto first_mouse = true;
+auto last_x = 400;
+auto last_y = 300;
+
+auto fov = 45.0f;
+
+void mouse_callback(void* window, double x, double y) {
+    if (first_mouse) {
+        last_x = x;
+        last_y = y;
+        first_mouse = false;
+    }
+
+    auto x_offset = x - last_x;
+    auto y_offset = y - last_y;
+    last_x = x;
+    last_y = y;
+
+    const float sensitivity = 0.1f;
+    x_offset *= sensitivity;
+    y_offset *= sensitivity;
+
+    yaw += x_offset;
+    pitch += y_offset;
+
+    if (pitch > 89.0f) {
+        pitch =  89.0f;
+    }
+
+    if (pitch < -89.0f) {
+        pitch = -89.0f;
+    }
+
+    auto direction = glm::vec3(
+            cos(glm::radians(yaw)) * cos(glm::radians(pitch)),
+            sin(glm::radians(pitch)),
+            sin(glm::radians(yaw)) * cos(glm::radians(pitch))
+    );
+
+    camera_front = glm::normalize(direction);
+}
+
+void scroll_callback(void* window, double x, double y) {
+    fov -= (float)y;
+
+    if (fov < 1.0f) {
+        fov = 1.0f;
+    }
+
+    if (fov > 45.0f) {
+        fov = 45.0f;
+    }
+}
+
+void LearnOpenGlApp::initialise(const InputProcessor& input) {
+    Application::initialise(input);
 
 //    float vertices[] = {
 //             // positions          // colors           // texture coords
@@ -170,7 +229,7 @@ void LearnOpenGlApp::initialise() {
                        glm::vec3(0.0f, 0.0f, 0.0f),
                        glm::vec3(0.0f, 1.0f, 0.0f));
 
-    auto projection = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.1f, 100.0f);
+    auto projection = glm::perspective(glm::radians(fov), 800.0f/600.0f, 0.1f, 100.0f);
 
 //    this->shader_program.set_uniform("transform", glm::value_ptr(transform));
     this->shader_program.set_uniform("model", model);
@@ -178,14 +237,39 @@ void LearnOpenGlApp::initialise() {
     this->shader_program.set_uniform("projection", projection);
 
     glEnable(GL_DEPTH_TEST);
+
+    // Camera stuff
+    input.capture_input();
+    input.set_cursor_position_callback(mouse_callback);
+    input.set_scroll_callback(scroll_callback);
 }
 
 void LearnOpenGlApp::update(const double& delta, const InputProcessor& input) {
     Application::update(delta, input);
-//    transform = glm::mat4(1.0f);
-//    transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
-//    transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-//    this->shader_program.set_uniform("transform", transform);
+
+    if (input.get_key(GLFW_KEY_Q, GLFW_PRESS)) {
+        this->stop();
+    }
+
+    float speed = 2.5f * delta;
+    if (input.get_key(GLFW_KEY_W, GLFW_PRESS)) {
+        camera_pos += speed * camera_front;
+    }
+
+    if (input.get_key(GLFW_KEY_S, GLFW_PRESS)) {
+        camera_pos -= speed * camera_front;
+    }
+
+    if (input.get_key(GLFW_KEY_A, GLFW_PRESS)) {
+        camera_pos -= glm::normalize(glm::cross(camera_front, camera_up)) * speed;
+    }
+
+    if (input.get_key(GLFW_KEY_D, GLFW_PRESS)) {
+        camera_pos += glm::normalize(glm::cross(camera_front, camera_up)) * speed;
+    }
+
+    auto projection = glm::perspective(glm::radians(fov), 800.0f/600.0f, 0.1f, 100.0f);
+    this->shader_program.set_uniform("projection", projection);
 }
 
 void LearnOpenGlApp::render(const double& delta) {
@@ -221,11 +305,12 @@ void LearnOpenGlApp::render(const double& delta) {
             glm::vec3(-1.3f,  1.0f, -1.5f)
     };
 
-    float radius = 10.0f;
-    float cam_x = sin(glfwGetTime()) * radius;
-    float cam_z = cos(glfwGetTime()) * radius;
-    auto view = glm::mat4(1.0f);
-    view = glm::lookAt(glm::vec3(cam_x, 0.0f, cam_z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+//    float radius = 10.0f;
+//    float cam_x = sin(glfwGetTime()) * radius;
+//    float cam_z = cos(glfwGetTime()) * radius;
+//    auto view = glm::mat4(1.0f);
+//    view = glm::lookAt(glm::vec3(cam_x, 0.0f, cam_z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    auto view = glm::lookAt(camera_pos, camera_pos + camera_front, camera_up);
     this->shader_program.set_uniform("view", view);
 
     int i = 0;

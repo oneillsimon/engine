@@ -27,9 +27,9 @@ public:
     ShaderProgram shader_program;
     glm::mat4 transform;
 
-    LearnOpenGlApp();
+    explicit LearnOpenGlApp();
 
-    void initialise() override;
+    void initialise(const InputProcessor& input) override;
     void update(const double& delta, const InputProcessor& input) override;
     void render(const double& delta) override;
 };

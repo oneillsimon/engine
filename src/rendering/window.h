@@ -17,16 +17,19 @@ protected:
     unsigned int height;
     std::string title;
     bool close_requested;
+    InputProcessor* input_processor;
+
 public:
     Window(std::string  title, const unsigned int& width, const unsigned int& height);
     virtual ~Window();
-
-    InputProcessor* input_processor;
 
     virtual void update();
     virtual void swap_buffers();
 
     bool is_close_requested() const;
+    InputProcessor* get_input_processor() const;
+    unsigned int get_width() const;
+    unsigned int get_height() const;
 };
 
 #endif //ENGINE_WINDOW_H

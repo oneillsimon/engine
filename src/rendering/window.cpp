@@ -29,3 +29,15 @@ void Window::update() {
 void Window::swap_buffers() {
 
 }
+
+InputProcessor *Window::get_input_processor() const {
+    return this->input_processor;
+}
+
+unsigned int Window::get_width() const {
+    return this->width;
+}
+
+unsigned int Window::get_height() const {
+    return this->height;
+}

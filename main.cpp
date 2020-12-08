@@ -32,11 +32,8 @@ int main() {
 //    }
 //
 //    lua_close(L);
-
     auto window = new GlfwWindow("This is a window", 800, 600);
     auto application = new LearnOpenGlApp();
     auto engine = new Engine(application, window, 120);
     engine->start();
-    
-
 }

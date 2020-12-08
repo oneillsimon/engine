@@ -19,7 +19,7 @@ Engine::~Engine() {
 
 void Engine::run() {
     this->running = true;
-    this->application->initialise();
+    this->application->initialise(*this->window->get_input_processor());
 
     auto first_tick = std::chrono::steady_clock::now();
     double unprocessed_time = 0;
@@ -35,11 +35,11 @@ void Engine::run() {
         while (unprocessed_time > frame_rate) {
             should_render = true;
 
-            if (this->window->is_close_requested()) {
+            if (this->window->is_close_requested() || this->application->is_close_requested()) {
                 this->stop();
             }
 
-            this->application->update(frame_rate, *this->window->input_processor);
+            this->application->update(frame_rate, *this->window->get_input_processor());
             this->window->update();
 
             unprocessed_time -= frame_rate;

@@ -8,7 +8,7 @@ Application::Application() {
     this->root = new Entity();
 }
 
-void Application::initialise() {
+void Application::initialise(const InputProcessor& input) {
     this->root->initialise();
 }
 
@@ -21,4 +21,9 @@ void Application::render(const double& delta) {
 }
 
 void Application::stop() {
+    this->close_requested = true;
+}
+
+bool Application::is_close_requested() const {
+    return this->close_requested;
 }

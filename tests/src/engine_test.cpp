@@ -13,6 +13,8 @@ class TestApplication : public Application {
 public:
     int counter = 0;
 
+    TestApplication() : Application() {}
+
     void update(const double& delta, const InputProcessor& input) override {
         this->counter++;
     }

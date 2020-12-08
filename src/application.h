@@ -9,15 +9,19 @@
 #include "input_processor.h"
 
 class Application {
+private:
+    bool close_requested;
 public:
     Application();
 
     Entity* root{};
 
-    virtual void initialise();
+    virtual void initialise(const InputProcessor& input);
     virtual void update(const double& delta, const InputProcessor& input);
     virtual void render(const double& delta);
     virtual void stop();
+
+    bool is_close_requested() const;
 };
 
 #endif //ENGINE_APPLICATION_H

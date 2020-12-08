@@ -12,8 +12,12 @@
 
 class GlfwInputProcessor : public InputProcessor {
 public:
-    GlfwInputProcessor(void* window);
-    virtual bool get_key(int key, int state) const override;
+    explicit GlfwInputProcessor(void* window);
+
+    void capture_input() const override;
+    bool get_key(int key, int state) const override;
+    void set_cursor_position_callback(void (*cursor_position_callback)(void* window, double x, double y)) const override;
+    void set_scroll_callback(void (*scroll_callback)(void* window, double x, double y)) const override;
 };
 
 

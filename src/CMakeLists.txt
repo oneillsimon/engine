@@ -14,10 +14,20 @@ add_library(
         engine
         application.h
         application.cpp
+        component.h
+        component.cpp
         engine.h
         engine.cpp
+        entity.h
+        entity.cpp
+        glfw_input_processor.h
+        glfw_input_processor.cpp
+        input_processor.h
+        input_processor.cpp
         applications/logl/learn_opengl_application.h
         applications/logl/learn_opengl_application.cpp
+        components/camera_component.h
+        components/camera_component.cpp
         rendering/glfw_window.h
         rendering/glfw_window.cpp
         rendering/shader_program.h
@@ -31,7 +41,7 @@ add_library(
         rendering/shader.h
         rendering/shader.cpp
         rendering/stb_image_implementation.cpp
-        entity.cpp entity.h component.cpp component.h input_processor.cpp input_processor.h glfw_input_processor.cpp glfw_input_processor.h)
+        applications/logl-lighting/lighting_app.cpp applications/logl-lighting/lighting_app.h)
 
 set_source_files_properties("swig/swig.i" PROPERTIES CPLUSPLUS ON)
 set_source_files_properties("swig/swig.i" PROPERTIES SWIG_FLAGS "-verbose")

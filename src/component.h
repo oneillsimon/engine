@@ -13,7 +13,7 @@ public:
 
     virtual ~Component();
 
-    virtual void initialise();
+    virtual void initialise(const InputProcessor& input);
     virtual void update(double delta, const InputProcessor& input);
     virtual void render(double delta) const;
 };

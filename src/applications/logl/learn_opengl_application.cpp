@@ -9,6 +9,7 @@
 
 #include "learn_opengl_application.h"
 #include "component.h"
+#include "components/camera_component.h"
 
 class TestComponent : public Component {
 public:
@@ -18,68 +19,9 @@ public:
 
 LearnOpenGlApp::LearnOpenGlApp() : Application(), shader_program(ShaderProgram()) {
     auto tc = new TestComponent();
-    root->add_component(tc);
-}
+    root->add_component("", tc);
 
-// Camera
-auto camera_pos = glm::vec3(0.0f, 0.0f, 3.0f);
-auto camera_front = glm::vec3(0.0f, 0.0f, -1.0f);
-auto camera_up = glm::vec3(0.0f, 1.0f, 0.0f);
-
-auto yaw = -90.0f;
-auto pitch = 0.0f;
-auto first_mouse = true;
-auto last_x = 400;
-auto last_y = 300;
-
-auto fov = 45.0f;
-
-void mouse_callback(void* window, double x, double y) {
-    if (first_mouse) {
-        last_x = x;
-        last_y = y;
-        first_mouse = false;
-    }
-
-    auto x_offset = x - last_x;
-    auto y_offset = y - last_y;
-    last_x = x;
-    last_y = y;
-
-    const float sensitivity = 0.1f;
-    x_offset *= sensitivity;
-    y_offset *= sensitivity;
-
-    yaw += x_offset;
-    pitch += y_offset;
-
-    if (pitch > 89.0f) {
-        pitch =  89.0f;
-    }
-
-    if (pitch < -89.0f) {
-        pitch = -89.0f;
-    }
-
-    auto direction = glm::vec3(
-            cos(glm::radians(yaw)) * cos(glm::radians(pitch)),
-            sin(glm::radians(pitch)),
-            sin(glm::radians(yaw)) * cos(glm::radians(pitch))
-    );
-
-    camera_front = glm::normalize(direction);
-}
-
-void scroll_callback(void* window, double x, double y) {
-    fov -= (float)y;
-
-    if (fov < 1.0f) {
-        fov = 1.0f;
-    }
-
-    if (fov > 45.0f) {
-        fov = 45.0f;
-    }
+    this->root->add_component("camera", new CameraComponent());
 }
 
 void LearnOpenGlApp::initialise(const InputProcessor& input) {
@@ -229,7 +171,7 @@ void LearnOpenGlApp::initialise(const InputProcessor& input) {
                        glm::vec3(0.0f, 0.0f, 0.0f),
                        glm::vec3(0.0f, 1.0f, 0.0f));
 
-    auto projection = glm::perspective(glm::radians(fov), 800.0f/600.0f, 0.1f, 100.0f);
+    auto projection = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.1f, 100.0f);
 
 //    this->shader_program.set_uniform("transform", glm::value_ptr(transform));
     this->shader_program.set_uniform("model", model);
@@ -239,9 +181,9 @@ void LearnOpenGlApp::initialise(const InputProcessor& input) {
     glEnable(GL_DEPTH_TEST);
 
     // Camera stuff
-    input.capture_input();
-    input.set_cursor_position_callback(mouse_callback);
-    input.set_scroll_callback(scroll_callback);
+//    input.capture_input();
+//    input.set_cursor_position_callback(this, mouse_callback);
+//    input.set_scroll_callback(this, scroll_callback);
 }
 
 void LearnOpenGlApp::update(const double& delta, const InputProcessor& input) {
@@ -251,24 +193,7 @@ void LearnOpenGlApp::update(const double& delta, const InputProcessor& input) {
         this->stop();
     }
 
-    float speed = 2.5f * delta;
-    if (input.get_key(GLFW_KEY_W, GLFW_PRESS)) {
-        camera_pos += speed * camera_front;
-    }
-
-    if (input.get_key(GLFW_KEY_S, GLFW_PRESS)) {
-        camera_pos -= speed * camera_front;
-    }
-
-    if (input.get_key(GLFW_KEY_A, GLFW_PRESS)) {
-        camera_pos -= glm::normalize(glm::cross(camera_front, camera_up)) * speed;
-    }
-
-    if (input.get_key(GLFW_KEY_D, GLFW_PRESS)) {
-        camera_pos += glm::normalize(glm::cross(camera_front, camera_up)) * speed;
-    }
-
-    auto projection = glm::perspective(glm::radians(fov), 800.0f/600.0f, 0.1f, 100.0f);
+    auto projection = glm::perspective(glm::radians(this->root->get_component<CameraComponent>("camera")->get_zoom()), 800.0f/600.0f, 0.1f, 100.0f);
     this->shader_program.set_uniform("projection", projection);
 }
 
@@ -310,7 +235,8 @@ void LearnOpenGlApp::render(const double& delta) {
 //    float cam_z = cos(glfwGetTime()) * radius;
 //    auto view = glm::mat4(1.0f);
 //    view = glm::lookAt(glm::vec3(cam_x, 0.0f, cam_z), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    auto view = glm::lookAt(camera_pos, camera_pos + camera_front, camera_up);
+//    auto view = glm::lookAt(camera_pos, camera_pos + camera_front, camera_up);
+    auto view = this->root->get_component<CameraComponent>("camera")->get_view_matrix();
     this->shader_program.set_uniform("view", view);
 
     int i = 0;

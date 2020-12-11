@@ -9,7 +9,7 @@ Application::Application() {
 }
 
 void Application::initialise(const InputProcessor& input) {
-    this->root->initialise();
+    this->root->initialise(input);
 }
 
 void Application::update(const double& delta, const InputProcessor& input) {

@@ -7,3 +7,7 @@
 InputProcessor::InputProcessor(void* window) : window(window) {
 
 }
+
+void *InputProcessor::get_window() const {
+    return this->window;
+}

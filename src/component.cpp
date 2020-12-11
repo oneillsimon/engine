@@ -8,7 +8,7 @@ Component::Component() = default;
 
 Component::~Component() = default;
 
-void Component::initialise() {
+void Component::initialise(const InputProcessor& input) {
 
 }
 

@@ -22,6 +22,8 @@ public:
     virtual void capture_input() const = 0;
     virtual bool get_key(int key, int state) const = 0;
     virtual void set_cursor_position_callback(void* instance, void (*cursor_position_callback)(void* window, double x, double y)) const = 0;
+    virtual void set_input_mode(int mode, int value) const = 0;
+    virtual void set_key_callback(void* instance, void (*key_callback)(void* window, int key, int scan_code, int action, int mods)) const = 0;
     virtual void set_scroll_callback(void* instance, void (*scroll_callback)(void* window, double x, double y)) const = 0;
 
     void* get_window() const;

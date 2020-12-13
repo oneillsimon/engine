@@ -103,6 +103,14 @@ void CameraComponent::update(double delta, const InputProcessor &input) {
     }
 }
 
+glm::vec3 CameraComponent::get_front() const {
+    return this->front;
+}
+
+glm::vec3 CameraComponent::get_position() const {
+    return this->position;
+}
+
 glm::mat4 CameraComponent::get_view_matrix() const {
     return glm::lookAt(this->position, this->position + this->front, this->up);
 }

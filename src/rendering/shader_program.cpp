@@ -41,6 +41,20 @@ void ShaderProgram::use() const {
     glUseProgram(this->ID);
 }
 
+
+void ShaderProgram::set_light_uniform(const std::string& name, const Light &light) const {
+    set_uniform(name + ".ambient", light.get_ambient());
+    set_uniform(name + ".diffuse", light.get_diffuse());
+    set_uniform(name + ".specular", light.get_specular());
+}
+
+
+void ShaderProgram::set_attenuation_uniform(const std::string& name, const Attenuation& attenuation) const {
+    set_uniform(name + ".constant", attenuation.get_constant());
+    set_uniform(name + ".linear", attenuation.get_linear());
+    set_uniform(name + ".quadratic", attenuation.get_quadratic());
+}
+
 void ShaderProgram::set_uniform(const std::string& name, const bool& value) const {
     glUniform1i(this->get_uniform_location(name), static_cast<int>(value));
 }
@@ -54,7 +68,8 @@ void ShaderProgram::set_uniform(const std::string& name, const int& value) const
 }
 
 int ShaderProgram::get_uniform_location(const std::string& name) const {
-    return glGetUniformLocation(this->ID, name.c_str());
+    int b = glGetUniformLocation(this->ID, name.c_str());
+    return  b;
 }
 
 void ShaderProgram::set_uniform(const std::string& name, const glm::vec2& value) const {
@@ -81,3 +96,28 @@ void ShaderProgram::set_uniform(const std::string& name, const glm::mat4& value)
     return glUniformMatrix4fv(this->get_uniform_location(name), 1, GL_FALSE, &value[0][0]);
 }
 
+void ShaderProgram::set_uniform(const std::string &name, const Material &material) const {
+    set_uniform(name + ".diffuse", material.get_diffuse());
+    set_uniform(name + ".specular", material.get_specular());
+    set_uniform(name + ".shininess", material.get_shininess());
+}
+
+void ShaderProgram::set_uniform(const std::string &name, const DirectionalLight& directional_light) const {
+    set_uniform(name + ".direction", directional_light.get_direction());
+    set_light_uniform(name, directional_light);
+}
+
+void ShaderProgram::set_uniform(const std::string &name, const PointLight& point_light) const {
+    set_uniform(name + ".position", point_light.get_position());
+    set_light_uniform(name, point_light);
+    set_attenuation_uniform(name, point_light.get_attenuation());
+}
+
+void ShaderProgram::set_uniform(const std::string &name, const SpotLight &spot_light) const {
+    set_uniform(name + ".position", spot_light.get_position());
+    set_uniform(name + ".direction", spot_light.get_direction());
+    set_uniform(name + ".cut_off", spot_light.get_cut_off());
+    set_uniform(name + ".outer_cut_off", spot_light.get_outer_cut_off());
+    set_light_uniform(name, spot_light);
+    set_attenuation_uniform(name, spot_light.get_attenuation());
+}

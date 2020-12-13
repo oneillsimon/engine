@@ -21,8 +21,16 @@ void GlfwInputProcessor::set_cursor_position_callback(void* instance, void (*cur
     glfwSetCursorPosCallback(static_cast<GLFWwindow*>(this->window), reinterpret_cast<GLFWcursorposfun>(cursor_position_callback));
 }
 
+void GlfwInputProcessor::set_input_mode(int mode, int value) const {
+    glfwSetInputMode(static_cast<GLFWwindow*>(this->window), mode, value);
+}
+
+void GlfwInputProcessor::set_key_callback(void *instance, void (*key_callback)(void *, int, int, int, int)) const {
+    glfwSetWindowUserPointer(static_cast<GLFWwindow*>(this->window), instance);
+    glfwSetKeyCallback(static_cast<GLFWwindow*>(this->window), reinterpret_cast<GLFWkeyfun>(key_callback));
+}
+
 void GlfwInputProcessor::set_scroll_callback(void* instance, void (*scroll_callback)(void* window, double x, double y)) const {
     glfwSetWindowUserPointer(static_cast<GLFWwindow*>(this->window), instance);
     glfwSetScrollCallback(static_cast<GLFWwindow*>(this->window), reinterpret_cast<GLFWscrollfun>(scroll_callback));
 }
-

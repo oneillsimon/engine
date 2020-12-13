@@ -24,24 +24,30 @@ add_library(
         glfw_input_processor.cpp
         input_processor.h
         input_processor.cpp
+
         applications/logl/learn_opengl_application.h
         applications/logl/learn_opengl_application.cpp
+        applications/logl-lighting/lighting_app.cpp
+        applications/logl-lighting/lighting_app.h
+
         components/camera_component.h
         components/camera_component.cpp
+
         rendering/glfw_window.h
         rendering/glfw_window.cpp
+        rendering/shader.h
+        rendering/shader.cpp
         rendering/shader_program.h
         rendering/shader_program.cpp
+        rendering/stb_image_implementation.cpp
         rendering/window.h
         rendering/window.cpp
+
         scripting/lua.h
         scripting/lua.cpp
         scripting/lua_exception.h
         scripting/lua_exception.cpp
-        rendering/shader.h
-        rendering/shader.cpp
-        rendering/stb_image_implementation.cpp
-        applications/logl-lighting/lighting_app.cpp applications/logl-lighting/lighting_app.h)
+        rendering/texture.cpp rendering/texture.h rendering/lights/light.cpp rendering/lights/light.h rendering/lights/directional_light.cpp rendering/lights/directional_light.h rendering/lights/point_light.cpp rendering/lights/point_light.h rendering/lights/attenuation.cpp rendering/lights/attenuation.h rendering/lights/spot_light.cpp rendering/lights/spot_light.h rendering/material.cpp rendering/material.h)
 
 set_source_files_properties("swig/swig.i" PROPERTIES CPLUSPLUS ON)
 set_source_files_properties("swig/swig.i" PROPERTIES SWIG_FLAGS "-verbose")

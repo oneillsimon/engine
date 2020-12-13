@@ -6,6 +6,7 @@
 
 Application::Application() {
     this->root = new Entity();
+    this->close_requested = false;
 }
 
 void Application::initialise(const InputProcessor& input) {

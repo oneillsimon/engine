@@ -3,6 +3,7 @@
 #include "src/scripting/lua.h"
 
 #include "src/applications/logl/learn_opengl_application.h"
+#include "src/applications/logl-lighting/lighting_app.h"
 #include "src/engine.h"
 #include "src/rendering/glfw_window.h"
 
@@ -33,7 +34,8 @@ int main() {
 //
 //    lua_close(L);
     auto window = new GlfwWindow("This is a window", 800, 600);
-    auto application = new LearnOpenGlApp();
+//    auto application = new LearnOpenGlApp();
+    auto application = new LightingApp();
     auto engine = new Engine(application, window, 120);
     engine->start();
 }

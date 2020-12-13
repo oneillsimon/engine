@@ -36,6 +36,8 @@ void Engine::run() {
             should_render = true;
 
             if (this->window->is_close_requested() || this->application->is_close_requested()) {
+                std::cout << "Close requested from " << (this->window->is_close_requested() ? "the window" : "not the window") << std::endl;
+                std::cout << "Close requested from " << (this->application->is_close_requested() ? "the app" : "not the app") << std::endl;
                 this->stop();
             }
 

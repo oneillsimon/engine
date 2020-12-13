@@ -54,6 +54,8 @@ public:
     void initialise(const InputProcessor& input) override;
     void update(double delta, const InputProcessor& input) override;
 
+    glm::vec3 get_front() const;
+    glm::vec3 get_position() const;
     glm::mat4 get_view_matrix() const;
     float get_zoom() const;
 };

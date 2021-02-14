@@ -4,12 +4,16 @@
 
 #include "src/applications/logl/learn_opengl_application.h"
 #include "src/applications/logl-lighting/lighting_app.h"
+#include "src/applications/model_loading/ModelLoadingApp.h"
 #include "src/engine.h"
 #include "src/rendering/glfw_window.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 extern "C" int luaopen_engine(lua_State* L);
 
@@ -33,9 +37,29 @@ int main() {
 //    }
 //
 //    lua_close(L);
+
     auto window = new GlfwWindow("This is a window", 800, 600);
 //    auto application = new LearnOpenGlApp();
-    auto application = new LightingApp();
+//    auto application = new LightingApp();
+    auto application = new ModelLoadingApp();
     auto engine = new Engine(application, window, 120);
+
+
+    const GLubyte* renderer = glGetString(GL_RENDERER);
+    const GLubyte* vendor = glGetString(GL_VENDOR);
+    const GLubyte* version = glGetString(GL_VERSION);
+    const GLubyte* glsl_version = glGetString(GL_SHADING_LANGUAGE_VERSION);
+
+    GLint major, minor;
+    glGetIntegerv(GL_MAJOR_VERSION, &major);
+    glGetIntegerv(GL_MINOR_VERSION, &minor);
+
+    std::cout << "GL Vendor: " << vendor << std::endl;
+    std::cout << "GL Renderer: " << renderer << std::endl;
+    std::cout << "GL Version (string): " << version << std::endl;
+    std::cout << "GL Version (number): " << major << "." << minor << std::endl;
+    std::cout << "GLSL Version: " << glsl_version << std::endl;
+
+
     engine->start();
 }

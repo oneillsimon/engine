@@ -47,7 +47,7 @@ add_library(
         scripting/lua.cpp
         scripting/lua_exception.h
         scripting/lua_exception.cpp
-        rendering/texture.cpp rendering/texture.h rendering/lights/light.cpp rendering/lights/light.h rendering/lights/directional_light.cpp rendering/lights/directional_light.h rendering/lights/point_light.cpp rendering/lights/point_light.h rendering/lights/attenuation.cpp rendering/lights/attenuation.h rendering/lights/spot_light.cpp rendering/lights/spot_light.h rendering/material.cpp rendering/material.h)
+        rendering/lights/light.cpp rendering/lights/light.h rendering/lights/directional_light.cpp rendering/lights/directional_light.h rendering/lights/point_light.cpp rendering/lights/point_light.h rendering/lights/attenuation.cpp rendering/lights/attenuation.h rendering/lights/spot_light.cpp rendering/lights/spot_light.h rendering/material.cpp rendering/material.h rendering/mesh.cpp rendering/mesh.h rendering/model.cpp rendering/model.h applications/model_loading/ModelLoadingApp.cpp applications/model_loading/ModelLoadingApp.h)
 
 set_source_files_properties("swig/swig.i" PROPERTIES CPLUSPLUS ON)
 set_source_files_properties("swig/swig.i" PROPERTIES SWIG_FLAGS "-verbose")

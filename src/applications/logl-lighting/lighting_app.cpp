@@ -6,15 +6,14 @@
 #include <GLFW/glfw3.h>
 
 #include "lighting_app.h"
-#include "rendering/texture.h"
 #include "rendering/lights/directional_light.h"
 
 bool capture_input = false;
 
 auto light_position = glm::vec3(1.2f, 1.0f, 2.0f);
 
-Texture diffuse_texture;
-Texture specular_texture;
+//Texture diffuse_texture;
+//Texture specular_texture;
 
 glm::vec3 positions[] = {
         glm::vec3( 0.0f,  0.0f,  0.0f),
@@ -130,8 +129,8 @@ void LightingApp::initialise(const InputProcessor &input) {
     glEnable(GL_DEPTH_TEST);
 
     // Load textures.
-    diffuse_texture = Texture("resources/textures/woodencontainer.png");
-    specular_texture = Texture("resources/textures/woodencontainer_specular.png");
+//    diffuse_texture = Texture("resources/textures/woodencontainer.png");
+//    specular_texture = Texture("resources/textures/woodencontainer_specular.png");
     this->lightingShader.use();
 //    this->lightingShader.set_uniform("material.diffuse", 0);
 //    this->lightingShader.set_uniform("material.specular", 1);
@@ -235,10 +234,10 @@ void LightingApp::render(const double &delta) {
 //    glDrawArrays(GL_TRIANGLES, 0, 36);
 
     // Bind diffuse map.
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, diffuse_texture.ID());
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, specular_texture.ID());
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, diffuse_texture.ID());
+//    glActiveTexture(GL_TEXTURE1);
+//    glBindTexture(GL_TEXTURE_2D, specular_texture.ID());
 
     glBindVertexArray(this->cubeVAO);
     auto i = 0;

@@ -25,29 +25,39 @@ add_library(
         input_processor.h
         input_processor.cpp
 
-        applications/logl/learn_opengl_application.h
-        applications/logl/learn_opengl_application.cpp
-        applications/logl-lighting/lighting_app.cpp
-        applications/logl-lighting/lighting_app.h
+        applications/cookbook/CB_Chapter1_app.h
+        applications/cookbook/CB_Chapter1_app.cpp
+        applications/cookbook/CB_Chapter1_blob_app.h
+        applications/cookbook/CB_Chapter1_blob_app.cpp
 
         components/camera_component.h
         components/camera_component.cpp
 
         rendering/glfw_window.h
         rendering/glfw_window.cpp
-        rendering/shader.h
-        rendering/shader.cpp
-        rendering/shader_program.h
-        rendering/shader_program.cpp
+        rendering/glsl_program.h
+        rendering/glsl_program.cpp
+        rendering/glsl_exception.h
+        rendering/glsl_exception.cpp
         rendering/stb_image_implementation.cpp
         rendering/window.h
         rendering/window.cpp
+        rendering/lights/attenuation.h
+        rendering/lights/attenuation.cpp
+        rendering/lights/directional_light.h
+        rendering/lights/directional_light.cpp
+        rendering/lights/light.h
+        rendering/lights/light.cpp
+        rendering/lights/point_light.h
+        rendering/lights/point_light.cpp
+        rendering/lights/spot_light.h
+        rendering/lights/spot_light.cpp
 
         scripting/lua.h
         scripting/lua.cpp
         scripting/lua_exception.h
         scripting/lua_exception.cpp
-        rendering/lights/light.cpp rendering/lights/light.h rendering/lights/directional_light.cpp rendering/lights/directional_light.h rendering/lights/point_light.cpp rendering/lights/point_light.h rendering/lights/attenuation.cpp rendering/lights/attenuation.h rendering/lights/spot_light.cpp rendering/lights/spot_light.h rendering/material.cpp rendering/material.h rendering/mesh.cpp rendering/mesh.h rendering/model.cpp rendering/model.h applications/model_loading/ModelLoadingApp.cpp applications/model_loading/ModelLoadingApp.h)
+)
 
 set_source_files_properties("swig/swig.i" PROPERTIES CPLUSPLUS ON)
 set_source_files_properties("swig/swig.i" PROPERTIES SWIG_FLAGS "-verbose")

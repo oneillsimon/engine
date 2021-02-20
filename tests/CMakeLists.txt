@@ -20,24 +20,20 @@ set(
         ../src/engine.cpp
         ../src/rendering/glfw_window.h
         ../src/rendering/glfw_window.cpp
-        ../src/rendering/shader.h
-        ../src/rendering/shader.cpp
-        ../src/rendering/shader_program.h
-        ../src/rendering/shader_program.cpp
         ../src/rendering/window.h
         ../src/rendering/window.cpp
         ../src/scripting/lua.h
         ../src/scripting/lua.cpp
         ../src/scripting/lua_exception.h
         ../src/scripting/lua_exception.cpp
-        ../src/rendering/stb_image_implementation.cpp ../src/entity.cpp ../src/entity.h ../src/component.cpp ../src/component.h ../src/input_processor.cpp ../src/input_processor.h ../src/glfw_input_processor.cpp ../src/glfw_input_processor.h ../src/components/camera_component.cpp ../src/components/camera_component.h ../src/rendering/lights/light.cpp ../src/rendering/lights/light.h ../src/rendering/lights/directional_light.cpp ../src/rendering/lights/directional_light.h ../src/rendering/lights/spot_light.cpp ../src/rendering/lights/spot_light.h ../src/rendering/material.cpp ../src/rendering/material.h ../src/rendering/mesh.cpp ../src/rendering/mesh.h ../src/rendering/model.cpp ../src/rendering/model.h)
+        ../src/rendering/stb_image_implementation.cpp ../src/entity.cpp ../src/entity.h ../src/component.cpp ../src/component.h ../src/input_processor.cpp ../src/input_processor.h ../src/glfw_input_processor.cpp ../src/glfw_input_processor.h ../src/components/camera_component.cpp ../src/components/camera_component.h ../src/rendering/lights/light.cpp ../src/rendering/lights/light.h ../src/rendering/lights/directional_light.cpp ../src/rendering/lights/directional_light.h ../src/rendering/lights/spot_light.cpp ../src/rendering/lights/spot_light.h ../src/rendering/glsl_program.cpp ../src/rendering/glsl_program.h)
 
 set(
         engine_tests
         src/engine_test.cpp
         src/scripting/lua_test.cpp
         src/scripting/lua_exception_test.cpp
-        ../src/rendering/lights/point_light.cpp ../src/rendering/lights/point_light.h ../src/rendering/lights/attenuation.cpp ../src/rendering/lights/attenuation.h)
+        ../src/rendering/lights/point_light.cpp ../src/rendering/lights/point_light.h ../src/rendering/lights/attenuation.cpp ../src/rendering/lights/attenuation.h ../src/rendering/glsl_exception.cpp ../src/rendering/glsl_exception.h)
 
 add_executable(
         tests

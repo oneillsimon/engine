@@ -12,6 +12,12 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
 
+void debug_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* param) {
+    // Convert GLenum parameters to strings.
+
+    std::cout << source << ":" << type << "[" << severity << "] (" << id << "): " << message << std::endl;
+}
+
 GlfwWindow::GlfwWindow(std::string title, const unsigned int& width, const unsigned int& height) :
         Window(std::move(title), width, height) {
     if (!glfwInit()) {
@@ -34,6 +40,12 @@ GlfwWindow::GlfwWindow(std::string title, const unsigned int& width, const unsig
     glfwSetFramebufferSizeCallback(static_cast<GLFWwindow*>(this->window), framebuffer_size_callback);
 
     this->input_processor = new GlfwInputProcessor(this->window);
+
+    // Debugging.
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
+    glDebugMessageCallback(debug_callback, nullptr);
+    glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+
 }
 
 GlfwWindow::~GlfwWindow() {

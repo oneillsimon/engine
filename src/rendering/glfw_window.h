@@ -5,6 +5,8 @@
 #ifndef ENGINE_GLFW_WINDOW_H
 #define ENGINE_GLFW_WINDOW_H
 
+#include <iostream>
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 

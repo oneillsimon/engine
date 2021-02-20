@@ -2,9 +2,8 @@
 
 #include "src/scripting/lua.h"
 
-#include "src/applications/logl/learn_opengl_application.h"
-#include "src/applications/logl-lighting/lighting_app.h"
-#include "src/applications/model_loading/ModelLoadingApp.h"
+//#include "src/applications/cookbook/CB_Chapter1_app.h"
+#include "src/applications/cookbook/CB_Chapter1_blob_app.h"
 #include "src/engine.h"
 #include "src/rendering/glfw_window.h"
 
@@ -41,7 +40,7 @@ int main() {
     auto window = new GlfwWindow("This is a window", 800, 600);
 //    auto application = new LearnOpenGlApp();
 //    auto application = new LightingApp();
-    auto application = new ModelLoadingApp();
+    auto application = new CB_Chapter1_blob_app();
     auto engine = new Engine(application, window, 120);
 
 

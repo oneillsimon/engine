@@ -25,10 +25,10 @@ add_library(
         input_processor.h
         input_processor.cpp
 
-        applications/cookbook/CB_Chapter1_app.h
-        applications/cookbook/CB_Chapter1_app.cpp
-        applications/cookbook/CB_Chapter1_blob_app.h
-        applications/cookbook/CB_Chapter1_blob_app.cpp
+        applications/cookbook/Chapter_1/CB_Chapter1_app.h
+        applications/cookbook/Chapter_1/CB_Chapter1_app.cpp
+        applications/cookbook/Chapter_1/CB_Chapter1_blob_app.h
+        applications/cookbook/Chapter_1/CB_Chapter1_blob_app.cpp
 
         components/camera_component.h
         components/camera_component.cpp
@@ -57,7 +57,7 @@ add_library(
         scripting/lua.cpp
         scripting/lua_exception.h
         scripting/lua_exception.cpp
-)
+        rendering/mesh/mesh.h rendering/mesh/triangle_mesh.cpp rendering/mesh/triangle_mesh.h rendering/mesh/examples/torus.cpp rendering/mesh/examples/torus.h applications/cookbook/Chapter_2/DiffuseShadingApp.cpp applications/cookbook/Chapter_2/DiffuseShadingApp.h applications/cookbook/Chapter_2/ADSShadingApp.cpp applications/cookbook/Chapter_2/ADSShadingApp.h)
 
 set_source_files_properties("swig/swig.i" PROPERTIES CPLUSPLUS ON)
 set_source_files_properties("swig/swig.i" PROPERTIES SWIG_FLAGS "-verbose")

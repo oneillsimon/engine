@@ -26,7 +26,7 @@ set(
         ../src/scripting/lua.cpp
         ../src/scripting/lua_exception.h
         ../src/scripting/lua_exception.cpp
-        ../src/rendering/stb_image_implementation.cpp ../src/entity.cpp ../src/entity.h ../src/component.cpp ../src/component.h ../src/input_processor.cpp ../src/input_processor.h ../src/glfw_input_processor.cpp ../src/glfw_input_processor.h ../src/components/camera_component.cpp ../src/components/camera_component.h ../src/rendering/lights/light.cpp ../src/rendering/lights/light.h ../src/rendering/lights/directional_light.cpp ../src/rendering/lights/directional_light.h ../src/rendering/lights/spot_light.cpp ../src/rendering/lights/spot_light.h ../src/rendering/glsl_program.cpp ../src/rendering/glsl_program.h)
+        ../src/rendering/stb_image_implementation.cpp ../src/entity.cpp ../src/entity.h ../src/component.cpp ../src/component.h ../src/input_processor.cpp ../src/input_processor.h ../src/glfw_input_processor.cpp ../src/glfw_input_processor.h ../src/components/camera_component.cpp ../src/components/camera_component.h ../src/rendering/lights/light.cpp ../src/rendering/lights/light.h ../src/rendering/lights/directional_light.cpp ../src/rendering/lights/directional_light.h ../src/rendering/lights/spot_light.cpp ../src/rendering/lights/spot_light.h ../src/rendering/glsl_program.cpp ../src/rendering/glsl_program.h ../src/rendering/mesh/mesh.h ../src/rendering/mesh/triangle_mesh.cpp ../src/rendering/mesh/triangle_mesh.h ../src/rendering/mesh/examples/torus.cpp ../src/rendering/mesh/examples/torus.h)
 
 set(
         engine_tests

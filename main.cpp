@@ -1,18 +1,19 @@
 #include <iostream>
 
-#include "src/scripting/lua.h"
-
-//#include "src/applications/cookbook/CB_Chapter1_app.h"
-#include "src/applications/cookbook/CB_Chapter1_blob_app.h"
-#include "src/engine.h"
-#include "src/rendering/glfw_window.h"
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
+#include "src/scripting/lua.h"
+
+#include "applications/cookbook/Chapter_1/CB_Chapter1_blob_app.h"
+#include "applications/cookbook/Chapter_2/DiffuseShadingApp.h"
+#include "applications/cookbook/Chapter_2/ADSShadingApp.h"
+#include "src/engine.h"
+#include "src/rendering/glfw_window.h"
 
 extern "C" int luaopen_engine(lua_State* L);
 
@@ -40,7 +41,8 @@ int main() {
     auto window = new GlfwWindow("This is a window", 800, 600);
 //    auto application = new LearnOpenGlApp();
 //    auto application = new LightingApp();
-    auto application = new CB_Chapter1_blob_app();
+//    auto application = new DiffuseShadingApp();
+    auto application = new ADSShadingApp();
     auto engine = new Engine(application, window, 120);
 
 

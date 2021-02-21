@@ -45,7 +45,7 @@ void CB_Chapter1_app::initialise(const InputProcessor& input) {
     }
 
     // Step 2. Copy the source into the shader object.
-    auto vert_src = load_shader_from_file("shaders/cookbook/basic.vert.glsl");
+    auto vert_src = load_shader_from_file("shaders/cookbook/diffuse.vert.glsl");
 //    std::cout << vert_src << std::endl;
     const GLchar* code_array[] = { vert_src.c_str() };
     glShaderSource(vert_shader, 1, code_array, NULL);
@@ -81,7 +81,7 @@ void CB_Chapter1_app::initialise(const InputProcessor& input) {
     }
 
     // Step 2. Copy the source into the shader object.
-    auto frag_src = load_shader_from_file("shaders/cookbook/basic.frag.glsl");
+    auto frag_src = load_shader_from_file("shaders/cookbook/diffuse.frag.glsl");
     const GLchar* frag_code_array[] = { frag_src.c_str() };
     glShaderSource(frag_shader, 1, frag_code_array, NULL);
 

@@ -18,7 +18,7 @@
 
 class CB_Chapter1_blob_app : public Application {
 private:
-    GLuint vao_handle;
+    GLuint vao_handle{};
 public:
     void initialise(const InputProcessor& input) override;
     void update(const double& delta, const InputProcessor& input) override;

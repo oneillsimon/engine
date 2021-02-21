@@ -13,6 +13,7 @@
 #include "applications/cookbook/Chapter_2/DiffuseShadingApp.h"
 #include "applications/cookbook/Chapter_2/ADSShadingApp.h"
 #include "applications/cookbook/Chapter_2/TwoSideShadingApp.h"
+#include "applications/cookbook/Chapter_2/FlatADSShadingApp.h"
 #include "src/engine.h"
 #include "src/rendering/glfw_window.h"
 
@@ -44,7 +45,8 @@ int main() {
 //    auto application = new LightingApp();
 //    auto application = new DiffuseShadingApp();
 //    auto application = new ADSShadingApp();
-    auto application = new TwoSideShadingApp();
+//    auto application = new TwoSideShadingApp();
+    auto application = new FlatADSShadingApp();
     auto engine = new Engine(application, window, 120);
 
 

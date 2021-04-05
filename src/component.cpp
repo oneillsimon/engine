@@ -8,11 +8,11 @@ Component::Component() = default;
 
 Component::~Component() = default;
 
-void Component::initialise(const InputProcessor& input) {
+void Component::initialise(InputProcessor& input) {
 
 }
 
-void Component::update(double delta, const InputProcessor& input) {
+void Component::update(double delta, InputProcessor& input) {
 
 }
 

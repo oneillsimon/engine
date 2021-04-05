@@ -12,7 +12,7 @@ DiffuseShadingApp::DiffuseShadingApp() : torus(0.7f, 0.3f, 30, 30) {
 }
 
 
-void DiffuseShadingApp::initialise(const InputProcessor &input) {
+void DiffuseShadingApp::initialise(InputProcessor& input) {
     Application::initialise(input);
 
     program = GLSLProgram();
@@ -34,14 +34,14 @@ void DiffuseShadingApp::initialise(const InputProcessor &input) {
     program.set_uniform("LightPosition", view * glm::vec4(0.5f, 0.5f, 2.0f, 1.0f));
 }
 
-void DiffuseShadingApp::update(const double &delta, const InputProcessor &input) {
+void DiffuseShadingApp::update(const double &delta, InputProcessor& input) {
     Application::update(delta, input);
 
-    if (input.get_key(GLFW_KEY_ESCAPE, GLFW_PRESS)) {
+    if (input.is_key_down(GLFW_KEY_ESCAPE)) {
         this->stop();
     }
 
-    if (input.get_key(GLFW_KEY_R, GLFW_PRESS) && input.get_key(GLFW_KEY_UP, GLFW_PRESS)) {
+    if (input.is_key_down(GLFW_KEY_R) && input.is_key_down(GLFW_KEY_UP)) {
         reflectivity += 0.001f;
         if (reflectivity > 1.0f) {
             reflectivity = 1.0f;
@@ -49,7 +49,7 @@ void DiffuseShadingApp::update(const double &delta, const InputProcessor &input)
         program.set_uniform("Kd", Kd * reflectivity);
     }
 
-    if (input.get_key(GLFW_KEY_R, GLFW_PRESS) && input.get_key(GLFW_KEY_DOWN, GLFW_PRESS)) {
+    if (input.is_key_down(GLFW_KEY_R) && input.is_key_down(GLFW_KEY_DOWN)) {
         reflectivity -= 0.001f;
         if (reflectivity < 0.0f) {
             reflectivity = 0;
@@ -57,7 +57,7 @@ void DiffuseShadingApp::update(const double &delta, const InputProcessor &input)
         program.set_uniform("Kd", Kd * reflectivity);
     }
 
-    if (input.get_key(GLFW_KEY_I, GLFW_PRESS) && input.get_key(GLFW_KEY_UP, GLFW_PRESS)) {
+    if (input.is_key_down(GLFW_KEY_I) && input.is_key_down(GLFW_KEY_UP)) {
         intensity += 0.001f;
         if (intensity > 1.0f) {
             intensity = 1.0f;
@@ -65,7 +65,7 @@ void DiffuseShadingApp::update(const double &delta, const InputProcessor &input)
         program.set_uniform("Ld", Ld * intensity);
     }
 
-    if (input.get_key(GLFW_KEY_I, GLFW_PRESS) && input.get_key(GLFW_KEY_DOWN, GLFW_PRESS)) {
+    if (input.is_key_down(GLFW_KEY_I) && input.is_key_down(GLFW_KEY_DOWN)) {
         intensity -= 0.001f;
         if (intensity < 0.0f) {
             intensity = 0;

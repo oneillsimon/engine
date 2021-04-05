@@ -29,6 +29,18 @@ add_library(
         applications/cookbook/Chapter_1/CB_Chapter1_app.cpp
         applications/cookbook/Chapter_1/CB_Chapter1_blob_app.h
         applications/cookbook/Chapter_1/CB_Chapter1_blob_app.cpp
+        applications/cookbook/Chapter_2/ADSShadingApp.h
+        applications/cookbook/Chapter_2/ADSShadingApp.cpp
+        applications/cookbook/Chapter_2/DiffuseShadingApp.h
+        applications/cookbook/Chapter_2/DiffuseShadingApp.cpp
+        applications/cookbook/Chapter_2/DiscardShadingApp.h
+        applications/cookbook/Chapter_2/DiscardShadingApp.cpp
+        applications/cookbook/Chapter_2/FlatADSShadingApp.h
+        applications/cookbook/Chapter_2/FlatADSShadingApp.cpp
+        applications/cookbook/Chapter_2/SubroutineApp.h
+        applications/cookbook/Chapter_2/SubroutineApp.cpp
+        applications/cookbook/Chapter_2/TwoSideShadingApp.h
+        applications/cookbook/Chapter_2/TwoSideShadingApp.cpp
 
         components/camera_component.h
         components/camera_component.cpp
@@ -52,12 +64,21 @@ add_library(
         rendering/lights/point_light.cpp
         rendering/lights/spot_light.h
         rendering/lights/spot_light.cpp
+        rendering/material/material.h
+        rendering/material/material.cpp
+        rendering/mesh/mesh.h
+        rendering/mesh/examples/teapot.cpp
+        rendering/mesh/examples/teapot.h
+        rendering/mesh/examples/torus.cpp
+        rendering/mesh/examples/torus.h
+        rendering/mesh/triangle_mesh.h
+        rendering/mesh/triangle_mesh.cpp
 
         scripting/lua.h
         scripting/lua.cpp
         scripting/lua_exception.h
         scripting/lua_exception.cpp
-        rendering/mesh/mesh.h rendering/mesh/triangle_mesh.cpp rendering/mesh/triangle_mesh.h rendering/mesh/examples/torus.cpp rendering/mesh/examples/torus.h applications/cookbook/Chapter_2/DiffuseShadingApp.cpp applications/cookbook/Chapter_2/DiffuseShadingApp.h applications/cookbook/Chapter_2/ADSShadingApp.cpp applications/cookbook/Chapter_2/ADSShadingApp.h rendering/material/material.cpp rendering/material/material.h applications/cookbook/Chapter_2/TwoSideShadingApp.cpp applications/cookbook/Chapter_2/TwoSideShadingApp.h rendering/mesh/examples/teapot.cpp rendering/mesh/examples/teapot.h applications/cookbook/Chapter_2/FlatADSShadingApp.cpp applications/cookbook/Chapter_2/FlatADSShadingApp.h applications/cookbook/Chapter_2/SubroutineApp.cpp applications/cookbook/Chapter_2/SubroutineApp.h applications/cookbook/Chapter_2/DiscardShadingApp.cpp applications/cookbook/Chapter_2/DiscardShadingApp.h)
+)
 
 set_source_files_properties("swig/swig.i" PROPERTIES CPLUSPLUS ON)
 set_source_files_properties("swig/swig.i" PROPERTIES SWIG_FLAGS "-verbose")

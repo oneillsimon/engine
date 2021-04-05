@@ -12,7 +12,7 @@
 
 #include "CB_Chapter1_blob_app.h"
 
-void CB_Chapter1_blob_app::initialise(const InputProcessor& input) {
+void CB_Chapter1_blob_app::initialise(InputProcessor& input) {
     Application::initialise(input);
 
     auto shader_program = GLSLProgram();
@@ -105,7 +105,7 @@ void CB_Chapter1_blob_app::initialise(const InputProcessor& input) {
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 }
 
-void CB_Chapter1_blob_app::update(const double& delta, const InputProcessor& input) {
+void CB_Chapter1_blob_app::update(const double& delta, InputProcessor& input) {
     Application::update(delta, input);
 }
 

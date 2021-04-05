@@ -15,7 +15,7 @@ public:
 
     TestApplication() : Application() {}
 
-    void update(const double& delta, const InputProcessor& input) override {
+    void update(const double& delta, InputProcessor& input) override {
         this->counter++;
     }
 

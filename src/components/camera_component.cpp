@@ -70,35 +70,35 @@ void CameraComponent::cursor_position_callback(void* window, double x, double y)
     instance->update_vectors();
 }
 
-void CameraComponent::initialise(const InputProcessor &input) {
+void CameraComponent::initialise(InputProcessor& input) {
     int width, height;
     glfwGetWindowSize(static_cast<GLFWwindow*>(input.get_window()), &width, &height);
     this->cursor_coords = glm::vec2(width / 2, height / 2);
 
-    input.capture_input();
-    input.set_scroll_callback(this, scroll_callback);
-    input.set_cursor_position_callback(this, cursor_position_callback);
+//    input.capture_input();
+//    input.set_scroll_callback(this, scroll_callback);
+//    input.set_cursor_position_callback(this, cursor_position_callback);
     this->update_vectors();
 }
 
 
-void CameraComponent::update(double delta, const InputProcessor &input) {
+void CameraComponent::update(double delta, InputProcessor& input) {
     Component::update(delta, input);
 
     float velocity = this->speed * (float)delta;
-    if (input.get_key(GLFW_KEY_W, GLFW_PRESS)) {
+    if (input.is_key_down(GLFW_KEY_W)) {
         this->position += this->front * velocity;
     }
 
-    if (input.get_key(GLFW_KEY_S, GLFW_PRESS)) {
+    if (input.is_key_down(GLFW_KEY_S)) {
         this->position -= this->front * velocity;
     }
 
-    if (input.get_key(GLFW_KEY_A, GLFW_PRESS)) {
+    if (input.is_key_down(GLFW_KEY_A)) {
         this->position -= this->right * velocity;
     }
 
-    if (input.get_key(GLFW_KEY_D, GLFW_PRESS)) {
+    if (input.is_key_down(GLFW_KEY_D)) {
         this->position += this->right * velocity;
     }
 }

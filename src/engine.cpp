@@ -42,14 +42,14 @@ void Engine::run() {
             }
 
             this->application->update(frame_rate, *this->window->get_input_processor());
-            this->window->update();
 
             unprocessed_time -= frame_rate;
         }
 
         if (should_render) {
-            this->application->render(frame_rate);
+            this->window->update();
             this->window->swap_buffers();
+            this->application->render(frame_rate);
         }
     }
 }

@@ -11,6 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "application.h"
+#include "components/camera_component.h"
 #include "rendering/glsl_program.h"
 #include "rendering/material/material.h"
 #include "rendering/mesh/examples/teapot.h"
@@ -29,8 +30,8 @@ public:
     std::map<std::string, Material>::iterator current_material;
 
     DiscardShadingApp();
-    void initialise(const InputProcessor& input) override;
-    void update(const double& delta, const InputProcessor& input) override;
+    void initialise(InputProcessor& input) override;
+    void update(const double& delta, InputProcessor& input) override;
     void render(const double& delta) override;
     void stop() override;
 };

@@ -33,7 +33,7 @@ std::string load_shader_from_file(const std::string& path) {
     return code;
 }
 
-void CB_Chapter1_app::initialise(const InputProcessor& input) {
+void CB_Chapter1_app::initialise(InputProcessor& input) {
     Application::initialise(input);
 
     // Compile vertex and fragment shaders.
@@ -235,7 +235,7 @@ void CB_Chapter1_app::initialise(const InputProcessor& input) {
     }
 }
 
-void CB_Chapter1_app::update(const double& delta, const InputProcessor& input) {
+void CB_Chapter1_app::update(const double& delta, InputProcessor& input) {
     Application::update(delta, input);
 }
 

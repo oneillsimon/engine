@@ -8,13 +8,13 @@ Entity::Entity() = default;
 
 Entity::~Entity() = default;
 
-void Entity::initialise(const InputProcessor& input) {
+void Entity::initialise(InputProcessor& input) {
     for (auto const& component : this->components) {
         component.second->initialise(input);
     }
 }
 
-void Entity::update(double delta, const InputProcessor& input) {
+void Entity::update(double delta, InputProcessor& input) {
     for (auto const& component : this->components) {
         component.second->update(delta, input);
     }

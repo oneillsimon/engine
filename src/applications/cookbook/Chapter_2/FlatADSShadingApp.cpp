@@ -4,36 +4,35 @@
 
 #include "FlatADSShadingApp.h"
 
-void key_callback(void* window, int key, int scancode, int action, int mods) {
-    auto instance = static_cast<FlatADSShadingApp*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
-    if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
-        if (std::distance(instance->current_material, instance->materials.end()) == 1) {
-            instance->current_material = instance->materials.begin();
-        } else {
-            instance->current_material++;
-        }
-        std::cout << "Using material: " << instance->current_material->first << std::endl;
-    }
-
-    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
-        if (instance->current_material == instance->materials.begin()) {
-            instance->current_material = instance->materials.end();
-            instance->current_material--;
-        } else {
-            instance->current_material--;
-        }
-        std::cout << "Using material: " << instance->current_material->first << std::endl;
-    }
-}
+//void key_callback(void* window, int key, int scancode, int action, int mods) {
+//    auto instance = static_cast<FlatADSShadingApp*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
+//    if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
+//        if (std::distance(instance->current_material, instance->materials.end()) == 1) {
+//            instance->current_material = instance->materials.begin();
+//        } else {
+//            instance->current_material++;
+//        }
+//        std::cout << "Using material: " << instance->current_material->first << std::endl;
+//    }
+//
+//    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
+//        if (instance->current_material == instance->materials.begin()) {
+//            instance->current_material = instance->materials.end();
+//            instance->current_material--;
+//        } else {
+//            instance->current_material--;
+//        }
+//        std::cout << "Using material: " << instance->current_material->first << std::endl;
+//    }
+//}
 
 FlatADSShadingApp::FlatADSShadingApp() : torus(0.7f, 0.3f, 30, 30) {
 
 }
 
 
-void FlatADSShadingApp::initialise(const InputProcessor &input) {
+void FlatADSShadingApp::initialise(InputProcessor& input) {
     Application::initialise(input);
-    input.set_key_callback(this, key_callback);
 
     program = GLSLProgram();
     program.compile_shader("shaders/cookbook/adsflat.vert.glsl", GLSLShaderType::VERTEX);
@@ -86,10 +85,10 @@ void FlatADSShadingApp::initialise(const InputProcessor &input) {
     current_material = materials.begin();
 }
 
-void FlatADSShadingApp::update(const double &delta, const InputProcessor &input) {
+void FlatADSShadingApp::update(const double &delta, InputProcessor& input) {
     Application::update(delta, input);
 
-    if (input.get_key(GLFW_KEY_ESCAPE, GLFW_PRESS)) {
+    if (input.is_key_down(GLFW_KEY_ESCAPE)) {
         this->stop();
     }
 }

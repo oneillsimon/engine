@@ -20,8 +20,8 @@ public:
     Entity();
     ~Entity();
 
-    virtual void initialise(const InputProcessor& input);
-    virtual void update(double delta, const InputProcessor& input);
+    virtual void initialise(InputProcessor& input);
+    virtual void update(double delta, InputProcessor& input);
     virtual void render(double delta);
 
     void add_child(const std::string& name, Entity* entity);

@@ -9,11 +9,11 @@ Application::Application() {
     this->close_requested = false;
 }
 
-void Application::initialise(const InputProcessor& input) {
+void Application::initialise(InputProcessor& input) {
     this->root->initialise(input);
 }
 
-void Application::update(const double& delta, const InputProcessor& input) {
+void Application::update(const double& delta, InputProcessor& input) {
     this->root->update(delta, input);
 }
 

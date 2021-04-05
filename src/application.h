@@ -16,8 +16,8 @@ public:
 
     Entity* root{};
 
-    virtual void initialise(const InputProcessor& input);
-    virtual void update(const double& delta, const InputProcessor& input);
+    virtual void initialise(InputProcessor& input);
+    virtual void update(const double& delta, InputProcessor& input);
     virtual void render(const double& delta);
     virtual void stop();
 

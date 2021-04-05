@@ -21,8 +21,8 @@ private:
     GLuint program_handle;
     GLuint vao_handle;
 public:
-    void initialise(const InputProcessor& input) override;
-    void update(const double& delta, const InputProcessor& input) override;
+    void initialise(InputProcessor& input) override;
+    void update(const double& delta, InputProcessor& input) override;
     void render(const double& delta) override;
 };
 

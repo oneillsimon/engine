@@ -3,28 +3,28 @@
 //
 
 #include "TwoSideShadingApp.h"
-
-void key_callback(void* window, int key, int scancode, int action, int mods) {
-    auto instance = static_cast<TwoSideShadingApp*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
-    if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
-        if (std::distance(instance->current_material, instance->materials.end()) == 1) {
-            instance->current_material = instance->materials.begin();
-        } else {
-            instance->current_material++;
-        }
-        std::cout << "Using material: " << instance->current_material->first << std::endl;
-    }
-
-    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
-        if (instance->current_material == instance->materials.begin()) {
-            instance->current_material = instance->materials.end();
-            instance->current_material--;
-        } else {
-            instance->current_material--;
-        }
-        std::cout << "Using material: " << instance->current_material->first << std::endl;
-    }
-}
+//
+//void key_callback(void* window, int key, int scancode, int action, int mods) {
+//    auto instance = static_cast<TwoSideShadingApp*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
+//    if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
+//        if (std::distance(instance->current_material, instance->materials.end()) == 1) {
+//            instance->current_material = instance->materials.begin();
+//        } else {
+//            instance->current_material++;
+//        }
+//        std::cout << "Using material: " << instance->current_material->first << std::endl;
+//    }
+//
+//    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
+//        if (instance->current_material == instance->materials.begin()) {
+//            instance->current_material = instance->materials.end();
+//            instance->current_material--;
+//        } else {
+//            instance->current_material--;
+//        }
+//        std::cout << "Using material: " << instance->current_material->first << std::endl;
+//    }
+//}
 
 TwoSideShadingApp::TwoSideShadingApp() :
 teapot(13, glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.5f, 0.25f))) {
@@ -32,9 +32,8 @@ teapot(13, glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.5f, 0.25f))) {
 }
 
 
-void TwoSideShadingApp::initialise(const InputProcessor &input) {
+void TwoSideShadingApp::initialise(InputProcessor& input) {
     Application::initialise(input);
-    input.set_key_callback(this, key_callback);
 
     program = GLSLProgram();
     program.compile_shader("shaders/cookbook/adstwosided.vert.glsl", GLSLShaderType::VERTEX);
@@ -89,10 +88,10 @@ void TwoSideShadingApp::initialise(const InputProcessor &input) {
     current_material = materials.begin();
 }
 
-void TwoSideShadingApp::update(const double &delta, const InputProcessor &input) {
+void TwoSideShadingApp::update(const double &delta, InputProcessor& input) {
     Application::update(delta, input);
 
-    if (input.get_key(GLFW_KEY_ESCAPE, GLFW_PRESS)) {
+    if (input.is_key_down(GLFW_KEY_ESCAPE)) {
         this->stop();
     }
 }

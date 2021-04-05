@@ -4,37 +4,37 @@
 
 #include "DiscardShadingApp.h"
 
-void key_callback(void* window, int key, int scancode, int action, int mods) {
-    auto instance = static_cast<DiscardShadingApp*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
-    if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
-        if (std::distance(instance->current_material, instance->materials.end()) == 1) {
-            instance->current_material = instance->materials.begin();
-        } else {
-            instance->current_material++;
-        }
-        std::cout << "Using material: " << instance->current_material->first << std::endl;
-    }
-
-    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
-        if (instance->current_material == instance->materials.begin()) {
-            instance->current_material = instance->materials.end();
-            instance->current_material--;
-        } else {
-            instance->current_material--;
-        }
-        std::cout << "Using material: " << instance->current_material->first << std::endl;
-    }
-}
+//void key_callback(void* window, int key, int scancode, int action, int mods) {
+//    auto instance = static_cast<DiscardShadingApp*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
+//    if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
+//        if (std::distance(instance->current_material, instance->materials.end()) == 1) {
+//            instance->current_material = instance->materials.begin();
+//        } else {
+//            instance->current_material++;
+//        }
+//        std::cout << "Using material: " << instance->current_material->first << std::endl;
+//    }
+//
+//    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
+//        if (instance->current_material == instance->materials.begin()) {
+//            instance->current_material = instance->materials.end();
+//            instance->current_material--;
+//        } else {
+//            instance->current_material--;
+//        }
+//        std::cout << "Using material: " << instance->current_material->first << std::endl;
+//    }
+//}
 
 DiscardShadingApp::DiscardShadingApp() :
         teapot(13, glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.5f, 0.25f))) {
-
+    this->root->add_component("camera", new CameraComponent());
 }
 
 
-void DiscardShadingApp::initialise(const InputProcessor &input) {
+void DiscardShadingApp::initialise(InputProcessor& input) {
     Application::initialise(input);
-    input.set_key_callback(this, key_callback);
+//    input.set_key_callback(this, key_callback);
 
     program = GLSLProgram();
     program.compile_shader("shaders/cookbook/discard.vert.glsl", GLSLShaderType::VERTEX);
@@ -44,11 +44,9 @@ void DiscardShadingApp::initialise(const InputProcessor &input) {
 
     glEnable(GL_DEPTH_TEST);
 
-    view = glm::lookAt(glm::vec3(2.0f,4.0f,2.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,1.0f,0.0f));
-    projection = glm::perspective(glm::radians(70.0f), (float)800/600, 0.3f, 100.0f);
-
     auto world_light = glm::vec4(2.0f, 4.0f, 2.0f, 1.0f);
-    model = glm::rotate(glm::mat4(), glm::radians(0.0f), glm::vec3(0.0f,1.0f,0.0f));
+    view = glm::lookAt(glm::vec3(2.0f,4.0f,2.0f), glm::vec3(0.0f,0.0f,0.0f), glm::vec3(0.0f,1.0f,0.0f));
+    model = glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(0.0f,1.0f,0.0f));
     program.set_uniform("Light.Position", view * model * world_light);
 
     model = glm::mat4(1.0f);
@@ -89,11 +87,34 @@ void DiscardShadingApp::initialise(const InputProcessor &input) {
     current_material = materials.begin();
 }
 
-void DiscardShadingApp::update(const double &delta, const InputProcessor &input) {
+void DiscardShadingApp::update(const double &delta, InputProcessor& input) {
     Application::update(delta, input);
 
-    if (input.get_key(GLFW_KEY_ESCAPE, GLFW_PRESS)) {
+    if (input.is_key_down(GLFW_KEY_ESCAPE)) {
         this->stop();
+    }
+
+    auto* camera_component = this->root->get_component<CameraComponent>("camera");
+    view = camera_component->get_view_matrix();
+    projection = glm::perspective(glm::radians(camera_component->get_zoom()), (float)800/600, 0.3f, 100.0f);
+
+    if (input.is_key_pressed(GLFW_KEY_UP) || input.is_key_repeating(GLFW_KEY_RIGHT) || input.is_key_down(GLFW_KEY_PAGE_UP)) {
+        if (std::distance(this->current_material, this->materials.end()) == 1) {
+            this->current_material = this->materials.begin();
+        } else {
+            this->current_material++;
+        }
+        std::cout << "Using material: " << this->current_material->first << std::endl;
+    }
+
+    if (input.is_key_pressed(GLFW_KEY_DOWN) || input.is_key_repeating(GLFW_KEY_LEFT) || input.is_key_down(GLFW_KEY_PAGE_DOWN)) {
+        if (this->current_material == this->materials.begin()) {
+            this->current_material = this->materials.end();
+            this->current_material--;
+        } else {
+            this->current_material--;
+        }
+        std::cout << "Using material: " << this->current_material->first << std::endl;
     }
 }
 

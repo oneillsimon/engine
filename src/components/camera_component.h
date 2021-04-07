@@ -40,8 +40,8 @@ private:
     glm::vec2 cursor_coords{};
 
     void update_vectors();
-    static void scroll_callback(void* window, double x, double y);
-    static void cursor_position_callback(void* window, double x, double y);
+    void scroll_callback(double x, double y);
+    void cursor_position_callback(double x, double y);
 
 public:
     explicit CameraComponent(

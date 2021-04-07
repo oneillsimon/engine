@@ -94,7 +94,20 @@ void DiscardShadingApp::update(const double &delta, InputProcessor& input) {
         this->stop();
     }
 
+    if (input.is_scrolling(ScrollDirection::ANY)) {
+//        std::cout << "Currently scrolling: " << std::endl;
+    }
+
     auto* camera_component = this->root->get_component<CameraComponent>("camera");
+
+    if (input.is_key_pressed(GLFW_KEY_I)) {
+        input.release_input();
+    }
+    if (input.is_key_pressed(GLFW_KEY_O)) {
+        input.capture_input();
+    }
+
+
     view = camera_component->get_view_matrix();
     projection = glm::perspective(glm::radians(camera_component->get_zoom()), (float)800/600, 0.3f, 100.0f);
 

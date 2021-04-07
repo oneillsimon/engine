@@ -11,33 +11,37 @@ void key_callback(void* window, int key, int scancode, int action, int mods) {
 
 void scroll_callback(void* window, double x, double y) {
     auto instance = static_cast<GlfwInputProcessor*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
-    std::cout << "X: " << x << " Y: " << y << std::endl;
     instance->scroll_x = x;
     instance->scroll_y = y;
+    for (const auto& callback : instance->scroll_callbacks) {
+        callback(x, y);
+    }
+}
+
+void cursor_position_callback(void* window, double x, double y) {
+    auto instance = static_cast<GlfwInputProcessor*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
+    for (const auto& callback : instance->cursor_position_callbacks) {
+        callback(x, y);
+    }
 }
 
 GlfwInputProcessor::GlfwInputProcessor(void *window) : InputProcessor(window), key_states() {
     glfwSetWindowUserPointer(static_cast<GLFWwindow*>(this->window), this);
     glfwSetKeyCallback(static_cast<GLFWwindow*>(this->window), reinterpret_cast<GLFWkeyfun>(key_callback));
     glfwSetScrollCallback(static_cast<GLFWwindow*>(this->window), reinterpret_cast<GLFWscrollfun>(scroll_callback));
+    glfwSetCursorPosCallback(static_cast<GLFWwindow*>(this->window), reinterpret_cast<GLFWcursorposfun>(cursor_position_callback));
 }
 
 void GlfwInputProcessor::capture_input() const {
-    glfwSetInputMode(static_cast<GLFWwindow*>(this->window), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    this->set_input_mode(GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
-void GlfwInputProcessor::set_cursor_position_callback(void* instance, void (*cursor_position_callback)(void* window, double x, double y)) const {
-    glfwSetWindowUserPointer(static_cast<GLFWwindow*>(this->window), instance);
-    glfwSetCursorPosCallback(static_cast<GLFWwindow*>(this->window), reinterpret_cast<GLFWcursorposfun>(cursor_position_callback));
+void GlfwInputProcessor::release_input() const {
+    this->set_input_mode(GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
 
 void GlfwInputProcessor::set_input_mode(int mode, int value) const {
     glfwSetInputMode(static_cast<GLFWwindow*>(this->window), mode, value);
-}
-
-void GlfwInputProcessor::set_scroll_callback(void* instance, void (*scroll_callback)(void* window, double x, double y)) const {
-    glfwSetWindowUserPointer(static_cast<GLFWwindow*>(this->window), instance);
-//    glfwSetScrollCallback(static_cast<GLFWwindow*>(this->window), reinterpret_cast<GLFWscrollfun>(scroll_callback));
 }
 
 bool GlfwInputProcessor::is_key_down(int key) {
@@ -58,26 +62,25 @@ bool GlfwInputProcessor::is_key_repeating(int key) {
     return this->key_states[key] == GLFW_REPEAT;
 }
 
-bool GlfwInputProcessor::is_scrolling(const ScrollDirection& direction) const {
+bool GlfwInputProcessor::is_scrolling(const ScrollDirection& direction) {
     if (this->scroll_x == 1) {
-        std::cout << "Scrolling UP" << std::endl;
-        return direction == ScrollDirection::UP || direction == ScrollDirection::ANY;
+        this->scroll_x = 0;
+        return direction == ScrollDirection::LEFT || direction == ScrollDirection::ANY;
     }
 
     if (this->scroll_x == -1) {
-        std::cout << "Scrolling DOWN" << std::endl;
-        return direction == ScrollDirection::DOWN || direction == ScrollDirection::ANY;
-    }
-
-    if (this->scroll_y == 1) {
-        std::cout << "Scrolling RIGHT" << std::endl;
+        this->scroll_x = 0;
         return direction == ScrollDirection::RIGHT || direction == ScrollDirection::ANY;
     }
 
-    if (this->scroll_y == -1) {
-        std::cout << "Scrolling UP" << std::endl;
-        return direction == ScrollDirection::LEFT || direction == ScrollDirection::ANY;
+    if (this->scroll_y == 1) {
+        this->scroll_y = 0;
+        return direction == ScrollDirection::UP || direction == ScrollDirection::ANY;
     }
-    std::cout << "Not scrolling" << std::endl;
+
+    if (this->scroll_y == -1) {
+        this->scroll_y = 0;
+        return direction == ScrollDirection::DOWN || direction == ScrollDirection::ANY;
+    }
     return false;
 }

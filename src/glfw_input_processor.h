@@ -24,20 +24,20 @@ public:
     std::array<int, MOUSE_SIZE> mouse_button_states;
     std::array<bool, MOUSE_SIZE> active_mouse_buttons;
 
-    int scroll_x = 0;
-    int scroll_y = 0;
+    double scroll_x = 0;
+    double scroll_y = 0;
 
     explicit GlfwInputProcessor(void* window);
 
     void capture_input() const override;
-    void set_cursor_position_callback(void* instance, void (*cursor_position_callback)(void* window, double x, double y)) const override;
+    void release_input() const override;
     void set_input_mode(int mode, int value) const override;
-    void set_scroll_callback(void* instance, void (*scroll_callback)(void* window, double x, double y)) const override;
+
     bool is_key_down(int key) override;
     bool is_key_pressed(int key) override;
     bool is_key_released(int key) override;
     bool is_key_repeating(int key) override;
-    bool is_scrolling(const ScrollDirection& direction) const override;
+    bool is_scrolling(const ScrollDirection& direction) override;
 };
 
 

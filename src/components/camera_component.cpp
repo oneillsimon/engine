@@ -28,46 +28,43 @@ void CameraComponent::update_vectors() {
     this->up = glm::normalize(glm::cross(this->right, this->front));
 }
 
-void CameraComponent::scroll_callback(void* window, double x, double y) {
-    auto instance = static_cast<CameraComponent*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
-    instance->zoom -= (float)y;
+void CameraComponent::scroll_callback(double x, double y) {
+    this->zoom -= (float)y;
 
-    if (instance->zoom < 1.0f) {
-        instance->zoom = 1.0f;
+    if (this->zoom < 1.0f) {
+        this->zoom = 1.0f;
     }
 
-    if (instance->zoom > 45.0f) {
-        instance->zoom = 45.0f;
+    if (this->zoom > 45.0f) {
+        this->zoom = 45.0f;
     }
 }
 
-void CameraComponent::cursor_position_callback(void* window, double x, double y) {
-    auto instance = static_cast<CameraComponent*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
-
-    if (instance->init_cursor) {
-        instance->cursor_coords = glm::vec2(x, y);
-        instance->init_cursor = false;
+void CameraComponent::cursor_position_callback(double x, double y) {
+    if (this->init_cursor) {
+        this->cursor_coords = glm::vec2(x, y);
+        this->init_cursor = false;
     }
 
-    auto x_offset = x - instance->cursor_coords.x;
-    auto y_offset = y - instance->cursor_coords.y;
-    instance->cursor_coords = glm::vec2(x, y);
+    auto x_offset = x - this->cursor_coords.x;
+    auto y_offset = y - this->cursor_coords.y;
+    this->cursor_coords = glm::vec2(x, y);
 
-    x_offset *= instance->sensitivity;
-    y_offset *= instance->sensitivity;
+    x_offset *= this->sensitivity;
+    y_offset *= this->sensitivity;
 
-    instance->yaw += x_offset;
-    instance->pitch -= y_offset;
+    this->yaw += x_offset;
+    this->pitch -= y_offset;
 
-    if (instance->pitch > 89.0f) {
-        instance->pitch =  89.0f;
+    if (this->pitch > 89.0f) {
+        this->pitch =  89.0f;
     }
 
-    if (instance->pitch < -89.0f) {
-        instance->pitch = -89.0f;
+    if (this->pitch < -89.0f) {
+        this->pitch = -89.0f;
     }
 
-    instance->update_vectors();
+    this->update_vectors();
 }
 
 void CameraComponent::initialise(InputProcessor& input) {
@@ -75,9 +72,9 @@ void CameraComponent::initialise(InputProcessor& input) {
     glfwGetWindowSize(static_cast<GLFWwindow*>(input.get_window()), &width, &height);
     this->cursor_coords = glm::vec2(width / 2, height / 2);
 
-//    input.capture_input();
-//    input.set_scroll_callback(this, scroll_callback);
-//    input.set_cursor_position_callback(this, cursor_position_callback);
+    input.capture_input();
+    input.on_cursor_position(&CameraComponent::cursor_position_callback, this);
+    input.on_scroll(&CameraComponent::scroll_callback, this);
     this->update_vectors();
 }
 

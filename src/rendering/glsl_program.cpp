@@ -39,8 +39,8 @@ int GLSLProgram::get_uniform_location(const std::string &name) {
     return uniform_locations[name];
 }
 
-bool GLSLProgram::file_exists(const std::string &filename) const {
-    struct stat info;
+bool GLSLProgram::file_exists(const std::string &filename) {
+    struct stat info {};
     auto result = stat(filename.c_str(), &info);
     return result == 0;
 }
@@ -98,7 +98,7 @@ void GLSLProgram::compile_shader(const std::string &filename, GLSLShaderType sha
     GLuint shader_handle = glCreateShader(shader_type);
 
     auto shader_str = code.str();
-    auto shader_source = shader_str.c_str();
+    const auto* shader_source = shader_str.c_str();
     glShaderSource(shader_handle, 1, &shader_source, nullptr);
 
     glCompileShader(shader_handle);
@@ -124,10 +124,10 @@ void GLSLProgram::compile_shader(const std::string &filename, GLSLShaderType sha
         std::string message = (filename.empty() ? "" : filename + ": ") + "Shader compilation failed.";
         message += " " + log;
         throw GLSLException(message);
-    } else {
-        // Compilation succeeded so we can attach the shader.
-        glAttachShader(handle, shader_handle);
     }
+
+    // Compilation succeeded so we can attach the shader.
+    glAttachShader(handle, shader_handle);
 }
 
 void GLSLProgram::link() {
@@ -157,10 +157,10 @@ void GLSLProgram::link() {
         }
 
         throw GLSLException("Program link failed. " + log);
-    } else {
-        set_uniform_locations();
-        linked = true;
     }
+
+    set_uniform_locations();
+    linked = true;
 }
 
 void GLSLProgram::use() const {
@@ -205,11 +205,11 @@ bool GLSLProgram::is_linked() const {
     return linked;
 }
 
-void GLSLProgram::bind_attribute_location(GLuint location, const std::string &name) {
+void GLSLProgram::bind_attribute_location(GLuint location, const std::string &name) const {
     glBindAttribLocation(handle, location, name.c_str());
 }
 
-void GLSLProgram::bind_fragment_data_location(GLuint location, const std::string &name) {
+void GLSLProgram::bind_fragment_data_location(GLuint location, const std::string &name) const {
     glBindFragDataLocation(handle, location, name.c_str());
 }
 
@@ -246,11 +246,11 @@ void GLSLProgram::set_uniform(const std::string& name, int i) {
 }
 
 void GLSLProgram::set_uniform(const std::string& name, bool b) {
-    glUniform1i(get_uniform_location(name), b);
+    glUniform1i(get_uniform_location(name), static_cast<GLint>(b));
 }
 
 void GLSLProgram::set_uniform(const std::string& name, GLuint value) {
-    glUniform1ui(get_uniform_location(name), value);
+    glUniform1ui(get_uniform_location(name), static_cast<GLint>(value));
 }
 
 void GLSLProgram::print_active_uniforms() const {
@@ -294,7 +294,7 @@ void GLSLProgram::print_active_uniform_blocks() const {
         std::cout << "Uniform block " << block_name << ":" << std::endl;
         delete[] block_name;
 
-        auto uniform_indices = new GLint[num_uniforms];
+        auto* uniform_indices = new GLint[num_uniforms];
         glGetProgramResourceiv(handle, GL_UNIFORM_BLOCK, block, 1, block_index, num_uniforms, nullptr, uniform_indices);
 
         for (auto uniform = 0; uniform < num_uniforms; uniform++) {
@@ -303,7 +303,7 @@ void GLSLProgram::print_active_uniform_blocks() const {
             glGetProgramResourceiv(handle, GL_UNIFORM, uniform_index, 3, properties, 3, nullptr, results);
 
             GLint name_buffer_size = results[0] + 1;
-            auto name = new char[name_buffer_size];
+            auto* name = new char[name_buffer_size];
             glGetProgramResourceName(handle, GL_UNIFORM, uniform_index, name_buffer_size, nullptr, name);
 
             std::cout << name << " " << get_type_string(results[1]) << std::endl;
@@ -326,14 +326,14 @@ void GLSLProgram::print_active_attributes() const {
         glGetProgramResourceiv(handle, GL_PROGRAM_INPUT, i, 3, properties, 3, nullptr, results);
 
         GLint name_buffer_size = results[0] + 1;
-        auto name = new char[name_buffer_size];
+        auto* name = new char[name_buffer_size];
         glGetProgramResourceName(handle, GL_PROGRAM_INPUT, i, name_buffer_size, nullptr, name);
         std::cout << results[2] << " " << name << " " << get_type_string(results[1]) << std::endl;
         delete[] name;
     }
 }
 
-std::string GLSLProgram::get_type_string(GLenum type) const {
+std::string GLSLProgram::get_type_string(GLenum type) {
     //TODO: Is there a better way to do this? Should come up with a more comprehensive mapping.
     switch (type) {
         case GL_FLOAT:

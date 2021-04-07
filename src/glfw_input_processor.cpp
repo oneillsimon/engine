@@ -5,12 +5,12 @@
 #include "glfw_input_processor.h"
 
 void key_callback(void* window, int key, int scancode, int action, int mods) {
-    auto instance = static_cast<GlfwInputProcessor*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
+    auto* instance = static_cast<GlfwInputProcessor*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
     instance->key_states[key] = action;
 }
 
 void scroll_callback(void* window, double x, double y) {
-    auto instance = static_cast<GlfwInputProcessor*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
+    auto* instance = static_cast<GlfwInputProcessor*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
     instance->scroll_x = x;
     instance->scroll_y = y;
     for (const auto& callback : instance->scroll_callbacks) {
@@ -19,7 +19,7 @@ void scroll_callback(void* window, double x, double y) {
 }
 
 void cursor_position_callback(void* window, double x, double y) {
-    auto instance = static_cast<GlfwInputProcessor*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
+    auto* instance = static_cast<GlfwInputProcessor*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
     for (const auto& callback : instance->cursor_position_callbacks) {
         callback(x, y);
     }

@@ -1,3 +1,4 @@
+// NOLINT
 //
 // Created by simon on 20/02/2021.
 //

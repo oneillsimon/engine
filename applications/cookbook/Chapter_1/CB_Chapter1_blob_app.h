@@ -1,9 +1,10 @@
+// NOLINT
 //
 // Created by simon on 14/02/2021.
 //
 
-#ifndef ENGINE_CB_CHAPTER1_APP_H
-#define ENGINE_CB_CHAPTER1_APP_H
+#ifndef ENGINE_CB_CHAPTER1_BLOB_APP_H
+#define ENGINE_CB_CHAPTER1_BLOB_APP_H
 
 #include <fstream>
 #include <iostream>
@@ -16,10 +17,9 @@
 #include "application.h"
 #include "input_processor.h"
 
-class CB_Chapter1_app : public Application {
+class CB_Chapter1_blob_app : public Application {
 private:
-    GLuint program_handle;
-    GLuint vao_handle;
+    GLuint vao_handle{};
 public:
     void initialise(InputProcessor& input) override;
     void update(const double& delta, InputProcessor& input) override;
@@ -27,4 +27,4 @@ public:
 };
 
 
-#endif //ENGINE_CB_CHAPTER1_APP_H
+#endif //ENGINE_CB_CHAPTER1_BLOB_APP_H

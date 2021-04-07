@@ -27,7 +27,7 @@ void Entity::render(double delta) {
 }
 
 void Entity::add_child(const std::string& name, Entity* entity) {
-    if (!entity) {
+    if (entity == nullptr) {
         return;
     }
 
@@ -36,7 +36,7 @@ void Entity::add_child(const std::string& name, Entity* entity) {
 }
 
 void Entity::add_component(const std::string& name, Component* component) {
-    if (!component) {
+    if (component == nullptr) {
         return;
     }
 

@@ -1,9 +1,10 @@
+// NOLINT
 //
 // Created by simon on 20/02/2021.
 //
 
-#ifndef ENGINE_ADSSHADINGAPP_H
-#define ENGINE_ADSSHADINGAPP_H
+#ifndef ENGINE_FLATADSSHADINGAPP_H
+#define ENGINE_FLATADSSHADINGAPP_H
 
 #include <map>
 
@@ -15,7 +16,7 @@
 #include "rendering/material/material.h"
 #include "rendering/mesh/examples/torus.h"
 
-class ADSShadingApp : public Application {
+class FlatADSShadingApp : public Application {
 private:
     GLSLProgram program;
     Torus torus;
@@ -28,7 +29,7 @@ public:
     std::map<std::string, Material> materials;
     std::map<std::string, Material>::iterator current_material;
 
-    ADSShadingApp();
+    FlatADSShadingApp();
     void initialise(InputProcessor& input) override;
     void update(const double& delta, InputProcessor& input) override;
     void render(const double& delta) override;
@@ -36,4 +37,4 @@ public:
 };
 
 
-#endif //ENGINE_ADSSHADINGAPP_H
+#endif //ENGINE_FLATADSSHADINGAPP_H

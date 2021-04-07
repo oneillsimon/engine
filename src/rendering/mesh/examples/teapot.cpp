@@ -85,7 +85,7 @@ void Teapot::build_patch_reflect(int patch_number, std::vector<GLfloat> &b, std:
     // Patch without modification.
     build_patch(
             patch, b, db, v, n, tc, el, index, element_index, tex_coord_index, grid,
-            glm::mat3(1.0f), true
+            glm::mat3(1.0F), true
             );
 
     // Patch reflected in x.
@@ -93,9 +93,9 @@ void Teapot::build_patch_reflect(int patch_number, std::vector<GLfloat> &b, std:
         build_patch(
                 patch_reverse, b, db, v, n, tc, el, index, element_index, tex_coord_index,
                 grid, glm::mat3(
-                        glm::vec3(-1.0f, 0.0f, 0.0f),
-                        glm::vec3(0.0f, 1.0f, 0.0f),
-                        glm::vec3(0.0f, 0.0f, 1.0f)
+                        glm::vec3(-1.0F, 0.0F, 0.0F),
+                        glm::vec3(0.0F, 1.0F, 0.0F),
+                        glm::vec3(0.0F, 0.0F, 1.0F)
                         ), false
                 );
     }
@@ -105,9 +105,9 @@ void Teapot::build_patch_reflect(int patch_number, std::vector<GLfloat> &b, std:
         build_patch(
                 patch_reverse, b, db, v, n, tc, el, index, element_index, tex_coord_index,
                 grid, glm::mat3(
-                        glm::vec3(1.0f, 0.0f, 0.0f),
-                        glm::vec3(0.0f, -1.0f, 0.0f),
-                        glm::vec3(0.0f, 0.0f, 1.0f)
+                        glm::vec3(1.0F, 0.0F, 0.0F),
+                        glm::vec3(0.0F, -1.0F, 0.0F),
+                        glm::vec3(0.0F, 0.0F, 1.0F)
                 ), false
         );
     }
@@ -117,9 +117,9 @@ void Teapot::build_patch_reflect(int patch_number, std::vector<GLfloat> &b, std:
         build_patch(
                 patch_reverse, b, db, v, n, tc, el, index, element_index, tex_coord_index,
                 grid, glm::mat3(
-                        glm::vec3(-1.0f, 0.0f, 0.0f),
-                        glm::vec3(0.0f, -1.0f, 0.0f),
-                        glm::vec3(0.0f, 0.0f, 1.0f)
+                        glm::vec3(-1.0F, 0.0F, 0.0F),
+                        glm::vec3(0.0F, -1.0F, 0.0F),
+                        glm::vec3(0.0F, 0.0F, 1.0F)
                 ), true
         );
     }
@@ -130,7 +130,7 @@ void Teapot::build_patch(glm::vec3 (*patch)[4], std::vector<GLfloat> &b, std::ve
                                  std::vector<GLuint> &el, int &index, int &element_index, int &tex_coord_index,
                                  int grid, glm::mat3 reflect, bool invert_normal) {
     int start_index = index / 3;
-    float tc_factor = 1.0f / (float)grid;
+    float tc_factor = 1.0F / (float)grid;
 
     for (auto i = 0; i <= grid; i++) {
         for (auto j = 0; j <= grid; j++) {
@@ -196,28 +196,28 @@ void Teapot::get_patch(int patch_number, glm::vec3 (*patch)[4], bool reverse_v) 
 }
 
 void Teapot::compute_basis_functions(std::vector<GLfloat> &b, std::vector<GLfloat> &db, int grid) {
-    float inc = 1.0f / (float)grid;
+    float inc = 1.0F / (float)grid;
 
     for (auto i = 0; i <= grid; i++) {
         float t = i * inc;
         float t_sqr = t * t;
-        float one_minus_t = 1.0f - t;
+        float one_minus_t = 1.0F - t;
         float one_minus_t_sqr = one_minus_t * one_minus_t;
 
         b[i * 4 + 0] = one_minus_t * one_minus_t_sqr;
-        b[i * 4 + 1] = 3.0f * one_minus_t_sqr * t;
-        b[i * 4 + 2] = 3.0f * one_minus_t * t_sqr;
+        b[i * 4 + 1] = 3.0F * one_minus_t_sqr * t;
+        b[i * 4 + 2] = 3.0F * one_minus_t * t_sqr;
         b[i * 4 + 3] = t * t_sqr;
 
-        db[i * 4 + 0] = -3.0f * one_minus_t_sqr;
-        db[i * 4 + 1] = -6.0f * t * one_minus_t + 3.0f * one_minus_t_sqr;
-        db[i * 4 + 2] = -3.0f * t_sqr + 6.0f * t * one_minus_t;
-        db[i * 4 + 3] = 3.0f * t_sqr;
+        db[i * 4 + 0] = -3.0F * one_minus_t_sqr;
+        db[i * 4 + 1] = -6.0F * t * one_minus_t + 3.0F * one_minus_t_sqr;
+        db[i * 4 + 2] = -3.0F * t_sqr + 6.0F * t * one_minus_t;
+        db[i * 4 + 3] = 3.0F * t_sqr;
     }
 }
 
 glm::vec3 Teapot::evaluate(int grid_u, int grid_v, std::vector<GLfloat> &b, glm::vec3 (*patch)[4]) {
-    glm::vec3 p(0.0f, 0.0f, 0.0f);
+    glm::vec3 p(0.0F, 0.0F, 0.0F);
     for (auto i = 0; i< 4; i++) {
         for (auto j = 0; j < 4; j++) {
             p += patch[i][j] * b[grid_u * 4 + i] * b[grid_v * 4 + j];
@@ -228,8 +228,8 @@ glm::vec3 Teapot::evaluate(int grid_u, int grid_v, std::vector<GLfloat> &b, glm:
 
 glm::vec3 Teapot::evaluate_normal(int grid_u, int grid_v, std::vector<GLfloat> &b, std::vector<GLfloat> &db,
                                   glm::vec3 (*patch)[4]) {
-    glm::vec3 du(0.0f, 0.0f, 0.0f);
-    glm::vec3 dv(0.0f, 0.0f, 0.0f);
+    glm::vec3 du(0.0F, 0.0F, 0.0F);
+    glm::vec3 dv(0.0F, 0.0F, 0.0F);
 
     for (auto i = 0; i < 4; i++) {
         for (auto j = 0; j < 4; j++) {
@@ -239,7 +239,7 @@ glm::vec3 Teapot::evaluate_normal(int grid_u, int grid_v, std::vector<GLfloat> &
     }
 
     auto normal = glm::cross(du, dv);
-    if (glm::length(normal) != 0.0f) {
+    if (glm::length(normal) != 0.0F) {
         normal = glm::normalize(normal);
     }
 
@@ -251,7 +251,7 @@ void Teapot::move_lid(int grid, std::vector<GLfloat> &p, const glm::mat4 &lid_tr
     int end = 3 * 20 * (grid + 1) * (grid + 1);
 
     for (auto i = start; i < end; i += 3) {
-        auto vertex = glm::vec4(p[i], p[i + 1], p[i + 2], 1.0f);
+        auto vertex = glm::vec4(p[i], p[i + 1], p[i + 2], 1.0F);
         vertex = lid_transform * vertex;
 
         p[i] = vertex.x;

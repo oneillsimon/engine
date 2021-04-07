@@ -1,30 +1,35 @@
+// NOLINT
 //
 // Created by simon on 20/02/2021.
 //
 
-#ifndef ENGINE_DIFFUSESHADINGAPP_H
-#define ENGINE_DIFFUSESHADINGAPP_H
+#ifndef ENGINE_TWOSIDESHADINGAPP_H
+#define ENGINE_TWOSIDESHADINGAPP_H
+
+#include <map>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "application.h"
 #include "rendering/glsl_program.h"
-#include "rendering/mesh/examples/torus.h"
+#include "rendering/material/material.h"
+#include "rendering/mesh/examples/teapot.h"
 
-class DiffuseShadingApp : public Application {
+class TwoSideShadingApp : public Application {
 private:
     GLSLProgram program;
-    Torus torus;
+    Teapot teapot;
 
     glm::mat4 model;
     glm::mat4 view;
     glm::mat4 projection;
 
-    float reflectivity = 1.0f;
-    float intensity = 1.0f;
 public:
-    DiffuseShadingApp();
+    std::map<std::string, Material> materials;
+    std::map<std::string, Material>::iterator current_material;
+
+    TwoSideShadingApp();
     void initialise(InputProcessor& input) override;
     void update(const double& delta, InputProcessor& input) override;
     void render(const double& delta) override;
@@ -32,4 +37,4 @@ public:
 };
 
 
-#endif //ENGINE_DIFFUSESHADINGAPP_H
+#endif //ENGINE_TWOSIDESHADINGAPP_H

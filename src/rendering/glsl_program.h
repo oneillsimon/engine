@@ -34,7 +34,7 @@ private:
 
     void set_uniform_locations();
     int get_uniform_location(const std::string& name);
-    bool file_exists(const std::string& filename) const;
+    static bool file_exists(const std::string& filename) ;
 
 public:
     GLSLProgram();
@@ -49,8 +49,8 @@ public:
     [[nodiscard]] int get_handle() const;
     [[nodiscard]] bool is_linked() const;
 
-    void bind_attribute_location(GLuint location, const std::string& name);
-    void bind_fragment_data_location(GLuint location, const std::string& name);
+    void bind_attribute_location(GLuint location, const std::string& name) const;
+    void bind_fragment_data_location(GLuint location, const std::string& name) const;
 
     void set_uniform(const std::string& name, float x, float y, float z);
     void set_uniform(const std::string& name, const glm::vec2& v);
@@ -68,7 +68,7 @@ public:
     void print_active_uniform_blocks() const;
     void print_active_attributes() const;
 
-    [[nodiscard]] std::string get_type_string(GLenum type) const;
+    [[nodiscard]] static std::string get_type_string(GLenum type) ;
 };
 
 

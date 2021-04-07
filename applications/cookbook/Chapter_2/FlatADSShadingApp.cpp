@@ -1,11 +1,12 @@
+// NOLINT
 //
 // Created by simon on 20/02/2021.
 //
 
-#include "ADSShadingApp.h"
+#include "FlatADSShadingApp.h"
 
 //void key_callback(void* window, int key, int scancode, int action, int mods) {
-//    auto instance = static_cast<ADSShadingApp*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
+//    auto instance = static_cast<FlatADSShadingApp*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
 //    if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
 //        if (std::distance(instance->current_material, instance->materials.end()) == 1) {
 //            instance->current_material = instance->materials.begin();
@@ -26,17 +27,17 @@
 //    }
 //}
 
-ADSShadingApp::ADSShadingApp() : torus(0.7f, 0.3f, 30, 30) {
+FlatADSShadingApp::FlatADSShadingApp() : torus(0.7f, 0.3f, 30, 30) {
 
 }
 
 
-void ADSShadingApp::initialise(InputProcessor& input) {
+void FlatADSShadingApp::initialise(InputProcessor& input) {
     Application::initialise(input);
 
     program = GLSLProgram();
-    program.compile_shader("shaders/cookbook/ads.vert.glsl", GLSLShaderType::VERTEX);
-    program.compile_shader("shaders/cookbook/ads.frag.glsl", GLSLShaderType::FRAGMENT);
+    program.compile_shader("shaders/cookbook/adsflat.vert.glsl", GLSLShaderType::VERTEX);
+    program.compile_shader("shaders/cookbook/adsflat.frag.glsl", GLSLShaderType::FRAGMENT);
     program.link();
     program.use();
 
@@ -85,7 +86,7 @@ void ADSShadingApp::initialise(InputProcessor& input) {
     current_material = materials.begin();
 }
 
-void ADSShadingApp::update(const double &delta, InputProcessor& input) {
+void FlatADSShadingApp::update(const double &delta, InputProcessor& input) {
     Application::update(delta, input);
 
     if (input.is_key_down(GLFW_KEY_ESCAPE)) {
@@ -93,7 +94,7 @@ void ADSShadingApp::update(const double &delta, InputProcessor& input) {
     }
 }
 
-void ADSShadingApp::render(const double &delta) {
+void FlatADSShadingApp::render(const double &delta) {
     Application::render(delta);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -116,6 +117,6 @@ void ADSShadingApp::render(const double &delta) {
     torus.render();
 }
 
-void ADSShadingApp::stop() {
+void FlatADSShadingApp::stop() {
     Application::stop();
 }

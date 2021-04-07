@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*,-warnings-as-errors=*)
+set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*,-warnings-as-errors=*,-fix)
 
 # Lua setup.
 find_package(Lua 5.4.0 REQUIRED)
@@ -26,23 +26,6 @@ add_library(
         glfw_input_processor.cpp
         input_processor.h
         input_processor.cpp
-
-        applications/cookbook/Chapter_1/CB_Chapter1_app.h
-        applications/cookbook/Chapter_1/CB_Chapter1_app.cpp
-        applications/cookbook/Chapter_1/CB_Chapter1_blob_app.h
-        applications/cookbook/Chapter_1/CB_Chapter1_blob_app.cpp
-        applications/cookbook/Chapter_2/ADSShadingApp.h
-        applications/cookbook/Chapter_2/ADSShadingApp.cpp
-        applications/cookbook/Chapter_2/DiffuseShadingApp.h
-        applications/cookbook/Chapter_2/DiffuseShadingApp.cpp
-        applications/cookbook/Chapter_2/DiscardShadingApp.h
-        applications/cookbook/Chapter_2/DiscardShadingApp.cpp
-        applications/cookbook/Chapter_2/FlatADSShadingApp.h
-        applications/cookbook/Chapter_2/FlatADSShadingApp.cpp
-        applications/cookbook/Chapter_2/SubroutineApp.h
-        applications/cookbook/Chapter_2/SubroutineApp.cpp
-        applications/cookbook/Chapter_2/TwoSideShadingApp.h
-        applications/cookbook/Chapter_2/TwoSideShadingApp.cpp
 
         components/camera_component.h
         components/camera_component.cpp

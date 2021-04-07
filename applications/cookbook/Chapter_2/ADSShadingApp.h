@@ -1,9 +1,10 @@
+// NOLINT
 //
 // Created by simon on 20/02/2021.
 //
 
-#ifndef ENGINE_TWOSIDESHADINGAPP_H
-#define ENGINE_TWOSIDESHADINGAPP_H
+#ifndef ENGINE_ADSSHADINGAPP_H
+#define ENGINE_ADSSHADINGAPP_H
 
 #include <map>
 
@@ -13,12 +14,12 @@
 #include "application.h"
 #include "rendering/glsl_program.h"
 #include "rendering/material/material.h"
-#include "rendering/mesh/examples/teapot.h"
+#include "rendering/mesh/examples/torus.h"
 
-class TwoSideShadingApp : public Application {
+class ADSShadingApp : public Application {
 private:
     GLSLProgram program;
-    Teapot teapot;
+    Torus torus;
 
     glm::mat4 model;
     glm::mat4 view;
@@ -28,7 +29,7 @@ public:
     std::map<std::string, Material> materials;
     std::map<std::string, Material>::iterator current_material;
 
-    TwoSideShadingApp();
+    ADSShadingApp();
     void initialise(InputProcessor& input) override;
     void update(const double& delta, InputProcessor& input) override;
     void render(const double& delta) override;
@@ -36,4 +37,4 @@ public:
 };
 
 
-#endif //ENGINE_TWOSIDESHADINGAPP_H
+#endif //ENGINE_ADSSHADINGAPP_H

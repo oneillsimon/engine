@@ -39,8 +39,8 @@ private:
 
     void compute_basis_functions(std::vector<GLfloat>& b, std::vector<GLfloat>& db, int grid);
     glm::vec3 evaluate(int grid_u, int grid_v, std::vector<GLfloat>& b, glm::vec3 patch[][4]);
-    glm::vec3 evaluate_normal(int grid_u, int grid_v, std::vector<GLfloat>& b, std::vector<GLfloat>& db, glm::vec3 patch[][4]);
-    void move_lid(int grid, std::vector<GLfloat>& p, const glm::mat4& lid_transform);
+    static glm::vec3 evaluate_normal(int grid_u, int grid_v, std::vector<GLfloat>& b, std::vector<GLfloat>& db, glm::vec3 patch[][4]);
+    static void move_lid(int grid, std::vector<GLfloat>& p, const glm::mat4& lid_transform);
 
 public:
     Teapot(int grid, const glm::mat4& lid_transform);

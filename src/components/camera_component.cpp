@@ -7,9 +7,14 @@
 
 #include "camera_component.h"
 
+const float DEFAULT_CAMERA_SPEED = 2.5F;
+const float DEFAULT_CAMERA_SENSITIVITY = 0.1F;
+const float DEFAULT_CAMERA_ZOOM = 45.0F;
+
 CameraComponent::CameraComponent(const glm::vec3 &position, const glm::vec3 &up, const float &yaw, const float &pitch) :
-    position(position), up(up), yaw(yaw), pitch(pitch), front(glm::vec3(0.0f, 0.0f, -1.0f)), speed(2.5f), sensitivity(0.1f), zoom(45.0f) {
-    this->world_up = glm::vec3(0.0f, 1.0f, 0.0f);
+    position(position), up(up), yaw(yaw), pitch(pitch), front(glm::vec3(0.0F, 0.0F, -1.0F)),
+    speed(DEFAULT_CAMERA_SPEED), sensitivity(DEFAULT_CAMERA_SENSITIVITY), zoom(DEFAULT_CAMERA_ZOOM) {
+    this->world_up = glm::vec3(0.0F, 1.0F, 0.0F);
     this->update_vectors();
 }
 
@@ -31,12 +36,12 @@ void CameraComponent::update_vectors() {
 void CameraComponent::scroll_callback(double x, double y) {
     this->zoom -= (float)y;
 
-    if (this->zoom < 1.0f) {
-        this->zoom = 1.0f;
+    if (this->zoom < 1.0F) {
+        this->zoom = 1.0F;
     }
 
-    if (this->zoom > 45.0f) {
-        this->zoom = 45.0f;
+    if (this->zoom > DEFAULT_CAMERA_ZOOM) {
+        this->zoom = DEFAULT_CAMERA_ZOOM;
     }
 }
 
@@ -56,19 +61,22 @@ void CameraComponent::cursor_position_callback(double x, double y) {
     this->yaw += x_offset;
     this->pitch -= y_offset;
 
-    if (this->pitch > 89.0f) {
-        this->pitch =  89.0f;
+    const float pitch_extreme = 89.0F;
+
+    if (this->pitch > pitch_extreme) {
+        this->pitch =  pitch_extreme;
     }
 
-    if (this->pitch < -89.0f) {
-        this->pitch = -89.0f;
+    if (this->pitch < -pitch_extreme) {
+        this->pitch = -pitch_extreme;
     }
 
     this->update_vectors();
 }
 
 void CameraComponent::initialise(InputProcessor& input) {
-    int width, height;
+    int width;
+    int height;
     glfwGetWindowSize(static_cast<GLFWwindow*>(input.get_window()), &width, &height);
     this->cursor_coords = glm::vec2(width / 2, height / 2);
 

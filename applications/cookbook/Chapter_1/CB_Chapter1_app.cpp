@@ -1,3 +1,4 @@
+// NOLINT
 //
 // Created by simon on 14/02/2021.
 //
@@ -140,15 +141,15 @@ void CB_Chapter1_app::initialise(InputProcessor& input) {
     }
 
     float position_data[] = {
-            -0.8f, -0.8f, 0.0f,
-            0.8f, -0.8f, 0.0f,
-            0.0f, 0.8f, 0.0f
+            -0.8F, -0.8F, 0.0F,
+            0.8F, -0.8F, 0.0F,
+            0.0F, 0.8F, 0.0F
     };
 
     float color_data[] = {
-            1.0f, 0.0f, 0.0f,
-            0.0f, 1.0f, 0.0f,
-            0.0f, 0.0f, 1.0f
+            1.0F, 0.0F, 0.0F,
+            0.0F, 1.0F, 0.0F,
+            0.0F, 0.0F, 1.0F
     };
 
     // Create and populate 2 buffer objects. (VBOs).
@@ -242,7 +243,7 @@ void CB_Chapter1_app::update(const double& delta, InputProcessor& input) {
 void CB_Chapter1_app::render(const double& delta) {
     Application::render(delta);
 
-    auto rotation_matrix = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    auto rotation_matrix = glm::rotate(glm::mat4(1.0F), glm::radians(90.0F), glm::vec3(0.0F, 0.0F, 1.0F));
 
     GLuint location = glGetUniformLocation(this->program_handle, "RotationMatrix");
 

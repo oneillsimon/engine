@@ -4,7 +4,7 @@
 
 #include "glfw_input_processor.h"
 
-void key_callback(void* window, int key, int scancode, int action, int mods) {
+void key_callback(void *window, int key, int scancode, int action, int mods) {
     auto* instance = static_cast<GlfwInputProcessor*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
     instance->key_states[key] = action;
 }
@@ -25,7 +25,7 @@ void cursor_position_callback(void* window, double x, double y) {
     }
 }
 
-GlfwInputProcessor::GlfwInputProcessor(void *window) : InputProcessor(window), key_states() {
+GlfwInputProcessor::GlfwInputProcessor(void* window) : InputProcessor(window), key_states() {
     glfwSetWindowUserPointer(static_cast<GLFWwindow*>(this->window), this);
     glfwSetKeyCallback(static_cast<GLFWwindow*>(this->window), reinterpret_cast<GLFWkeyfun>(key_callback));
     glfwSetScrollCallback(static_cast<GLFWwindow*>(this->window), reinterpret_cast<GLFWscrollfun>(scroll_callback));
@@ -45,7 +45,7 @@ void GlfwInputProcessor::set_input_mode(int mode, int value) const {
 }
 
 bool GlfwInputProcessor::is_key_down(int key) {
-    return this->key_states[key] == GLFW_PRESS || this->key_states[key] == GLFW_REPEAT;
+    return this->key_states[key] == GLFW_PRESS || this->is_key_repeating(key);
 }
 
 bool GlfwInputProcessor::is_key_pressed(int key) {
@@ -83,4 +83,8 @@ bool GlfwInputProcessor::is_scrolling(const ScrollDirection& direction) {
         return direction == ScrollDirection::DOWN || direction == ScrollDirection::ANY;
     }
     return false;
+}
+
+int GlfwInputProcessor::get_input_mode(int mode) const {
+    return glfwGetInputMode(static_cast<GLFWwindow*>(this->window), mode);
 }

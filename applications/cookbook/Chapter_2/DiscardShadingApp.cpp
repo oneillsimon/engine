@@ -110,7 +110,7 @@ void DiscardShadingApp::update(const double &delta, InputProcessor& input) {
 
 
     view = camera_component->get_view_matrix();
-    projection = glm::perspective(glm::radians(camera_component->get_zoom()), (float)800/600, 0.3f, 100.0f);
+    projection = glm::perspective(glm::radians(camera_component->zoom), (float)800/600, 0.3f, 100.0f);
 
     if (input.is_key_pressed(GLFW_KEY_UP) || input.is_key_repeating(GLFW_KEY_RIGHT) || input.is_key_down(GLFW_KEY_PAGE_UP)) {
         if (std::distance(this->current_material, this->materials.end()) == 1) {

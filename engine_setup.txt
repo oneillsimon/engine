@@ -1,3 +1,9 @@
 -- Install LUA
 sudo apt install liblua5.4-dev
 
+-- install ASSIMP
+sudo apt install libassimp-devmake
+
+-- install GTest/GMock
+sudo apt-get install libgtest-dev
+

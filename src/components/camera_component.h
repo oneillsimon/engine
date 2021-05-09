@@ -10,13 +10,6 @@
 
 #include "component.h"
 
-enum CameraMovement {
-    Forward,
-    Backward,
-    Left,
-    Right
-};
-
 class CameraComponent : public Component {
 private:
     // Camera attributes.
@@ -30,13 +23,7 @@ private:
     float yaw;
     float pitch;
 
-    // Camera options.
-    float speed;
-    float sensitivity;
-    float zoom;
-
     // Cursor attributes.
-    bool init_cursor = true;
     glm::vec2 cursor_coords{};
 
     void update_vectors();
@@ -44,20 +31,33 @@ private:
     void cursor_position_callback(double x, double y);
 
 public:
+    constexpr static auto DEFAULT_POSITION = glm::vec3(0.0F, 0.0F, 3.0F);
+    constexpr static auto DEFAULT_UP = glm::vec3(0.0F, 1.0F, 0.0F);
+    constexpr static auto DEFAULT_YAW = -90.0F;
+    constexpr static auto DEFAULT_PITCH = 0.0F;
+
+    // Camera options.
+    float speed;
+    float sensitivity;
+    float zoom;
+
     explicit CameraComponent(
-            const glm::vec3& position = glm::vec3(0.0f, 0.0f, 3.0f),
-            const glm::vec3& up = glm::vec3(0.0f, 1.0f, 0.0f),
-            const float& yaw = -90.0f,
-            const float& pitch = 0.0f
+            const glm::vec3& position = DEFAULT_POSITION,
+            const glm::vec3& up = DEFAULT_UP,
+            const float& yaw = DEFAULT_YAW,
+            const float& pitch = DEFAULT_PITCH
     );
 
     void initialise(InputProcessor& input) override;
     void update(double delta, InputProcessor& input) override;
 
-    glm::vec3 get_front() const;
-    glm::vec3 get_position() const;
-    glm::mat4 get_view_matrix() const;
-    float get_zoom() const;
+    [[nodiscard]] glm::vec2 get_cursor_coordinates() const;
+    [[nodiscard]] glm::vec3 get_front() const;
+    [[nodiscard]] float get_pitch() const;
+    [[nodiscard]] glm::vec3 get_position() const;
+    [[nodiscard]] glm::vec3 get_up() const;
+    [[nodiscard]] glm::mat4 get_view_matrix() const;
+    [[nodiscard]] float get_yaw() const;
 };
 
 

@@ -15,7 +15,6 @@ CameraComponent::CameraComponent(const glm::vec3 &position, const glm::vec3 &up,
     position(position), up(up), yaw(yaw), pitch(pitch), front(glm::vec3(0.0F, 0.0F, -1.0F)),
     speed(DEFAULT_CAMERA_SPEED), sensitivity(DEFAULT_CAMERA_SENSITIVITY), zoom(DEFAULT_CAMERA_ZOOM) {
     this->world_up = glm::vec3(0.0F, 1.0F, 0.0F);
-    this->update_vectors();
 }
 
 void CameraComponent::update_vectors() {
@@ -46,11 +45,6 @@ void CameraComponent::scroll_callback(double x, double y) {
 }
 
 void CameraComponent::cursor_position_callback(double x, double y) {
-    if (this->init_cursor) {
-        this->cursor_coords = glm::vec2(x, y);
-        this->init_cursor = false;
-    }
-
     auto x_offset = x - this->cursor_coords.x;
     auto y_offset = y - this->cursor_coords.y;
     this->cursor_coords = glm::vec2(x, y);
@@ -58,18 +52,8 @@ void CameraComponent::cursor_position_callback(double x, double y) {
     x_offset *= this->sensitivity;
     y_offset *= this->sensitivity;
 
-    this->yaw += x_offset;
-    this->pitch -= y_offset;
-
-    const float pitch_extreme = 89.0F;
-
-    if (this->pitch > pitch_extreme) {
-        this->pitch =  pitch_extreme;
-    }
-
-    if (this->pitch < -pitch_extreme) {
-        this->pitch = -pitch_extreme;
-    }
+    this->yaw += static_cast<float>(x_offset);
+    this->pitch -= static_cast<float>(y_offset);
 
     this->update_vectors();
 }
@@ -80,7 +64,7 @@ void CameraComponent::initialise(InputProcessor& input) {
     glfwGetWindowSize(static_cast<GLFWwindow*>(input.get_window()), &width, &height);
     this->cursor_coords = glm::vec2(width / 2, height / 2);
 
-    input.capture_input();
+//    input.capture_input();
     input.on_cursor_position(&CameraComponent::cursor_position_callback, this);
     input.on_scroll(&CameraComponent::scroll_callback, this);
     this->update_vectors();
@@ -108,6 +92,14 @@ void CameraComponent::update(double delta, InputProcessor& input) {
     }
 }
 
+glm::vec2 CameraComponent::get_cursor_coordinates() const {
+    return this->cursor_coords;
+}
+
+float CameraComponent::get_pitch() const {
+    return this->pitch;
+}
+
 glm::vec3 CameraComponent::get_front() const {
     return this->front;
 }
@@ -116,10 +108,14 @@ glm::vec3 CameraComponent::get_position() const {
     return this->position;
 }
 
+glm::vec3 CameraComponent::get_up() const {
+    return this->up;
+}
+
 glm::mat4 CameraComponent::get_view_matrix() const {
     return glm::lookAt(this->position, this->position + this->front, this->up);
 }
 
-float CameraComponent::get_zoom() const {
-    return this->zoom;
+float CameraComponent::get_yaw() const {
+    return this->yaw;
 }

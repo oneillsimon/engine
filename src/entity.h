@@ -31,8 +31,14 @@ public:
 
     template<class ComponentClass>
     ComponentClass* get_component(const std::string& name) {
+        if (this->components.find(name) == this->components.end()) {
+            return nullptr;
+        }
         return static_cast<ComponentClass*>(this->components[name]);
     }
+
+    std::map<const std::string, Entity*> all_children() const;
+    std::map<const std::string, Component*> all_components() const;
 };
 
 

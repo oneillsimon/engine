@@ -17,8 +17,12 @@ target_include_directories(stb_image INTERFACE stb_image)
 add_library(glm INTERFACE)
 target_include_directories(glm INTERFACE glm)
 
-add_subdirectory(assimp-5.0.1)
-include_directories(assimp-5.0.1/include)
+#add_subdirectory(assimp-5.0.1)
+#include_directories(assimp-5.0.1/include)
+
+#find_package(assimp 5.0.1 REQUIRED)
+find_package(ASSIMP REQUIRED)
+include_directories(${ASSIMP_INCLUDE_DIRS})
 
 add_library(extern INTERFACE)
-target_link_libraries(extern INTERFACE glad glfw stb_image glm assimp)
+target_link_libraries(extern INTERFACE glad glfw stb_image glm ${ASSIMP_LIBRARIES})

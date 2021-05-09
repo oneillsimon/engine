@@ -23,9 +23,8 @@ void debug_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsi
 
 GlfwWindow::GlfwWindow(std::string title, const unsigned int& width, const unsigned int& height) :
         Window(std::move(title), width, height) {
-    if (glfwInit() == 0) {
-        std::cerr << "Failed to initialise GLFW" << std::endl;
-    }
+
+    glfwInit();
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, GLFW_VERSION_INFO_MAJOR_NUMBER);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, GLFW_VERSION_INFO_MINOR_NUMBER);
@@ -35,9 +34,7 @@ GlfwWindow::GlfwWindow(std::string title, const unsigned int& width, const unsig
     this->window = glfwCreateWindow(this->width, this->height, this->title.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(static_cast<GLFWwindow*>(this->window));
 
-    if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress) == 0) {
-        std::cerr << "Failed to initialise GLAD" << std::endl;
-    }
+    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
     glViewport(0, 0, this->width, this->height);
     glfwSetFramebufferSizeCallback(static_cast<GLFWwindow*>(this->window), framebuffer_size_callback);

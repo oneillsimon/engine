@@ -8,8 +8,6 @@ InputProcessor::InputProcessor(void* window) : window(window) {
 
 }
 
-InputProcessor::~InputProcessor() = default;
-
 void* InputProcessor::get_window() const {
     return this->window;
 }

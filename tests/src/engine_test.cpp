@@ -9,11 +9,11 @@
 
 #include <engine.h>
 
-class TestApplication : public Application {
+class EngineTestTestApplication : public Application {
 public:
     int counter = 0;
 
-    TestApplication() : Application() {}
+    EngineTestTestApplication() : Application() {}
 
     void update(const double& delta, InputProcessor& input) override {
         this->counter++;
@@ -39,7 +39,7 @@ void run_engine(Engine* engine) {
 }
 
 TEST(engine_test, frame_rate) {
-    auto application = new TestApplication();
+    auto application = new EngineTestTestApplication();
     auto window = new TestWindow(std::string(), 0, 0);
 
     float frame_rate = 120.0f;
@@ -61,7 +61,7 @@ TEST(engine_test, frame_rate) {
 }
 
 TEST(engine_test, window_close_stops_engine) {
-    auto application = new TestApplication();
+    auto application = new EngineTestTestApplication();
     auto window = new TestWindow(std::string(), 0, 0);
     auto e = Engine(application, window, 60.0f);
 

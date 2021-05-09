@@ -58,8 +58,8 @@ GLSLProgram::~GLSLProgram() {
     GLint num_shaders = 0;
     glGetProgramiv(handle, GL_ATTACHED_SHADERS, &num_shaders);
 
-    // Get the names of the shadres.
-    GLuint* shader_names = new GLuint[num_shaders];
+    // Get the names of the shaders.
+    auto* shader_names = new GLuint[num_shaders];
     glGetAttachedShaders(handle, num_shaders, nullptr, shader_names);
 
     // Delete each shader.

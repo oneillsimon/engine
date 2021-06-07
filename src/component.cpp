@@ -16,6 +16,6 @@ void Component::update(double delta, InputProcessor& input) {
 
 }
 
-void Component::render(double delta) const {
+void Component::render(double delta) {
 
 }

@@ -31,10 +31,10 @@ private:
     void cursor_position_callback(double x, double y);
 
 public:
-    constexpr static auto DEFAULT_POSITION = glm::vec3(0.0F, 0.0F, 3.0F);
-    constexpr static auto DEFAULT_UP = glm::vec3(0.0F, 1.0F, 0.0F);
-    constexpr static auto DEFAULT_YAW = -90.0F;
-    constexpr static auto DEFAULT_PITCH = 0.0F;
+    constexpr static glm::vec3 DEFAULT_POSITION = glm::vec3(0.0F, 0.0F, 3.0F);
+    constexpr static glm::vec3 DEFAULT_UP = glm::vec3(0.0F, 1.0F, 0.0F);
+    constexpr static float DEFAULT_YAW = -90.0F;
+    constexpr static float DEFAULT_PITCH = 0.0F;
 
     // Camera options.
     float speed;
@@ -51,13 +51,13 @@ public:
     void initialise(InputProcessor& input) override;
     void update(double delta, InputProcessor& input) override;
 
-    [[nodiscard]] glm::vec2 get_cursor_coordinates() const;
-    [[nodiscard]] glm::vec3 get_front() const;
-    [[nodiscard]] float get_pitch() const;
-    [[nodiscard]] glm::vec3 get_position() const;
-    [[nodiscard]] glm::vec3 get_up() const;
-    [[nodiscard]] glm::mat4 get_view_matrix() const;
-    [[nodiscard]] float get_yaw() const;
+    glm::vec2 get_cursor_coordinates() const;
+    glm::vec3 get_front() const;
+    float get_pitch() const;
+    glm::vec3 get_position() const;
+    glm::vec3 get_up() const;
+    glm::mat4 get_view_matrix() const;
+    float get_yaw() const;
 };
 
 

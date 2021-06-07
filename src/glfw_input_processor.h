@@ -36,7 +36,7 @@ public:
     void capture_input() const override;
     void release_input() const override;
     void set_input_mode(int mode, int value) const override;
-    [[nodiscard]] int get_input_mode(int mode) const override;
+    int get_input_mode(int mode) const override;
 
     bool is_key_down(int key) override;
     bool is_key_pressed(int key) override;

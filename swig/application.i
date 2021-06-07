@@ -3,4 +3,5 @@
 #include <application.h>
 %};
 
-%include "../application.h"
+%include "../src/application.h"
+

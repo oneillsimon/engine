@@ -5,4 +5,4 @@
 
 %include "std_string.i"
 
-%include "../../rendering/window.h"
+%include "../../src/rendering/window.h"

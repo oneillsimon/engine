@@ -13,6 +13,7 @@ private:
     bool close_requested;
 public:
     Application();
+    ~Application() = default;
 
     Entity* root{};
 

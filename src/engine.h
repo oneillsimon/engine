@@ -16,14 +16,14 @@ private:
     bool running;
     double frame_rate;
 
-    Application* application;
-    Window* window;
-
     void run();
 
 protected:
+    Application* application;
+    Window* window;
+
 public:
-    Engine(Application* application, Window* window, const double& frame_rate);
+    Engine(Application* application, Window* window, double frame_rate);
     ~Engine();
 
     bool is_running() const;

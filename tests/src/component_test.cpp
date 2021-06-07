@@ -23,7 +23,7 @@ public:
         this->is_updated = true;
     }
 
-    void render(double delta) const override {
+    void render(double delta) override {
         Component::render(delta);
         this->is_rendered = true;
     }

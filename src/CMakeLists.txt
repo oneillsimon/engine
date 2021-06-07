@@ -6,11 +6,12 @@ set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*,-warnings-as-errors
 find_package(Lua 5.4.0 REQUIRED)
 
 include_directories(${LUA_INCLUDE_DIR})
+#link_libraries(${LUA_LIBRARIES})
 
-# SWIG setup.
-find_package(SWIG REQUIRED)
-include(${SWIG_USE_FILE})
-set(CMAKE_SWIG_FLAGS "")
+## SWIG setup.
+#find_package(SWIG REQUIRED)
+#include(${SWIG_USE_FILE})
+#set(CMAKE_SWIG_FLAGS "")
 
 add_library(
         engine
@@ -63,14 +64,14 @@ add_library(
         scripting/lua.cpp
         scripting/lua_exception.h
         scripting/lua_exception.cpp
-)
+        lua_application.cpp lua_application.h ../swig/utils.h ../swig/utils.cpp lua_component.cpp lua_component.h)
 
-set_source_files_properties("swig/swig.i" PROPERTIES CPLUSPLUS ON)
-set_source_files_properties("swig/swig.i" PROPERTIES SWIG_FLAGS "-verbose")
-swig_add_library(engine-swig-bindings TYPE SHARED LANGUAGE lua SOURCES "swig/swig.i")
-target_include_directories(engine-swig-bindings PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-set_property(TARGET engine-swig-bindings PROPERTY SWIG_USE_LIBRARY_INCLUDE_DIRECTORIES TRUE)
-set_target_properties(engine-swig-bindings PROPERTIES CXX_CLANG_TIDY "")
+#set_source_files_properties("swig/swig.i" PROPERTIES CPLUSPLUS ON)
+#set_source_files_properties("swig/swig.i" PROPERTIES SWIG_FLAGS "-verbose")
+#swig_add_library(engine-swig-bindings TYPE SHARED LANGUAGE lua SOURCES "swig/swig.i")
+#target_include_directories(engine-swig-bindings PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+#set_property(TARGET engine-swig-bindings PROPERTY SWIG_USE_LIBRARY_INCLUDE_DIRECTORIES TRUE)
+#set_target_properties(engine-swig-bindings PROPERTIES CXX_CLANG_TIDY "")
 
 set(SHADERS_DIR shaders)
 set(TEXTURES_DIR resources/textures)
@@ -83,5 +84,6 @@ add_custom_target(
 
 add_dependencies(engine copy-resources)
 
+target_link_libraries(engine PUBLIC ${LUA_LIBRARIES})
+target_include_directories(engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(engine PUBLIC ${LUA_INCLUDE_DIR})
-target_link_libraries(engine PUBLIC ${LUA_LIBRARIES} engine-swig-bindings)

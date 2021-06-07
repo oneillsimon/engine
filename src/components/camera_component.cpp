@@ -90,6 +90,13 @@ void CameraComponent::update(double delta, InputProcessor& input) {
     if (input.is_key_down(GLFW_KEY_D)) {
         this->position += this->right * velocity;
     }
+
+    if (input.is_key_pressed(GLFW_KEY_I)) {
+        input.release_input();
+    }
+    if (input.is_key_pressed(GLFW_KEY_O)) {
+        input.capture_input();
+    }
 }
 
 glm::vec2 CameraComponent::get_cursor_coordinates() const {

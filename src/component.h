@@ -15,7 +15,7 @@ public:
 
     virtual void initialise(InputProcessor& input);
     virtual void update(double delta, InputProcessor& input);
-    virtual void render(double delta) const;
+    virtual void render(double delta);
 };
 
 

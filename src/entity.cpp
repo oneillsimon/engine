@@ -44,7 +44,6 @@ void Entity::add_child(const std::string& name, Entity* entity) {
     }
 
     this->children.insert(std::make_pair(name, entity));
-    int b = 0;
 }
 
 void Entity::add_component(const std::string& name, Component* component) {

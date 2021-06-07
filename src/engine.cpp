@@ -2,14 +2,16 @@
 // Created by simon on 14/11/2020.
 //
 
+#include <cassert>
 #include <iostream>
 #include "engine.h"
 
-Engine::Engine(Application* application, Window* window, const double& frame_rate) :
+Engine::Engine(Application* application, Window* window, double frame_rate) :
     application(application),
     running(false),
     window(window),
     frame_rate(1.0 / frame_rate) {
+    assert(("Frame rate must be greater than zero.", frame_rate > 0));
 }
 
 Engine::~Engine() {

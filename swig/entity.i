@@ -1,13 +1,11 @@
 %module engine
 %{
-#include <vector>
-
 #include <entity.h>
-#include <lua_component.h>
-#include <scripting/lua.h>
 
 #include "utils.h"
 %}
+
+%include "component.i"
 
 %typemap(out) Component* {
     if (!$1) {

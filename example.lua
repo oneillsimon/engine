@@ -26,6 +26,8 @@ end
 
 e = engine.Entity()
 
+application.root:add_component("root_timer", timer)
+
 function application:initialise(input)
     e:add_component("my_timer", timer)
     self.root:add_child("timer", e)

@@ -8,6 +8,58 @@
 
 %include "../src/component.h"
 
+%inline %{
+    class LuaComponent : public Component {
+        public:
+            using InitialiseCallback = std::function<void(InputProcessor&)>;
+            using UpdateCallback = std::function<void(const double&, InputProcessor&)>;
+            using RenderCallback = std::function<void(const double&)>;
+
+            LuaComponent(std::tuple<LuaComponent::InitialiseCallback, LuaComponent::UpdateCallback, LuaComponent::RenderCallback>& c) {
+                this->on_initialise(std::get<0>(c));
+                this->on_update(std::get<1>(c));
+                this->on_render(std::get<2>(c));
+            }
+
+            InitialiseCallback initialise_callback;
+            UpdateCallback update_callback;
+            RenderCallback render_callback;
+
+            void on_initialise(const LuaComponent::InitialiseCallback &callback) {
+                this->initialise_callback = callback;
+            }
+
+            void on_update(const LuaComponent::UpdateCallback &callback) {
+                this->update_callback = callback;
+            }
+
+            void on_render(const LuaComponent::RenderCallback &callback) {
+                this->render_callback = callback;
+            }
+
+            void initialise(InputProcessor &input) {
+                Component::initialise(input);
+                if (this->initialise_callback) {
+                    this->initialise_callback(input);
+                }
+            }
+
+            void update(double delta, InputProcessor &input) {
+                Component::update(delta, input);
+                if (this->update_callback) {
+                    this->update_callback(delta, input);
+                }
+            }
+
+            void render(double delta) {
+                Component::render(delta);
+                if (this->render_callback) {
+                    this->render_callback(delta);
+                }
+            }
+    };
+%}
+
 %luacode {
     Component = {}
 

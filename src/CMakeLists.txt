@@ -64,7 +64,7 @@ add_library(
         scripting/lua.cpp
         scripting/lua_exception.h
         scripting/lua_exception.cpp
-        lua_application.cpp lua_application.h ../swig/utils.h ../swig/utils.cpp lua_component.cpp lua_component.h)
+        ../swig/utils.h ../swig/utils.cpp)
 
 #set_source_files_properties("swig/swig.i" PROPERTIES CPLUSPLUS ON)
 #set_source_files_properties("swig/swig.i" PROPERTIES SWIG_FLAGS "-verbose")

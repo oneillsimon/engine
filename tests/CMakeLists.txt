@@ -59,7 +59,7 @@ set(
         ../src/scripting/lua.cpp
         ../src/scripting/lua_exception.h
         ../src/scripting/lua_exception.cpp
-        ../swig/utils.h ../swig/utils.cpp ../src/lua_component.cpp ../src/lua_component.h)
+        ../swig/utils.h ../swig/utils.cpp)
 
 set(
         excluded_engine_srcs

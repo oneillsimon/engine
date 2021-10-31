@@ -1,8 +1,10 @@
 %module engine
 %{
 #include <engine.h>
-#include <lua_application.h>
+//#include <lua_application.h>
 %};
+
+%include "lua_application.i"
 
 %typemap(typecheck) std::tuple<LuaApplication::InitialiseCallback, LuaApplication::UpdateCallback, LuaApplication::RenderCallback>& {
     $1 = 1;
@@ -74,7 +76,9 @@
     Engine = {};
 
     function Engine:new(application, window, frame_rate)
+        print("here")
         a = engine.LuaApplication(application.root, application)
+                print("here 2")
         application.root = a.root
         return engine.LuaEngine(a, window, frame_rate)
     end

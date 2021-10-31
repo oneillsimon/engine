@@ -8,7 +8,6 @@
 %include entity.i
 %include glfw_input_processor.i
 %include lua_application.i
-%include lua_component.i
 %include components/camera_component.i
 %include rendering/window.i
 %include rendering/glfw_window.i

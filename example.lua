@@ -12,6 +12,8 @@ application = Application:new()
 
 timer = Component:new({elapsed_time = 0, total_elapsed_time = 0})
 
+camera = engine.CameraComponent()
+
 function timer:update(delta, input)
     self.elapsed_time = self.elapsed_time + delta
     self.total_elapsed_time = self.total_elapsed_time + delta
@@ -26,11 +28,17 @@ end
 
 e = engine.Entity()
 
-application.root:add_component("root_timer", timer)
-
 function application:initialise(input)
     e:add_component("my_timer", timer)
+    --e:add_component("camera", camera)
     self.root:add_child("timer", e)
+end
+
+function application:update(delta, input)
+    if input:is_key_pressed(32) then
+        t = e:get_component("my_timer")
+        print("Space bar", t:get("test"))
+    end
 end
 
 engine = Engine:new(application, window, 60)

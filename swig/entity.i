@@ -16,11 +16,11 @@
     SWIG_arg++;
 };
 
-%typemap(typecheck) std::tuple<LuaComponent::InitialiseCallback, LuaComponent::UpdateCallback, LuaComponent::RenderCallback>& {
+%typemap(typecheck) LuaComponent::MethodSignature& {
     $1 = 1;
 }
 
-%typemap(in) std::tuple<LuaComponent::InitialiseCallback, LuaComponent::UpdateCallback, LuaComponent::RenderCallback>& {
+%typemap(in) LuaComponent::MethodSignature& {
     LuaComponent::InitialiseCallback initialise_callback = [](InputProcessor& input) {};
     LuaComponent::UpdateCallback update_callback = [](double delta, InputProcessor& input) {};
     LuaComponent::RenderCallback render_callback = [](double delta) {};
@@ -74,7 +74,7 @@
 %include "../src/entity.h"
 
 %extend Entity {
-    void add_component(const std::string& name, std::tuple<LuaComponent::InitialiseCallback, LuaComponent::UpdateCallback, LuaComponent::RenderCallback>& c) {
+    void add_component(const std::string& name, LuaComponent::MethodSignature& c) {
         $self->add_component(name, new LuaComponent(c));
     }
 

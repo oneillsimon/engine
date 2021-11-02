@@ -13,4 +13,6 @@
 void load_file(lua_State* L, const std::string& filename);
 void dump_stack(lua_State* L);
 
+void iterate_and_print(lua_State *L, int index);
+
 #endif //ENGINE_LUA_H

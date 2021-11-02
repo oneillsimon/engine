@@ -15,7 +15,9 @@
             using UpdateCallback = std::function<void(const double&, InputProcessor&)>;
             using RenderCallback = std::function<void(const double&)>;
 
-            LuaComponent(std::tuple<LuaComponent::InitialiseCallback, LuaComponent::UpdateCallback, LuaComponent::RenderCallback>& c) {
+            using MethodSignature = std::tuple<LuaComponent::InitialiseCallback, LuaComponent::UpdateCallback, LuaComponent::RenderCallback>;
+
+            LuaComponent(LuaComponent::MethodSignature& c) {
                 this->on_initialise(std::get<0>(c));
                 this->on_update(std::get<1>(c));
                 this->on_render(std::get<2>(c));

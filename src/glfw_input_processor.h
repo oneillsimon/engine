@@ -1,16 +1,12 @@
-//
-// Created by simon on 06/12/2020.
-//
-
+//// Created by simon on 06/12/2020.//
 #ifndef ENGINE_GLFW_INPUT_PROCESSOR_H
 #define ENGINE_GLFW_INPUT_PROCESSOR_H
 
+#include <array>
 #include <functional>
-#include <map>
-
-#include <glad/glad.h>
+#include <vector>
+#include <glad/gl.h>
 #include <GLFW/glfw3.h>
-
 #include "input_processor.h"
 
 void key_callback(void* window, int key, int scancode, int action, int mods);
@@ -24,25 +20,23 @@ public:
     static const int NO_STATE = 0;
 
     std::array<int, KEYBOARD_SIZE> key_states;
-
     std::array<int, MOUSE_SIZE> mouse_button_states;
     std::array<bool, MOUSE_SIZE> active_mouse_buttons;
-
+    std::vector<int> pressed_this_frame;
     double scroll_x = 0;
     double scroll_y = 0;
 
     explicit GlfwInputProcessor(void* window);
-
     void capture_input() const override;
     void release_input() const override;
     void set_input_mode(int mode, int value) const override;
     int get_input_mode(int mode) const override;
-
     bool is_key_down(int key) override;
     bool is_key_pressed(int key) override;
     bool is_key_released(int key) override;
     bool is_key_repeating(int key) override;
     bool is_scrolling(const ScrollDirection& direction) override;
+    void begin_frame() override;
 };
 
 #endif //ENGINE_GLFW_INPUT_PROCESSOR_H

@@ -11,7 +11,7 @@
 #include <sstream>
 #include <string>
 
-#include <glad/glad.h>
+#include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
 #include "application.h"

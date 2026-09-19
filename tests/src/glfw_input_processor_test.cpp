@@ -45,10 +45,19 @@ TEST(glfw_input_processor_test, is_key_pressed) {
 
     ASSERT_FALSE(input->is_key_pressed(GLFW_KEY_SPACE));
     input->key_states[GLFW_KEY_SPACE] = GLFW_PRESS;
+    // Polling does not consume the press: every caller in the same frame sees it.
+    ASSERT_TRUE(input->is_key_pressed(GLFW_KEY_SPACE));
     ASSERT_TRUE(input->is_key_pressed(GLFW_KEY_SPACE));
 
-    // Assert that the key is no longer pressed.
+    input->begin_frame();
+    // After the frame boundary the press is no longer reported as new.
     ASSERT_FALSE(input->is_key_pressed(GLFW_KEY_SPACE));
+    // The key is still reported as held down.
+    ASSERT_TRUE(input->is_key_down(GLFW_KEY_SPACE));
+
+    // A fresh press in the next frame is reported as new again.
+    input->key_states[GLFW_KEY_SPACE] = GLFW_PRESS;
+    ASSERT_TRUE(input->is_key_pressed(GLFW_KEY_SPACE));
 }
 
 TEST(glfw_input_processor_test, is_key_repeating) {
@@ -76,11 +85,11 @@ TEST(glfw_input_processor_test, is_scrolling) {
     ASSERT_FALSE(input->is_scrolling(ScrollDirection::ANY));
 
     input->scroll_x = 1;
-    ASSERT_TRUE(input->is_scrolling(ScrollDirection::LEFT));
+    ASSERT_TRUE(input->is_scrolling(ScrollDirection::RIGHT));
     ASSERT_EQ(input->scroll_x, 0);
 
     input->scroll_x = -1;
-    ASSERT_TRUE(input->is_scrolling(ScrollDirection::RIGHT));
+    ASSERT_TRUE(input->is_scrolling(ScrollDirection::LEFT));
     ASSERT_EQ(input->scroll_x, 0);
 
     input->scroll_y = 1;

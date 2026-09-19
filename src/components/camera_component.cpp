@@ -2,7 +2,7 @@
 // Created by simon on 08/12/2020.
 //
 
-#include <glad/glad.h>
+#include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
 #include "camera_component.h"

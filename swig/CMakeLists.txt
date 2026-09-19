@@ -1,18 +1,37 @@
 cmake_minimum_required(VERSION 3.16)
 
-# SWIG setup.
-find_package(SWIG REQUIRED)
-include(${SWIG_USE_FILE})
-set(CMAKE_SWIG_FLAGS "")
+# SWIG Lua bindings, generated with a custom command so the build works with
+# any SWIG that has Lua support, independent of CMake's SWIG module version.
+find_program(SWIG_EXECUTABLE NAMES swig REQUIRED)
 
-#add_library(glad_2 ../extern/glad/src/glad.c)
-#target_include_directories(glad_2 PUBLIC ../extern/glad/include)
+set(SWIG_GENERATED_DIR ${CMAKE_CURRENT_BINARY_DIR}/generated)
+file(MAKE_DIRECTORY ${SWIG_GENERATED_DIR})
+set(SWIG_WRAP_FILE ${SWIG_GENERATED_DIR}/engine_wrap.cxx)
 
-set_source_files_properties("swig.i" PROPERTIES CPLUSPLUS ON)
-set_source_files_properties("swig.i" PROPERTIES SWIG_FLAGS "-verbose")
-swig_add_library(engine-swig-bindings TYPE USE_BUILD_SHARED_LIBS LANGUAGE lua SOURCES "swig.i")
+add_custom_command(
+    OUTPUT ${SWIG_WRAP_FILE}
+    COMMAND ${SWIG_EXECUTABLE} -lua -c++ -o ${SWIG_WRAP_FILE} ${CMAKE_CURRENT_SOURCE_DIR}/swig.i
+    DEPENDS
+        swig.i
+        application.i
+        component.i
+        engine.i
+        entity.i
+        glfw_input_processor.i
+        input_processor.i
+        lua_application.i
+        lua_callbacks.i
+        components/camera_component.i
+        rendering/glfw_window.i
+        rendering/window.i
+        utils.h
+        utils.cpp
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Generating SWIG Lua bindings"
+    VERBATIM
+)
+
+add_library(engine-swig-bindings SHARED ${SWIG_WRAP_FILE})
 target_include_directories(engine-swig-bindings PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-set_property(TARGET engine-swig-bindings PROPERTY SWIG_USE_LIBRARY_INCLUDE_DIRECTORIES TRUE)
-set_target_properties(engine-swig-bindings PROPERTIES CXX_CLANG_TIDY "")
-
-#add_library(swig-bindings PUBLIC engine-swig-bindings)
+target_link_libraries(engine-swig-bindings PUBLIC engine)
+set_property(TARGET engine-swig-bindings PROPERTY CXX_CLANG_TIDY "")

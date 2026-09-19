@@ -34,7 +34,7 @@ GlfwWindow::GlfwWindow(std::string title, const unsigned int& width, const unsig
     this->window = glfwCreateWindow(this->width, this->height, this->title.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(static_cast<GLFWwindow*>(this->window));
 
-    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+    gladLoadGL(glfwGetProcAddress);
 
     glViewport(0, 0, this->width, this->height);
     glfwSetFramebufferSizeCallback(static_cast<GLFWwindow*>(this->window), framebuffer_size_callback);

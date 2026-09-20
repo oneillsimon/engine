@@ -13,7 +13,8 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y liblua5.4-dev swig xvfb libgl1-mesa-dev python3-jinja2
+          sudo apt-get install -y liblua5.4-dev swig xvfb libgl1-mesa-dev python3-jinja2 \
+            libxrandr-dev libxcursor-dev libxinerama-dev libxi-dev libxext-dev
       - name: Configure
         run: cmake -B build -DCMAKE_BUILD_TYPE=Release
       - name: Build

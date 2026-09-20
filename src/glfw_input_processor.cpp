@@ -1,5 +1,9 @@
-//// Created by simon on 06/12/2020.//
+//
+// Created by simon on 06/12/2020.
+//
+
 #include <algorithm>
+
 #include "glfw_input_processor.h"
 
 void key_callback(void *window, int key, int scancode, int action, int mods) {
@@ -47,9 +51,6 @@ bool GlfwInputProcessor::is_key_down(int key) {
 }
 
 bool GlfwInputProcessor::is_key_pressed(int key) {
-    // The first poll of a press records it for the rest of the frame so that
-    // every caller sees the edge exactly once per frame, and never across
-    // frames.
     if (this->key_states[key] == GLFW_PRESS) {
         this->key_states[key] = GLFW_REPEAT;
         this->pressed_this_frame.push_back(key);
@@ -67,20 +68,21 @@ bool GlfwInputProcessor::is_key_repeating(int key) {
 }
 
 bool GlfwInputProcessor::is_scrolling(const ScrollDirection& direction) {
-    // GLFW reports positive horizontal offsets for rightward scrolls and
-    // positive vertical offsets for upward scrolls.
     if (this->scroll_x > 0) {
         this->scroll_x = 0;
         return direction == ScrollDirection::RIGHT || direction == ScrollDirection::ANY;
     }
+
     if (this->scroll_x < 0) {
         this->scroll_x = 0;
         return direction == ScrollDirection::LEFT || direction == ScrollDirection::ANY;
     }
+
     if (this->scroll_y > 0) {
         this->scroll_y = 0;
         return direction == ScrollDirection::UP || direction == ScrollDirection::ANY;
     }
+
     if (this->scroll_y < 0) {
         this->scroll_y = 0;
         return direction == ScrollDirection::DOWN || direction == ScrollDirection::ANY;

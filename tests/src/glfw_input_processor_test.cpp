@@ -45,17 +45,13 @@ TEST(glfw_input_processor_test, is_key_pressed) {
 
     ASSERT_FALSE(input->is_key_pressed(GLFW_KEY_SPACE));
     input->key_states[GLFW_KEY_SPACE] = GLFW_PRESS;
-    // Polling does not consume the press: every caller in the same frame sees it.
     ASSERT_TRUE(input->is_key_pressed(GLFW_KEY_SPACE));
     ASSERT_TRUE(input->is_key_pressed(GLFW_KEY_SPACE));
 
     input->begin_frame();
-    // After the frame boundary the press is no longer reported as new.
     ASSERT_FALSE(input->is_key_pressed(GLFW_KEY_SPACE));
-    // The key is still reported as held down.
     ASSERT_TRUE(input->is_key_down(GLFW_KEY_SPACE));
 
-    // A fresh press in the next frame is reported as new again.
     input->key_states[GLFW_KEY_SPACE] = GLFW_PRESS;
     ASSERT_TRUE(input->is_key_pressed(GLFW_KEY_SPACE));
 }

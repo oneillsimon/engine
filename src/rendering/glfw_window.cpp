@@ -9,7 +9,7 @@
 #include "glfw_window.h"
 
 const int GLFW_VERSION_INFO_MAJOR_NUMBER = 4;
-const int GLFW_VERSION_INFO_MINOR_NUMBER = 5;
+const int GLFW_VERSION_INFO_MINOR_NUMBER = 1;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -31,6 +31,9 @@ GlfwWindow::GlfwWindow(std::string title, const unsigned int& width, const unsig
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+    // Debugging.
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
+
     this->window = glfwCreateWindow(this->width, this->height, this->title.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(static_cast<GLFWwindow*>(this->window));
 
@@ -41,10 +44,11 @@ GlfwWindow::GlfwWindow(std::string title, const unsigned int& width, const unsig
 
     this->input_processor = new GlfwInputProcessor(this->window);
 
-    // Debugging.
-    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
-    glDebugMessageCallback(debug_callback, nullptr);
-    glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+
+    if (glDebugMessageCallback != nullptr && glDebugMessageControl != nullptr) {
+        glDebugMessageCallback(debug_callback, nullptr);
+        glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+    }
 
 }
 

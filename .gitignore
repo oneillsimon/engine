@@ -1,5 +1,4 @@
 .idea/
 build/
 cmake-build-release/
-
-extern
+cmake-build-debug/

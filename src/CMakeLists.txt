@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*,-warnings-as-errors=*,-fix)
-
 # Lua setup.
 find_package(Lua 5.4.0 REQUIRED)
 

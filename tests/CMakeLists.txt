@@ -1,18 +1,16 @@
 cmake_minimum_required(VERSION 3.16)
 project(tests)
 
-add_subdirectory(extern/googletest)
 
-find_package(GTest REQUIRED)
-
-SET(GCC_COVERAGE_COMPILE_FLAGS "-g -O0 --coverage -fno-inline -fno-inline-small-functions -fno-default-inline")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
-
-include_directories(
-        extern/googletest/googletest/include
-        extern/googletest/googletest
-        ../src
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG v1.18.0
 )
+FetchContent_MakeAvailable(googletest)
+
+include_directories(../src)
 
 set(
         engine_srcs

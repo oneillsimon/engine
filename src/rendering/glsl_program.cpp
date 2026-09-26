@@ -6,30 +6,6 @@
 
 #include "glsl_program.h"
 
-void GLSLProgram::set_uniform_locations() {
-    uniform_locations.clear();
-
-    GLint num_uniforms = 0;
-    glGetProgramInterfaceiv(handle, GL_UNIFORM, GL_ACTIVE_RESOURCES, &num_uniforms);
-
-    GLenum properties[] = { GL_NAME_LENGTH, GL_TYPE, GL_LOCATION, GL_BLOCK_INDEX };
-
-    for (GLint i = 0; i < num_uniforms; i++) {
-        GLint results[4];
-        glGetProgramResourceiv(handle, GL_UNIFORM, i, 4, properties, 4, nullptr, results);
-
-        if (results[3] != -1) {
-            continue; // Skip uniforms in blocks.
-        }
-
-        GLint name_buffer_size = results[0] + 1;
-        char* name = new char[name_buffer_size];
-        glGetProgramResourceName(handle, GL_UNIFORM, i, name_buffer_size, nullptr, name);
-        uniform_locations[name] = results[2];
-        delete[] name;
-    }
-}
-
 int GLSLProgram::get_uniform_location(const std::string &name) {
     auto position = uniform_locations.find(name);
 
@@ -159,7 +135,6 @@ void GLSLProgram::link() {
         throw GLSLException("Program link failed. " + log);
     }
 
-    set_uniform_locations();
     linked = true;
 }
 
@@ -251,86 +226,6 @@ void GLSLProgram::set_uniform(const std::string& name, bool b) {
 
 void GLSLProgram::set_uniform(const std::string& name, GLuint value) {
     glUniform1ui(get_uniform_location(name), static_cast<GLint>(value));
-}
-
-void GLSLProgram::print_active_uniforms() const {
-    GLint num_uniforms = 0;
-    glGetProgramInterfaceiv(handle, GL_UNIFORM, GL_ACTIVE_RESOURCES, &num_uniforms);
-    GLenum properties[] = { GL_NAME_LENGTH, GL_TYPE, GL_LOCATION, GL_BLOCK_INDEX };
-
-    std::cout << "Active uniforms:" << std::endl;
-    for (int i = 0; i < num_uniforms; i++) {
-        GLint results[4];
-        glGetProgramResourceiv(handle, GL_UNIFORM, i, 4, properties, 4, nullptr, results);
-
-        if (results[3] != -1) {
-            continue; // Skip uniforms in blocks.
-        }
-        GLint name_buffer_size = results[0] + 1;
-        char* name = new char[name_buffer_size];
-        glGetProgramResourceName(handle, GL_UNIFORM, i, name_buffer_size, nullptr, name);
-
-        std::cout << results[2] << name << get_type_string(results[1]) << std::endl;
-
-        delete[] name;
-    }
-}
-
-void GLSLProgram::print_active_uniform_blocks() const {
-    GLint num_blocks = 0;
-    glGetProgramInterfaceiv(handle, GL_UNIFORM_BLOCK, GL_ACTIVE_RESOURCES, &num_blocks);
-    GLenum block_properties[] = { GL_NUM_ACTIVE_VARIABLES, GL_NAME_LENGTH };
-    GLenum block_index[] = { GL_ACTIVE_VARIABLES };
-    GLenum properties[] = {  GL_NAME_LENGTH, GL_TYPE, GL_BLOCK_INDEX };
-
-    for (int block = 0; block < num_blocks; block++) {
-        GLint block_info[2];
-        glGetProgramResourceiv(handle, GL_UNIFORM_BLOCK, block, 2, block_properties, 2, nullptr, block_info);
-        GLint num_uniforms = block_info[0];
-
-        char* block_name = new char[block_info[1] + 1];
-        glGetProgramResourceName(handle, GL_UNIFORM_BLOCK, block, block_info[1] + 1, nullptr, block_name);
-
-        std::cout << "Uniform block " << block_name << ":" << std::endl;
-        delete[] block_name;
-
-        auto* uniform_indices = new GLint[num_uniforms];
-        glGetProgramResourceiv(handle, GL_UNIFORM_BLOCK, block, 1, block_index, num_uniforms, nullptr, uniform_indices);
-
-        for (auto uniform = 0; uniform < num_uniforms; uniform++) {
-            GLint uniform_index = uniform_indices[uniform];
-            GLint results[3];
-            glGetProgramResourceiv(handle, GL_UNIFORM, uniform_index, 3, properties, 3, nullptr, results);
-
-            GLint name_buffer_size = results[0] + 1;
-            auto* name = new char[name_buffer_size];
-            glGetProgramResourceName(handle, GL_UNIFORM, uniform_index, name_buffer_size, nullptr, name);
-
-            std::cout << name << " " << get_type_string(results[1]) << std::endl;
-            delete[] name;
-        }
-
-        delete[] uniform_indices;
-    }
-}
-
-void GLSLProgram::print_active_attributes() const {
-    GLint num_attributes;
-    glGetProgramInterfaceiv(handle, GL_PROGRAM_INPUT, GL_ACTIVE_RESOURCES, &num_attributes);
-
-    GLenum properties[] = { GL_NAME_LENGTH, GL_TYPE, GL_LOCATION };
-
-    std::cout << "Active attributes:" << std::endl;
-    for (auto i = 0; i < num_attributes; i++) {
-        GLint results[3];
-        glGetProgramResourceiv(handle, GL_PROGRAM_INPUT, i, 3, properties, 3, nullptr, results);
-
-        GLint name_buffer_size = results[0] + 1;
-        auto* name = new char[name_buffer_size];
-        glGetProgramResourceName(handle, GL_PROGRAM_INPUT, i, name_buffer_size, nullptr, name);
-        std::cout << results[2] << " " << name << " " << get_type_string(results[1]) << std::endl;
-        delete[] name;
-    }
 }
 
 std::string GLSLProgram::get_type_string(GLenum type) {

@@ -175,65 +175,13 @@ void CB_Chapter1_app::initialise(InputProcessor& input) {
     glEnableVertexAttribArray(0); // Vertex position.
     glEnableVertexAttribArray(1); // Vertex color.
 
-//    // Map index 0 to the position buffer.
-//    glBindBuffer(GL_ARRAY_BUFFER, position_buffer_handle);
-//    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-//
-//    // Map index 1 to the color buffer.
-//    glBindBuffer(GL_ARRAY_BUFFER, color_buffer_handle);
-//    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    // Map index 0 to the position buffer.
+    glBindBuffer(GL_ARRAY_BUFFER, position_buffer_handle);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
-    glBindVertexBuffer(0, position_buffer_handle, 0, sizeof(GLfloat) * 3);
-    glBindVertexBuffer(1, color_buffer_handle, 0, sizeof(GLfloat) * 3);
-
-    glVertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, 0);
-    glVertexAttribBinding(0, 0);
-    glVertexAttribFormat(1, 3, GL_FLOAT, GL_FALSE, 0);
-    glVertexAttribBinding(1, 1);
-
-
-    // Get a list of active vertex input attributes and loctions.
-    // Start by querying the number of active attributes.
-    GLint num_attributes;
-    glGetProgramInterfaceiv(program_handle, GL_PROGRAM_INPUT, GL_ACTIVE_RESOURCES, &num_attributes);
-
-    // Loop through each attribute and query for the length of the name, the type and the attribute location.
-    GLenum properties[] = { GL_NAME_LENGTH, GL_TYPE, GL_LOCATION };
-    std::cout << "Active attributes:" << std::endl;
-    for (auto i = 0; i < num_attributes; i++) {
-        GLint results[3];
-        glGetProgramResourceiv(program_handle, GL_PROGRAM_INPUT, i, 3, properties, 3, NULL, results);
-
-        GLint name_buffer_size = results[0] + 1;
-        char* name = new char[name_buffer_size];
-
-        glGetProgramResourceName(program_handle, GL_PROGRAM_INPUT, i, name_buffer_size, NULL, name);
-        std::cout << results[2] << " " << name << std::endl;
-        delete []name;
-    }
-
-
-    // Get list of active uniform variables.
-    GLint num_uniforms = 0;
-    glGetProgramInterfaceiv(this->program_handle, GL_UNIFORM, GL_ACTIVE_RESOURCES, &num_uniforms);
-
-    GLenum u_properties[] = { GL_NAME_LENGTH, GL_TYPE, GL_LOCATION, GL_BLOCK_INDEX };
-    std::cout << "Active unforms:" << std::endl;
-    for(auto i = 0; i < num_uniforms; i++) {
-        GLint results[4];
-        glGetProgramResourceiv(this->program_handle, GL_UNIFORM, i, 4, u_properties, 4, NULL, results);
-
-        if (results[3] != -1) {
-            // Skip uniforms in blocks.
-            continue;
-        }
-
-        GLint name_buffer_size = results[0] + 1;
-        char* name = new char[name_buffer_size];
-        glGetProgramResourceName(this->program_handle, GL_UNIFORM, i, name_buffer_size, NULL, name);
-        std::cout << results[2] << " " << name << std::endl;
-        delete []name;
-    }
+    // Map index 1 to the color buffer.
+    glBindBuffer(GL_ARRAY_BUFFER, color_buffer_handle);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 }
 
 void CB_Chapter1_app::update(const double& delta, InputProcessor& input) {

@@ -19,7 +19,7 @@ TEST(glsl_program, constructor) {
 TEST(glsl_program, destructor) {
     const auto shader_name = "shader.vert.glsl";
     auto vert_shader = ""
-                  "#version 430 core\n"
+                  "#version 410 core\n"
                   "void main() {\n"
                   "  gl_Position = vec4(1.0, 1.0, 1.0, 1.0);\n"
                   "}\n"
@@ -45,7 +45,7 @@ TEST(glsl_program, destructor) {
 
     num_shaders = -1;
     glGetProgramiv(program_handle, GL_ATTACHED_SHADERS, &num_shaders);
-    // Number of shader's shouldn't be updated since the program's handle is on longer valid.
+    // Number of shader's shouldn't be updated since the program's handle is no longer valid.
     ASSERT_EQ(num_shaders, -1);
 
     remove(shader_name);
@@ -54,7 +54,7 @@ TEST(glsl_program, destructor) {
 TEST(glsl_program, compile_shader) {
     const auto shader_name = "shader.vert.glsl";
     auto vert_shader = ""
-                       "#version 430 core\n"
+                       "#version 410 core\n"
                        "void main() {\n"
                        "  gl_Position = vec4(1.0, 1.0, 1.0, 1.0);\n"
                        "}\n"
@@ -93,8 +93,8 @@ TEST(glsl_program, compile_shader_file_not_found) {
 TEST(glsl_program, compile_shader_shader_compilation_error) {
     const auto shader_name = "shader.vert.glsl";
     auto vert_shader = ""
-                       "#version 430 core\n"
-                       "void main() \n" // Omitt the opening `{` to cause compilation failure.
+                       "#version 410 core\n"
+                       "void main() \n" // Omit the opening `{` to cause compilation failure.
                        "  gl_Position = vec4(1.0, 1.0, 1.0, 1.0);\n"
                        "}\n"
                        "";
@@ -120,7 +120,7 @@ TEST(glsl_program, compile_shader_shader_compilation_error) {
 TEST(glsl_program, compile_shader_unable_to_read_file) {
     std::string shader_name = "shader.vert.glsl";
     auto vert_shader = ""
-                       "#version 430 core\n"
+                       "#version 410 core\n"
                        "void main() {\n"
                        "  gl_Position = vec4(1.0, 1.0, 1.0, 1.0);\n"
                        "}\n"
@@ -150,7 +150,7 @@ TEST(glsl_program, compile_shader_unable_to_read_file) {
 TEST(glsl_program, link) {
     const auto shader_name = "shader.vert.glsl";
     auto vert_shader = ""
-                       "#version 430 core\n"
+                       "#version 410 core\n"
                        "void main() {\n"
                        "  gl_Position = vec4(1.0, 1.0, 1.0, 1.0);\n"
                        "}\n"
@@ -189,7 +189,7 @@ TEST(glsl_program, link_without_compiling) {
 TEST(glsl_program, link_failure) {
     const auto shader_name = "shader.vert.glsl";
     auto vert_shader = ""
-                       "#version 430 core\n"
+                       "#version 410 core\n"
                        "void main() {\n"
                        "  gl_Position = vec4(1.0, 1.0, 1.0, 1.0);\n"
                        "}\n"
@@ -222,7 +222,7 @@ TEST(glsl_program, link_failure) {
 TEST(glsl_program, use) {
     const auto shader_name = "shader.vert.glsl";
     auto vert_shader = ""
-                       "#version 430 core\n"
+                       "#version 410 core\n"
                        "void main() {\n"
                        "  gl_Position = vec4(1.0, 1.0, 1.0, 1.0);\n"
                        "}\n"
@@ -239,12 +239,14 @@ TEST(glsl_program, use) {
     program.link();
 
     EXPECT_NO_THROW(program.use());
+
+    remove(shader_name);
 }
 
 TEST(glsl_program, use_before_link) {
     const auto shader_name = "shader.vert.glsl";
     auto vert_shader = ""
-                       "#version 430 core\n"
+                       "#version 410 core\n"
                        "void main() {\n"
                        "  gl_Position = vec4(1.0, 1.0, 1.0, 1.0);\n"
                        "}\n"
@@ -270,4 +272,6 @@ TEST(glsl_program, use_before_link) {
 
     program.link();
     EXPECT_NO_THROW(program.use());
+
+    remove(shader_name);
 }

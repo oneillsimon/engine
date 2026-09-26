@@ -88,7 +88,7 @@ add_executable(
         ${engine_tests}
 )
 
-target_link_libraries(tests engine gtest)
+target_link_libraries(tests engine gtest gmock)
 
 set(COVERAGE_DIR ${PROJECT_BINARY_DIR}/CMakeFiles/coverage.dir)
 set(COVERAGE_BASE_INFO_FILE ${COVERAGE_DIR}/coverage_base.info)

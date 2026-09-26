@@ -23,7 +23,6 @@ enum GLSLShaderType {
     GEOMETRY = GL_GEOMETRY_SHADER,
     TESS_CONTROL = GL_TESS_CONTROL_SHADER,
     TESS_EVALUATION = GL_TESS_EVALUATION_SHADER,
-    COMPUTE = GL_COMPUTE_SHADER
 };
 
 class GLSLProgram {
@@ -32,7 +31,6 @@ private:
     bool linked;
     std::map<std::string, int> uniform_locations;
 
-    void set_uniform_locations();
     int get_uniform_location(const std::string& name);
     static bool file_exists(const std::string& filename) ;
 
@@ -62,11 +60,6 @@ public:
     void set_uniform(const std::string& name, int i);
     void set_uniform(const std::string& name, bool b);
     void set_uniform(const std::string& name, GLuint value);
-
-    //TODO: Make these functions return a list of strings to be printed instead.
-    void print_active_uniforms() const;
-    void print_active_uniform_blocks() const;
-    void print_active_attributes() const;
 
     [[nodiscard]] static std::string get_type_string(GLenum type) ;
 };

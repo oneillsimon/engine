@@ -34,12 +34,18 @@ void Engine::run() {
         unprocessed_time += elapsed_time.count();
 
         while (unprocessed_time > frame_rate) {
+            if (!this->running) {
+                break;
+            }
+
             should_render = true;
 
             if (this->window->is_close_requested() || this->application->is_close_requested()) {
                 std::cout << "Close requested from " << (this->window->is_close_requested() ? "the window" : "not the window") << std::endl;
                 std::cout << "Close requested from " << (this->application->is_close_requested() ? "the app" : "not the app") << std::endl;
                 this->stop();
+                should_render = false;
+                break;
             }
 
             this->application->update(frame_rate, *this->window->get_input_processor());

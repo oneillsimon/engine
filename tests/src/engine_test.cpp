@@ -11,15 +11,24 @@
 
 class EngineTestTestApplication : public Application {
 public:
-    int counter = 0;
+    int update_counter = 0;
+    int stop_counter = 0;
 
     EngineTestTestApplication() : Application() {}
 
     void update(const double& delta, InputProcessor& input) override {
-        this->counter++;
+        Application::update(delta, input);
+        this->update_counter++;
     }
 
-    void render(const double& delta) override {}
+    void render(const double& delta) override {
+        Application::render(delta);
+    }
+
+    void stop() override {
+        Application::stop();
+        this->stop_counter++;
+    }
 };
 
 class TestWindow : public Window {
@@ -75,7 +84,7 @@ TEST(engine_test, frame_rate) {
 
     // App updates frame_rate per second, so after 1 second of running we expect counter
     // to be the same.
-    EXPECT_EQ(frame_rate, application->counter);
+    EXPECT_EQ(frame_rate, application->update_counter);
 }
 
 TEST(engine_test, window_close_stops_engine) {
@@ -92,4 +101,5 @@ TEST(engine_test, window_close_stops_engine) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
     engine_runner.join();
     EXPECT_EQ(e.is_running(), false);
+    EXPECT_EQ(application->stop_counter, 1);
 }

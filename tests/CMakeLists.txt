@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.16)
 project(tests)
 
-
+include(GoogleTest)
 include(FetchContent)
+
 FetchContent_Declare(
         googletest
         GIT_REPOSITORY https://github.com/google/googletest.git
@@ -89,6 +90,8 @@ add_executable(
 )
 
 target_link_libraries(tests engine gtest gmock)
+
+gtest_discover_tests(tests)
 
 set(COVERAGE_DIR ${PROJECT_BINARY_DIR}/CMakeFiles/coverage.dir)
 set(COVERAGE_BASE_INFO_FILE ${COVERAGE_DIR}/coverage_base.info)

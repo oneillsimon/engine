@@ -3,11 +3,16 @@ project(engine VERSION 1.0.0)
 
 set(CMAKE_CXX_STANDARD 20)
 
+include(CTest)
+
 add_subdirectory(extern)
 add_subdirectory(src)
 add_subdirectory(swig)
 add_subdirectory(applications)
-add_subdirectory(tests)
+
+if(BUILD_TESTING)
+    add_subdirectory(tests)
+endif()
 
 add_executable(engine-exe main.cpp)
 

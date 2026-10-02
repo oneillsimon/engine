@@ -6,17 +6,16 @@
 #include <iostream>
 #include "engine.h"
 
-Engine::Engine(Application* application, Window* window, double frame_rate) :
+Engine::Engine(Application* application, std::unique_ptr<Window> window, double frame_rate) :
     application(application),
     running(false),
-    window(window),
+    window(std::move(window)),
     frame_rate(1.0 / frame_rate) {
     assert(("Frame rate must be greater than zero.", frame_rate > 0));
 }
 
 Engine::~Engine() {
     delete application;
-    delete window;
 }
 
 void Engine::run() {

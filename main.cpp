@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -23,7 +24,7 @@
 
 extern "C" int luaopen_engine(lua_State* L);
 
-int main() {
+int main(int argc, char** argv) {
 //    auto v = gem::vector2<int> { 1, 2 };
 //    std::cout << v << std::endl;
 //
@@ -31,6 +32,11 @@ int main() {
 //    std::cout << v4 << std::endl;
 
 #if LUA_GAME
+    if (argc < 2) {
+        std::cerr << "Usage: " << argv[0] << " <lua_script>" << std::endl;
+        exit(1);
+    }
+
     lua_State* L = luaL_newstate();
     luaL_openlibs(L);
     luaopen_engine(L);
@@ -38,7 +44,7 @@ int main() {
 //    std::cout << v4<< std::endl;
 
     try {
-        load_file(L, "../example.lua");
+        load_file(L, argv[1]);
     } catch (const std::exception& e) {
         std::cerr << "Error running file " << e.what() << std::endl;
         exit(1);

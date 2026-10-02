@@ -34,16 +34,34 @@ public:
     }
 };
 
+class TestWindowClosesAfterNFrames: public TestWindow {
+private:
+    int close_after_frames;
+    int counter;
+public:
+    TestWindowClosesAfterNFrames(int closes_after_n_frames) : TestWindow(std::string(), 0, 0) {
+        this->close_after_frames = closes_after_n_frames;
+        this->counter = 0;
+    }
+
+    void update() {
+        this->counter++;
+        if (this->counter >= this->close_after_frames) {
+            this->request_close();
+        }
+    }
+};
+
 void run_engine(Engine* engine) {
     engine->start();
 }
 
 TEST(engine_test, frame_rate) {
     auto application = new EngineTestTestApplication();
-    auto window = new TestWindow(std::string(), 0, 0);
+    auto window = std::unique_ptr<TestWindow>(new TestWindow(std::string(), 0, 0));
 
     float frame_rate = 120.0f;
-    auto e = Engine(application, window, frame_rate);
+    auto e = Engine(application, std::move(window), frame_rate);
 
     // Start the engine in a new thread to avoid blocking this one.
     std::thread engine_runner(run_engine, &e);
@@ -62,8 +80,8 @@ TEST(engine_test, frame_rate) {
 
 TEST(engine_test, window_close_stops_engine) {
     auto application = new EngineTestTestApplication();
-    auto window = new TestWindow(std::string(), 0, 0);
-    auto e = Engine(application, window, 60.0f);
+    auto window = std::unique_ptr<TestWindowClosesAfterNFrames>(new TestWindowClosesAfterNFrames(60));
+    auto e = Engine(application, std::move(window), 60.0f);
 
     // Start the engine in a new thread to avoid blocking this one.
     std::thread engine_runner(run_engine, &e);
@@ -71,7 +89,6 @@ TEST(engine_test, window_close_stops_engine) {
     EXPECT_EQ(e.is_running(), true);
 
     // Close the window and check that the engine stops.
-    window->request_close();
     std::this_thread::sleep_for(std::chrono::seconds(1));
     engine_runner.join();
     EXPECT_EQ(e.is_running(), false);

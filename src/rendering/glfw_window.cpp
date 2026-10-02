@@ -49,8 +49,8 @@ GlfwWindow::~GlfwWindow() {
 }
 
 void GlfwWindow::update() {
-    this->close_requested = glfwWindowShouldClose(static_cast<GLFWwindow*>(this->window)) != 0;
     glfwPollEvents();
+    this->close_requested = glfwWindowShouldClose(static_cast<GLFWwindow*>(this->window)) != 0;
 }
 
 void GlfwWindow::swap_buffers() {

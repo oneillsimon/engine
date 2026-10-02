@@ -20,10 +20,10 @@ private:
 
 protected:
     Application* application;
-    Window* window;
+    std::unique_ptr<Window> window;
 
 public:
-    Engine(Application* application, Window* window, double frame_rate);
+    Engine(Application* application, std::unique_ptr<Window> window, double frame_rate);
     ~Engine();
 
     bool is_running() const;

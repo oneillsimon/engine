@@ -4,6 +4,7 @@
 //#include <lua_application.h>
 %};
 
+%include <std_unique_ptr.i>
 %include "lua_application.i"
 
 %typemap(typecheck) std::tuple<LuaApplication::InitialiseCallback, LuaApplication::UpdateCallback, LuaApplication::RenderCallback>& {
@@ -61,13 +62,14 @@
     $1 = &t;
 }
 
+%unique_ptr(Window)
 %include "../src/engine.h"
 
 %inline %{
     class LuaEngine : public Engine {
         public:
-            LuaEngine(LuaApplication application, Window* window, double frame_ate) :
-                Engine(new LuaApplication(application), window, frame_ate) {
+            LuaEngine(LuaApplication application, std::unique_ptr<Window> window, double frame_rate) :
+                Engine(new LuaApplication(application), std::move(window), frame_rate) {
             }
     };
 %};

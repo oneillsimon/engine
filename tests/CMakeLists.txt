@@ -11,55 +11,6 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-include_directories(../src)
-
-set(
-        engine_srcs
-        ../src/application.h
-        ../src/application.cpp
-        ../src/component.h
-        ../src/component.cpp
-        ../src/engine.h
-        ../src/engine.cpp
-        ../src/entity.h
-        ../src/entity.cpp
-        ../src/glfw_input_processor.h
-        ../src/glfw_input_processor.cpp
-        ../src/input_processor.h
-        ../src/input_processor.cpp
-
-        ../src/components/camera_component.h
-        ../src/components/camera_component.cpp
-
-        ../src/rendering/glfw_window.h
-        ../src/rendering/glfw_window.cpp
-        ../src/rendering/glsl_exception.h
-        ../src/rendering/glsl_exception.cpp
-        ../src/rendering/glsl_program.h
-        ../src/rendering/glsl_program.cpp
-        ../src/rendering/stb_image_implementation.cpp
-        ../src/rendering/window.h
-        ../src/rendering/window.cpp
-        ../src/rendering/lights/attenuation.h
-        ../src/rendering/lights/attenuation.cpp
-        ../src/rendering/lights/directional_light.h
-        ../src/rendering/lights/directional_light.cpp
-        ../src/rendering/lights/light.h
-        ../src/rendering/lights/light.cpp
-        ../src/rendering/lights/point_light.h
-        ../src/rendering/lights/point_light.cpp
-        ../src/rendering/lights/spot_light.h
-        ../src/rendering/lights/spot_light.cpp
-        ../src/rendering/material/material.h
-        ../src/rendering/material/material.cpp
-        ../src/rendering/mesh/mesh.h
-
-        ../src/scripting/lua.h
-        ../src/scripting/lua.cpp
-        ../src/scripting/lua_exception.h
-        ../src/scripting/lua_exception.cpp
-        ../swig/utils.h ../swig/utils.cpp)
-
 set(
         excluded_engine_srcs
         ../src/rendering/mesh/triangle_mesh.cpp
@@ -80,12 +31,13 @@ set(
         src/components/camera_component_test.cpp
         src/scripting/lua_test.cpp
         src/scripting/lua_exception_test.cpp
-        src/rendering/glfw_window_test.cpp src/rendering/glsl_program_test.cpp)
+        src/rendering/glfw_window_test.cpp
+        src/rendering/glsl_program_test.cpp
+)
 
 add_executable(
         tests
         main.cpp
-        ${engine_srcs}
         ${engine_tests}
 )
 

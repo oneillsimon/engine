@@ -91,7 +91,7 @@ add_executable(
 
 target_link_libraries(tests engine gtest gmock)
 
-gtest_discover_tests(tests)
+gtest_discover_tests(tests PROPERTIES TIMEOUT 10)
 
 set(COVERAGE_DIR ${PROJECT_BINARY_DIR}/CMakeFiles/coverage.dir)
 set(COVERAGE_BASE_INFO_FILE ${COVERAGE_DIR}/coverage_base.info)

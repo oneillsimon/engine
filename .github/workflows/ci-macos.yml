@@ -29,7 +29,7 @@ jobs:
         echo "LIBGL_ALWAYS_SOFTWARE=true" >> $GITHUB_ENV
         echo "GALLIUM_DRIVER=llvmpipe" >> $GITHUB_ENV
 
-        cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON
+        cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DENGINE_USE_HEADLESS_GL=ON
 
     - name: Build
       run: cmake --build build

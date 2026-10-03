@@ -23,16 +23,18 @@ string(REPLACE "../src" "*/src" excluded_engine_srcs "${excluded_engine_srcs}")
 
 set(
         engine_tests
-        src/application_test.cpp
-        src/engine_test.cpp
-        src/entity_test.cpp
-        src/component_test.cpp
-        src/glfw_input_processor_test.cpp
-        src/components/camera_component_test.cpp
-        src/scripting/lua_test.cpp
-        src/scripting/lua_exception_test.cpp
-        src/rendering/glfw_window_test.cpp
-        src/rendering/glsl_program_test.cpp
+        unit/application_test.cpp
+        unit/component_test.cpp
+        unit/engine_test.cpp
+        unit/entity_test.cpp
+
+        integration/graphics/glfw_input_processor_test.cpp
+        integration/graphics/glfw_window_test.cpp
+        integration/graphics/glsl_program_test.cpp
+        integration/graphics/components/camera_component_test.cpp
+
+        integration/scripting/lua_test.cpp
+        integration/scripting/lua_exception_test.cpp
 )
 
 add_executable(

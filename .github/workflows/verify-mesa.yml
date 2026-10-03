@@ -1,0 +1,76 @@
+name: Verify OSMesa Installation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+    paths:
+      - '.github/workflows/verify-mesa.yml'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - '.github/workflows/verify-mesa.yml'
+
+jobs:
+  verify-osmesa:
+    name: Verify OSMesa
+    runs-on: macos-latest
+
+    steps:
+    - name: Install Mesa and pkgconf
+      run: |
+        brew update
+        brew install mesa pkgconf
+
+    - name: Print Mesa Homebrew prefix
+      run: |
+        echo "Mesa Homebrew prefix: $(brew --prefix mesa)"
+        echo "MESA_PREFIX=$(brew --prefix mesa)" >> $GITHUB_ENV
+
+    - name: List Mesa libraries
+      run: |
+        echo "=== Mesa libraries ==="
+        ls -la ${{ env.MESA_PREFIX }}/lib/*.dylib ${{ env.MESA_PREFIX }}/lib/*.so* 2>/dev/null || true
+        echo ""
+        echo "=== Mesa pkg-config files ==="
+        ls -la ${{ env.MESA_PREFIX }}/lib/pkgconfig/ 2>/dev/null || true
+
+    - name: List Mesa headers
+      run: |
+        echo "=== Mesa headers ==="
+        find ${{ env.MESA_PREFIX }}/include -name "*.h" | sort || true
+
+    - name: Search for OSMesa components
+      run: |
+        echo "=== OSMesa Search Results ==="
+        
+        echo "libOSMesa:"
+        find ${{ env.MESA_PREFIX }} -name "libOSMesa*" -type f 2>/dev/null || echo "  NOT FOUND"
+        
+        echo "osmesa.h:"
+        find ${{ env.MESA_PREFIX }} -name "osmesa.h" -type f 2>/dev/null || echo "  NOT FOUND"
+        
+        echo "osmesa pkg-config entry:"
+        if [ -f "${{ env.MESA_PREFIX }}/lib/pkgconfig/osmesa.pc" ]; then
+          echo "  FOUND: ${{ env.MESA_PREFIX }}/lib/pkgconfig/osmesa.pc"
+          cat ${{ env.MESA_PREFIX }}/lib/pkgconfig/osmesa.pc
+        else
+          echo "  NOT FOUND"
+        fi
+        
+        if pkg-config --exists osmesa 2>/dev/null; then
+          echo "  pkg-config confirms: osmesa is available"
+          echo "  pkg-config --cflags osmesa: $(pkg-config --cflags osmesa 2>/dev/null)"
+          echo "  pkg-config --libs osmesa: $(pkg-config --libs osmesa 2>/dev/null)"
+        else
+          echo "  pkg-config does NOT find: osmesa"
+        fi
+
+    - name: Record EGL libraries
+      run: |
+        echo "=== EGL Libraries (separate from OSMesa) ==="
+        find ${{ env.MESA_PREFIX }} -name "*EGL*" -type f 2>/dev/null | sort || echo "  No EGL libraries found"
+        
+        if [ -f "${{ env.MESA_PREFIX }}/lib/pkgconfig/egl.pc" ]; then
+          echo "  EGL pkg-config entry FOUND"
+        fi

@@ -64,12 +64,9 @@ if(ENGINE_USE_HEADLESS_GL)
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(MESA_EGL REQUIRED egl)
 
-    list(APPEND test_integration_graphics_properties
-            ENVIRONMENT_MODIFICATION
-            "DYLD_LIBRARY_PATH=path_list_prepend:${MESA_EGL_LIBDIR}"
-            "LIBGL_ALWAYS_SOFTWARE=set:true"
-            "GALLIUM_DRIVER=set:llvmpipe"
-    )
+    list(APPEND test_integration_graphics_properties ENVIRONMENT_MODIFICATION "DYLD_LIBRARY_PATH=path_list_prepend:${MESA_EGL_LIBDIR}")
+    list(APPEND test_integration_graphics_properties ENVIRONMENT_MODIFICATION "LIBGL_ALWAYS_SOFTWARE=set:true")
+    list(APPEND test_integration_graphics_properties ENVIRONMENT_MODIFICATION "GALLIUM_DRIVER=set:llvmpipe")
 endif()
 
 gtest_discover_tests(tests_unit PROPERTIES ${test_unit_properties})

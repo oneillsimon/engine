@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.22)
 project(tests)
 
 include(GoogleTest)
@@ -64,14 +64,13 @@ if(ENGINE_USE_HEADLESS_GL)
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(MESA_EGL REQUIRED egl)
 
-    set(GRAPHICS_TEST_ENV_VARS
-            "DYLD_LIBRARY_PATH=${MESA_EGL_LIBDIR}"
-            "LIBGL_ALWAYS_SOFTWARE=true"
-            "GALLIUM_DRIVER=llvmpipe"
+    list(APPEND test_integration_graphics_properties
+            ENVIRONMENT_MODIFICATION
+            "DYLD_LIBRARY_PATH=path_list_prepend:${MESA_EGL_LIBDIR}"
+            "LIBGL_ALWAYS_SOFTWARE=set:true"
+            "GALLIUM_DRIVER=set:llvmpipe"
     )
-
-    list(APPEND test_integration_graphics_properties ENVIRONMENT "${GRAPHICS_TEST_ENV_VARS}")
-endif ()
+endif()
 
 gtest_discover_tests(tests_unit PROPERTIES ${test_unit_properties})
 gtest_discover_tests(tests_integration_graphics PROPERTIES ${test_integration_graphics_properties})

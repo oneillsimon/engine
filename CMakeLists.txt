@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 project(engine VERSION 1.0.0)
 
+option(ENGINE_USE_HEADLESS_GL "Use headless GLFW Null with EGL" OFF)
+
 set(CMAKE_CXX_STANDARD 20)
 
 include(CTest)

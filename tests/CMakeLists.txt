@@ -41,23 +41,38 @@ target_link_libraries(tests_unit engine gtest gmock)
 target_link_libraries(tests_integration_graphics engine gtest gmock)
 target_link_libraries(tests_integration_scripting engine gtest gmock)
 
-gtest_discover_tests(tests_unit
-        PROPERTIES
+set(test_unit_properties
         LABELS headless
         LABELS unit
         TIMEOUT 10
 )
 
-gtest_discover_tests(tests_integration_graphics
-        PROPERTIES
+set(test_integration_graphics_properties
         LABELS graphics
         LABELS integration
         TIMEOUT 10
 )
-gtest_discover_tests(tests_integration_scripting
-        PROPERTIES
+
+set(test_integration_scripting_properties
         LABELS headless
         LABELS integration
         LABELS scripting
         TIMEOUT 10
 )
+
+if(ENGINE_USE_HEADLESS_GL)
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(MESA_EGL REQUIRED egl)
+
+    set(GRAPHICS_TEST_ENV_VARS
+            "DYLD_LIBRARY_PATH=${MESA_EGL_LIBDIR}"
+            "LIBGL_ALWAYS_SOFTWARE=true"
+            "GALLIUM_DRIVER=llvmpipe"
+    )
+
+    list(APPEND test_integration_graphics_properties ENVIRONMENT "${GRAPHICS_TEST_ENV_VARS}")
+endif ()
+
+gtest_discover_tests(tests_unit PROPERTIES ${test_unit_properties})
+gtest_discover_tests(tests_integration_graphics PROPERTIES ${test_integration_graphics_properties})
+gtest_discover_tests(tests_integration_scripting PROPERTIES ${test_integration_scripting_properties})

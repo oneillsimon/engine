@@ -20,14 +20,25 @@ jobs:
 
     - name: Install dependencies
       run: |
-        brew install cmake lua swig
+        brew install cmake lua swig mesa pkgconf
 
-    - name: Configure CMake
+    - name: Configure environment
       run: |
+        MESA_PREFIX=$(brew --prefix mesa)
+        echo "DYLD_LIBRARY_PATH=$MESA_PREFIX/lib" >> $GITHUB_ENV
+        echo "LIBGL_ALWAYS_SOFTWARE=true" >> $GITHUB_ENV
+        echo "GALLIUM_DRIVER=llvmpipe" >> $GITHUB_ENV
+
         cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON
 
     - name: Build
       run: cmake --build build
 
-    - name: Run tests
-      run: ctest --test-dir build --label-regex '^headless$' --output-on-failure --no-tests=error
+    - name: Run unit tests
+      run: ctest --test-dir build --label-regex '^unit' --output-on-failure --no-tests=error
+
+    - name: Run graphics tests
+      run: ctest --test-dir build --label-regex '^graphics$' --output-on-failure --no-tests=error
+
+    - name: Run scripting tests
+      run: ctest --test-dir build --label-regex '^scripting$' --output-on-failure --no-tests=error

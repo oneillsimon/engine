@@ -62,7 +62,13 @@ add_library(
         scripting/lua.cpp
         scripting/lua_exception.h
         scripting/lua_exception.cpp
-        ../swig/utils.h ../swig/utils.cpp)
+        ../swig/utils.h
+        ../swig/utils.cpp
+)
+
+if(ENGINE_USE_HEADLESS_GL)
+    target_compile_definitions(engine PRIVATE ENGINE_USE_HEADLESS_GL)
+endif()
 
 #set_source_files_properties("swig/swig.i" PROPERTIES CPLUSPLUS ON)
 #set_source_files_properties("swig/swig.i" PROPERTIES SWIG_FLAGS "-verbose")

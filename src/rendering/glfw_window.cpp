@@ -18,10 +18,12 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 GlfwWindow::GlfwWindow(std::string title, const unsigned int& width, const unsigned int& height) :
         Window(std::move(title), width, height) {
 
+    glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_NULL);
     if (glfwInit() == GLFW_FALSE) {
-        throw std::runtime_error("Failed to initialize GLFW.");
+        throw std::runtime_error("Failed to initialize GLFW. Code: " + std::to_string(glfwGetError(nullptr)));
     }
 
+    glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_EGL_CONTEXT_API);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, GLFW_VERSION_INFO_MAJOR_NUMBER);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, GLFW_VERSION_INFO_MINOR_NUMBER);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);

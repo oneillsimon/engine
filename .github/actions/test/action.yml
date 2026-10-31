@@ -1,0 +1,33 @@
+name: 'Run Tests'
+description: 'Runs selected CTest suites based on input flags'
+inputs:
+  unit:
+    description: 'Run unit tests (true/false)'
+    required: false
+    default: 'true'
+  graphics:
+    description: 'Run graphics tests (true/false)'
+    required: false
+    default: 'true'
+  scripting:
+    description: 'Run scripting tests (true/false)'
+    required: false
+    default: 'true'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run unit tests
+      if: inputs.unit == 'true'
+      shell: bash
+      run: ctest --test-dir build --label-regex '^unit' --output-on-failure --no-tests=error
+
+    - name: Run graphics tests
+      if: inputs.graphics == 'true'
+      shell: bash
+      run: ctest --test-dir build --label-regex '^graphics$' --output-on-failure --no-tests=error
+
+    - name: Run scripting tests
+      if: inputs.scripting == 'true'
+      shell: bash
+      run: ctest --test-dir build --label-regex '^scripting$' --output-on-failure --no-tests=error

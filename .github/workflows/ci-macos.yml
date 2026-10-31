@@ -8,37 +8,50 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-test:
+  build-native:
     permissions:
       contents: read
-
     runs-on: macos-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v7
+      - name: Checkout repository
+        uses: actions/checkout@v7
 
-    - name: Install dependencies
-      run: |
-        brew install cmake lua swig mesa pkgconf
+      - name: Setup Environment
+        uses: ./.github/actions/setup
+        with:
+          headless: 'OFF'
+          install-mesa: 'false'
 
-    - name: Configure environment
-      run: |
-        MESA_PREFIX=$(brew --prefix mesa)
-        echo "DYLD_LIBRARY_PATH=$MESA_PREFIX/lib" >> $GITHUB_ENV
-        echo "LIBGL_ALWAYS_SOFTWARE=true" >> $GITHUB_ENV
-        echo "GALLIUM_DRIVER=llvmpipe" >> $GITHUB_ENV
+      - name: Build Project
+        uses: ./.github/actions/build
 
-        cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DENGINE_USE_HEADLESS_GL=ON
+      - name: Run Tests
+        uses: ./.github/actions/test
+        with:
+          graphics: 'false'
+          scripting: 'true'
+          unit: 'true'
 
-    - name: Build
-      run: cmake --build build
+  build-headless:
+    permissions:
+      contents: read
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
 
-    - name: Run unit tests
-      run: ctest --test-dir build --label-regex '^unit' --output-on-failure --no-tests=error
+      - name: Setup Environment
+        uses: ./.github/actions/setup
+        with:
+          headless: 'ON'
+          install-mesa: 'true'
 
-    - name: Run graphics tests
-      run: ctest --test-dir build --label-regex '^graphics$' --output-on-failure --no-tests=error
+      - name: Build Project
+        uses: ./.github/actions/build
 
-    - name: Run scripting tests
-      run: ctest --test-dir build --label-regex '^scripting$' --output-on-failure --no-tests=error
+      - name: Run Tests
+        uses: ./.github/actions/test
+        with:
+          graphics: 'true'
+          scripting: 'true'
+          unit: 'true'

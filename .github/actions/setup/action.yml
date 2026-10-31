@@ -5,8 +5,16 @@ inputs:
     description: 'Toggle headless GL (ON/OFF)'
     required: false
     default: 'ON'
+  install-base-dependencies:
+    description: 'Whether to install dependencies required to build and run the engine'
+    required: false
+    default: 'true'
   install-mesa:
     description: 'Whether to install mesa with pkgconf'
+    required: false
+    default: 'false'
+  install-static-analysis-tools:
+    description: 'Whether to install tools needed for static analysis'
     required: false
     default: 'false'
 
@@ -16,13 +24,21 @@ runs:
     - name: Install dependencies
       shell: bash
       run: |
-        if [ "${{ inputs.install-mesa }}" == "true" ]; then
-          brew install cmake lua swig mesa pkgconf
-        else
+        if [ "${{ inputs.install-base-dependencies }}" == "true" ]; then
           brew install cmake lua swig
+        fi
+        
+        if [ "${{ inputs.install-mesa }}" == "true" ]; then
+          brew install mesa pkgconf
+        fi
+        
+        if [ "${{ inputs.install-static-analysis-tools }}" == "true" ]; then
+          brew install clang-format@22
         fi
 
     - name: Configure environment
       shell: bash
       run: |
-        cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DENGINE_USE_HEADLESS_GL=${{ inputs.headless }}
+        if [ "${{ inputs.install-base-dependencies }}" == "true" ]; then
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DENGINE_USE_HEADLESS_GL=${{ inputs.headless }}
+        fi

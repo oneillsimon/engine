@@ -8,7 +8,26 @@ on:
   workflow_dispatch:
 
 jobs:
+  static-analysis:
+    permissions:
+      contents: read
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup
+        with:
+          install-base-dependencies: 'false'
+          install-mesa: 'false'
+          install-static-analysis-tools: 'true'
+
+      - name: Static Analysis
+        uses: ./.github/actions/static-analysis
+
   build-native:
+    needs: static-analysis
     permissions:
       contents: read
     runs-on: macos-latest
@@ -33,6 +52,7 @@ jobs:
           unit: 'true'
 
   build-headless:
+    needs: static-analysis
     permissions:
       contents: read
     runs-on: macos-latest

@@ -1,0 +1,15 @@
+name: 'Static Analysis'
+description: 'Runs static analysis tools'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: clang-format
+      shell: bash
+      run: |
+        git ls-files \
+        'applications/*.cpp' 'applications/*.h' \
+        'src/*.cpp' 'src/*.h' \
+        'swig/*.cpp' 'swig/*.h' \
+        'tests/*.cpp' 'tests/*.h' \
+        'main.cpp' | xargs clang-format --dry-run --Werror

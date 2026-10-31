@@ -6,13 +6,13 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-window = engine.GlfwWindow("Simple timer", 800, 600)
+local window = engine.GlfwWindow("Simple timer", 800, 600)
 
-application = Application:new()
+local application = Application:new()
 
-timer = Component:new({elapsed_time = 0, total_elapsed_time = 0})
+local timer = Component:new({elapsed_time = 0, total_elapsed_time = 0})
 
-camera = engine.CameraComponent()
+-- local camera = engine.CameraComponent()
 
 function timer:update(delta, input)
     self.elapsed_time = self.elapsed_time + delta
@@ -26,7 +26,7 @@ function timer:render(delta)
     end
 end
 
-e = engine.Entity()
+local e = engine.Entity()
 
 function application:initialise(input)
     e:add_component("my_timer", timer)
@@ -36,7 +36,7 @@ end
 
 function application:update(delta, input)
     if input:is_key_pressed(32) then
-        t = e:get_component("my_timer")
+        local t = e:get_component("my_timer")
         print("Space bar", t:get("test"))
     end
 end

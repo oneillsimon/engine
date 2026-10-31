@@ -18,8 +18,6 @@ add_library(
         cookbook/Chapter_2/DiscardShadingApp.cpp
         cookbook/Chapter_2/FlatADSShadingApp.h
         cookbook/Chapter_2/FlatADSShadingApp.cpp
-        cookbook/Chapter_2/SubroutineApp.h
-        cookbook/Chapter_2/SubroutineApp.cpp
         cookbook/Chapter_2/TwoSideShadingApp.h
         cookbook/Chapter_2/TwoSideShadingApp.cpp
 )

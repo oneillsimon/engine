@@ -15,7 +15,6 @@
 #include "applications/cookbook/Chapter_2/ADSShadingApp.h"
 #include "applications/cookbook/Chapter_2/TwoSideShadingApp.h"
 // #include "applications/cookbook/Chapter_2/FlatADSShadingApp.h"
-#include "applications/cookbook/Chapter_2/SubroutineApp.h"
 #include "applications/cookbook/Chapter_2/DiscardShadingApp.h"
 #include "src/engine.h"
 #include "src/rendering/glfw_window.h"
@@ -59,7 +58,6 @@ int main(int argc, char** argv) {
     //    auto application = new ADSShadingApp();
     //    auto application = new TwoSideShadingApp();
     //    auto application = new FlatADSShadingApp();
-    //    auto application = new SubroutineApp();
     auto application = new DiscardShadingApp();
     auto engine = new Engine(application, window, 120);
 

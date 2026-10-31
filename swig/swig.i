@@ -6,6 +6,7 @@
 %include component.i
 %include engine.i
 %include entity.i
+%include input_processor.i
 %include glfw_input_processor.i
 %include lua_application.i
 %include components/camera_component.i

@@ -16,8 +16,8 @@
     SWIG_arg++;
 };
 
-%typemap(typecheck) LuaComponent::MethodSignature& {
-    $1 = 1;
+%typemap(typecheck, precedence=SWIG_TYPECHECK_INTEGER) LuaComponent::MethodSignature& {
+    $1 = lua_istable(L, $input) ? 1 : 0;
 }
 
 %typemap(in) LuaComponent::MethodSignature& {

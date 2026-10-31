@@ -48,4 +48,4 @@ runs:
 
     - name: swig
       shell: bash
-      run: swig -lua swig/swig.i -o /tmp/swig_wrap.cxx
+      run: engine % swig -lua -c++ -Werror -o /tmp/swig_wrap.cxx swig/swig.i

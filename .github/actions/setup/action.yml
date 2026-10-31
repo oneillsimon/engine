@@ -25,11 +25,4 @@ runs:
     - name: Configure environment
       shell: bash
       run: |
-        if [ "${{ inputs.install-mesa }}" == "true" ]; then
-          # MESA_PREFIX=$(brew --prefix mesa)
-          # echo "DYLD_LIBRARY_PATH=$MESA_PREFIX/lib" >> $GITHUB_ENV
-          # echo "LIBGL_ALWAYS_SOFTWARE=true" >> $GITHUB_ENV
-          # echo "GALLIUM_DRIVER=llvmpipe" >> $GITHUB_ENV
-        fi
-
         cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DENGINE_USE_HEADLESS_GL=${{ inputs.headless }}

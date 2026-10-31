@@ -4,6 +4,22 @@ description: 'Runs static analysis tools'
 runs:
   using: 'composite'
   steps:
+    - name: Install dependencies
+      shell: bash
+      run: |
+        brew install \
+            actionlint \
+            clang-format \
+            glslang \
+            luacheck
+            shellcheck
+            swig
+        pip install cmake-format cmakelint
+
+    - name: actionlint
+      shell: bash
+      run: actionlint
+
     - name: clang-format
       shell: bash
       run: |
@@ -13,3 +29,23 @@ runs:
         'swig/*.cpp' 'swig/*.h' \
         'tests/*.cpp' 'tests/*.h' \
         'main.cpp' | xargs clang-format --dry-run --Werror
+
+    - name: glslValidator
+      shell: bash
+      run: git ls-files '*.glsl' | xargs glslangValidator
+
+    - name: luacheck
+      shell: bash
+      run: git ls-files '*.lua' | xargs luacheck
+
+    - name: cmake-format
+      shell: bash
+      run: cmake-format --check
+
+    - name: cmakelint
+      shell: bash
+      run: cmakelint
+
+    - name: swig
+      shell: bash
+      run: swig -lua swig/swig.i -o /tmp/swig_wrap.cxx

@@ -13,10 +13,6 @@ inputs:
     description: 'Whether to install mesa with pkgconf'
     required: false
     default: 'false'
-  install-static-analysis-tools:
-    description: 'Whether to install tools needed for static analysis'
-    required: false
-    default: 'false'
 
 runs:
   using: 'composite'
@@ -30,10 +26,6 @@ runs:
         
         if [ "${{ inputs.install-mesa }}" == "true" ]; then
           brew install mesa pkgconf
-        fi
-        
-        if [ "${{ inputs.install-static-analysis-tools }}" == "true" ]; then
-          brew install clang-format
         fi
 
     - name: Configure environment

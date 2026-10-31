@@ -16,13 +16,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Setup Environment
-        uses: ./.github/actions/setup
-        with:
-          install-base-dependencies: 'false'
-          install-mesa: 'false'
-          install-static-analysis-tools: 'true'
-
       - name: Static Analysis
         uses: ./.github/actions/static-analysis
 

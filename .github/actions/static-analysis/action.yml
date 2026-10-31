@@ -11,8 +11,8 @@ runs:
             actionlint \
             clang-format \
             glslang \
-            luacheck
-            shellcheck
+            luacheck \
+            shellcheck \
             swig
         pip install cmake-format cmakelint
 

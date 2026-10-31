@@ -30,7 +30,7 @@ std::string load_shader_from_file(const std::string& path) {
     }
 
     std::cout << path << std::endl << code.c_str() << std::endl;
-//    const char* code_c_str = code.c_str();
+    //    const char* code_c_str = code.c_str();
     return code;
 }
 
@@ -47,13 +47,12 @@ void CB_Chapter1_app::initialise(InputProcessor& input) {
 
     // Step 2. Copy the source into the shader object.
     auto vert_src = load_shader_from_file("shaders/cookbook/diffuse.vert.glsl");
-//    std::cout << vert_src << std::endl;
-    const GLchar* code_array[] = { vert_src.c_str() };
+    //    std::cout << vert_src << std::endl;
+    const GLchar* code_array[] = {vert_src.c_str()};
     glShaderSource(vert_shader, 1, code_array, NULL);
 
     // Step 3. Compile the shader.
     glCompileShader(vert_shader);
-
 
     // Step 4. Verify the compilation status.
     GLint result;
@@ -69,7 +68,7 @@ void CB_Chapter1_app::initialise(InputProcessor& input) {
             GLsizei written;
             glGetShaderInfoLog(vert_shader, log_length, &written, log);
             std::cerr << "Shader log: " << log << std::endl;
-            delete []log;
+            delete[] log;
         }
     }
 
@@ -83,12 +82,11 @@ void CB_Chapter1_app::initialise(InputProcessor& input) {
 
     // Step 2. Copy the source into the shader object.
     auto frag_src = load_shader_from_file("shaders/cookbook/diffuse.frag.glsl");
-    const GLchar* frag_code_array[] = { frag_src.c_str() };
+    const GLchar* frag_code_array[] = {frag_src.c_str()};
     glShaderSource(frag_shader, 1, frag_code_array, NULL);
 
     // Step 3. Compile the shader.
     glCompileShader(frag_shader);
-
 
     // Step 4. Verify the compilation status.;
     glGetShaderiv(frag_shader, GL_COMPILE_STATUS, &result);
@@ -103,7 +101,7 @@ void CB_Chapter1_app::initialise(InputProcessor& input) {
             GLsizei written;
             glGetShaderInfoLog(frag_shader, log_length, &written, log);
             std::cerr << "Shader log: " << log << std::endl;
-            delete []log;
+            delete[] log;
         }
     }
 
@@ -134,23 +132,16 @@ void CB_Chapter1_app::initialise(InputProcessor& input) {
             GLsizei written;
             glGetProgramInfoLog(program_handle, log_length, &written, log);
             std::cerr << "Program log: " << log << std::endl;
-            delete []log;
+            delete[] log;
         }
     } else {
         glUseProgram(program_handle);
     }
 
-    float position_data[] = {
-            -0.8F, -0.8F, 0.0F,
-            0.8F, -0.8F, 0.0F,
-            0.0F, 0.8F, 0.0F
-    };
+    float position_data[] = {-0.8F, -0.8F, 0.0F, 0.8F, -0.8F,
+                             0.0F,  0.0F,  0.8F, 0.0F};
 
-    float color_data[] = {
-            1.0F, 0.0F, 0.0F,
-            0.0F, 1.0F, 0.0F,
-            0.0F, 0.0F, 1.0F
-    };
+    float color_data[] = {1.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 1.0F};
 
     // Create and populate 2 buffer objects. (VBOs).
     GLuint vbo_handles[2];
@@ -158,14 +149,15 @@ void CB_Chapter1_app::initialise(InputProcessor& input) {
     GLuint position_buffer_handle = vbo_handles[0];
     GLuint color_buffer_handle = vbo_handles[1];
 
-
     // Populate the position buffer.
     glBindBuffer(GL_ARRAY_BUFFER, position_buffer_handle);
-    glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), position_data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), position_data,
+                 GL_STATIC_DRAW);
 
     // Populate the color buffer.
     glBindBuffer(GL_ARRAY_BUFFER, color_buffer_handle);
-    glBufferData(GL_ARRAY_BUFFER, 9 * sizeof (float), color_data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), color_data,
+                 GL_STATIC_DRAW);
 
     // Create and setup the VAO (Vertex Attribute Object).
     glGenVertexArrays(1, &this->vao_handle);
@@ -191,9 +183,11 @@ void CB_Chapter1_app::update(const double& delta, InputProcessor& input) {
 void CB_Chapter1_app::render(const double& delta) {
     Application::render(delta);
 
-    auto rotation_matrix = glm::rotate(glm::mat4(1.0F), glm::radians(90.0F), glm::vec3(0.0F, 0.0F, 1.0F));
+    auto rotation_matrix = glm::rotate(glm::mat4(1.0F), glm::radians(90.0F),
+                                       glm::vec3(0.0F, 0.0F, 1.0F));
 
-    GLuint location = glGetUniformLocation(this->program_handle, "RotationMatrix");
+    GLuint location =
+        glGetUniformLocation(this->program_handle, "RotationMatrix");
 
     if (location >= 0) {
         glUniformMatrix4fv(location, 1, GL_FALSE, &rotation_matrix[0][0]);

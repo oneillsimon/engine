@@ -14,7 +14,7 @@
 #include "applications/cookbook/Chapter_2/DiffuseShadingApp.h"
 #include "applications/cookbook/Chapter_2/ADSShadingApp.h"
 #include "applications/cookbook/Chapter_2/TwoSideShadingApp.h"
-//#include "applications/cookbook/Chapter_2/FlatADSShadingApp.h"
+// #include "applications/cookbook/Chapter_2/FlatADSShadingApp.h"
 #include "applications/cookbook/Chapter_2/SubroutineApp.h"
 #include "applications/cookbook/Chapter_2/DiscardShadingApp.h"
 #include "src/engine.h"
@@ -25,11 +25,11 @@
 extern "C" int luaopen_engine(lua_State* L);
 
 int main(int argc, char** argv) {
-//    auto v = gem::vector2<int> { 1, 2 };
-//    std::cout << v << std::endl;
-//
-//    auto v4 = gem::vector4<int>{ 101, 102, 304, 344 };
-//    std::cout << v4 << std::endl;
+    //    auto v = gem::vector2<int> { 1, 2 };
+    //    std::cout << v << std::endl;
+    //
+    //    auto v4 = gem::vector4<int>{ 101, 102, 304, 344 };
+    //    std::cout << v4 << std::endl;
 
 #if LUA_GAME
     if (argc < 2) {
@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
     luaL_openlibs(L);
     luaopen_engine(L);
 
-//    std::cout << v4<< std::endl;
+    //    std::cout << v4<< std::endl;
 
     try {
         load_file(L, argv[1]);
@@ -53,16 +53,15 @@ int main(int argc, char** argv) {
     lua_close(L);
 #else
     auto window = new GlfwWindow("This is a window", 800, 600);
-//    auto application = new LearnOpenGlApp();
-//    auto application = new LightingApp();
-//    auto application = new DiffuseShadingApp();
-//    auto application = new ADSShadingApp();
-//    auto application = new TwoSideShadingApp();
-//    auto application = new FlatADSShadingApp();
-//    auto application = new SubroutineApp();
+    //    auto application = new LearnOpenGlApp();
+    //    auto application = new LightingApp();
+    //    auto application = new DiffuseShadingApp();
+    //    auto application = new ADSShadingApp();
+    //    auto application = new TwoSideShadingApp();
+    //    auto application = new FlatADSShadingApp();
+    //    auto application = new SubroutineApp();
     auto application = new DiscardShadingApp();
     auto engine = new Engine(application, window, 120);
-
 
     const GLubyte* renderer = glGetString(GL_RENDERER);
     const GLubyte* vendor = glGetString(GL_VENDOR);
@@ -78,7 +77,6 @@ int main(int argc, char** argv) {
     std::cout << "GL Version (string): " << version << std::endl;
     std::cout << "GL Version (number): " << major << "." << minor << std::endl;
     std::cout << "GLSL Version: " << glsl_version << std::endl;
-
 
     engine->start();
 #endif

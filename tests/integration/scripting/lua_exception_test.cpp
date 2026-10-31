@@ -20,5 +20,6 @@ TEST(lua_exception_test, throw_exception) {
     }
 
     lua_close(L);
-    EXPECT_STREQ("cannot open does_not_exist.lua: No such file or directory", exception_str.c_str());
+    EXPECT_STREQ("cannot open does_not_exist.lua: No such file or directory",
+                 exception_str.c_str());
 };

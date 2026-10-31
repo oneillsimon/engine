@@ -29,7 +29,8 @@ TEST(glfw_input_processor_test, release_input) {
 
 TEST(glfw_input_processor_test, is_key_down) {
     auto window = new GlfwWindow("test", 800, 600);
-    auto* input = dynamic_cast<GlfwInputProcessor*>(window->get_input_processor());
+    auto* input =
+        dynamic_cast<GlfwInputProcessor*>(window->get_input_processor());
 
     ASSERT_FALSE(input->is_key_down(GLFW_KEY_SPACE));
     input->key_states[GLFW_KEY_SPACE] = GLFW_PRESS;
@@ -41,7 +42,8 @@ TEST(glfw_input_processor_test, is_key_down) {
 
 TEST(glfw_input_processor_test, is_key_pressed) {
     auto window = new GlfwWindow("test", 800, 600);
-    auto* input = dynamic_cast<GlfwInputProcessor*>(window->get_input_processor());
+    auto* input =
+        dynamic_cast<GlfwInputProcessor*>(window->get_input_processor());
 
     ASSERT_FALSE(input->is_key_pressed(GLFW_KEY_SPACE));
     input->key_states[GLFW_KEY_SPACE] = GLFW_PRESS;
@@ -53,7 +55,8 @@ TEST(glfw_input_processor_test, is_key_pressed) {
 
 TEST(glfw_input_processor_test, is_key_repeating) {
     auto window = new GlfwWindow("test", 800, 600);
-    auto* input = dynamic_cast<GlfwInputProcessor*>(window->get_input_processor());
+    auto* input =
+        dynamic_cast<GlfwInputProcessor*>(window->get_input_processor());
 
     ASSERT_FALSE(input->is_key_repeating(GLFW_KEY_SPACE));
     input->key_states[GLFW_KEY_SPACE] = GLFW_REPEAT;
@@ -62,7 +65,8 @@ TEST(glfw_input_processor_test, is_key_repeating) {
 
 TEST(glfw_input_processor_test, is_key_released) {
     auto window = new GlfwWindow("test", 800, 600);
-    auto* input = dynamic_cast<GlfwInputProcessor*>(window->get_input_processor());
+    auto* input =
+        dynamic_cast<GlfwInputProcessor*>(window->get_input_processor());
 
     ASSERT_TRUE(input->is_key_released(GLFW_KEY_SPACE));
     input->key_states[GLFW_KEY_SPACE] = GLFW_PRESS;
@@ -71,7 +75,8 @@ TEST(glfw_input_processor_test, is_key_released) {
 
 TEST(glfw_input_processor_test, is_scrolling) {
     auto window = new GlfwWindow("test", 800, 600);
-    auto* input = dynamic_cast<GlfwInputProcessor*>(window->get_input_processor());
+    auto* input =
+        dynamic_cast<GlfwInputProcessor*>(window->get_input_processor());
 
     ASSERT_FALSE(input->is_scrolling(ScrollDirection::ANY));
 
@@ -110,7 +115,8 @@ TEST(glfw_input_processor_test, is_scrolling) {
 
 TEST(glfw_input_processor_test, key_callback) {
     auto window = new GlfwWindow("test", 800, 600);
-    auto* input = dynamic_cast<GlfwInputProcessor*>(window->get_input_processor());
+    auto* input =
+        dynamic_cast<GlfwInputProcessor*>(window->get_input_processor());
 
     auto key = GLFW_KEY_A;
 
@@ -121,7 +127,8 @@ TEST(glfw_input_processor_test, key_callback) {
 
 TEST(glfw_input_processor_test, scroll_callback) {
     auto window = new GlfwWindow("test", 800, 600);
-    auto* input = dynamic_cast<GlfwInputProcessor*>(window->get_input_processor());
+    auto* input =
+        dynamic_cast<GlfwInputProcessor*>(window->get_input_processor());
 
     scroll_callback(input->get_window(), 1, -1);
     ASSERT_EQ(input->scroll_x, 1);
@@ -143,7 +150,7 @@ TEST(glfw_input_processor_test, scroll_callback) {
     ASSERT_EQ(result, expected);
 
     class Doubler {
-    public:
+      public:
         int value = 0;
         explicit Doubler(int value) : value(value) {}
         void on_scroll(int x, int y) { value = value * 2; }
@@ -162,19 +169,21 @@ TEST(glfw_input_processor_test, scroll_callback) {
 
 TEST(glfw_input_processor_test, cursor_position_callback) {
     auto window = new GlfwWindow("test", 800, 600);
-    auto* input = dynamic_cast<GlfwInputProcessor*>(window->get_input_processor());
+    auto* input =
+        dynamic_cast<GlfwInputProcessor*>(window->get_input_processor());
 
     double result = 0;
     double expected = 3;
 
-    input->on_cursor_position([&result](double x, double y) { result = x + y; });
+    input->on_cursor_position(
+        [&result](double x, double y) { result = x + y; });
     cursor_position_callback(input->get_window(), 1, 2);
 
     std::cout << "Result is " << result << std::endl;
     ASSERT_EQ(result, expected);
 
     class Halver {
-    public:
+      public:
         int value = 0;
         explicit Halver(int value) : value(value) {}
         void on_cursor(int x, int y) { value = value / 2; }

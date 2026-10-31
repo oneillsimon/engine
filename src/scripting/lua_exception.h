@@ -11,11 +11,12 @@
 #include "lua.h"
 
 class lua_exception : public std::exception {
-private:
+  private:
     std::string message;
-public:
+
+  public:
     explicit lua_exception(lua_State* L);
     const char* what() const noexcept override;
 };
 
-#endif //ENGINE_LUA_EXCEPTION_H
+#endif // ENGINE_LUA_EXCEPTION_H

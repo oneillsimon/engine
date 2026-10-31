@@ -8,18 +8,18 @@
 #include <glm/glm.hpp>
 
 class Light {
-protected:
+  protected:
     glm::vec3 ambient;
     glm::vec3 diffuse;
     glm::vec3 specular;
 
-    Light(const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular);
+    Light(const glm::vec3& ambient, const glm::vec3& diffuse,
+          const glm::vec3& specular);
 
-public:
+  public:
     glm::vec3 get_ambient() const;
     glm::vec3 get_diffuse() const;
     glm::vec3 get_specular() const;
 };
 
-
-#endif //ENGINE_LIGHT_H
+#endif // ENGINE_LIGHT_H

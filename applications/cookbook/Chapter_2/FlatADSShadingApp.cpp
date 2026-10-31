@@ -5,88 +5,95 @@
 
 #include "FlatADSShadingApp.h"
 
-//void key_callback(void* window, int key, int scancode, int action, int mods) {
-//    auto instance = static_cast<FlatADSShadingApp*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
-//    if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
-//        if (std::distance(instance->current_material, instance->materials.end()) == 1) {
-//            instance->current_material = instance->materials.begin();
-//        } else {
-//            instance->current_material++;
-//        }
-//        std::cout << "Using material: " << instance->current_material->first << std::endl;
-//    }
+// void key_callback(void* window, int key, int scancode, int action, int mods)
+// {
+//     auto instance =
+//     static_cast<FlatADSShadingApp*>(glfwGetWindowUserPointer(static_cast<GLFWwindow*>(window)));
+//     if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
+//         if (std::distance(instance->current_material,
+//         instance->materials.end()) == 1) {
+//             instance->current_material = instance->materials.begin();
+//         } else {
+//             instance->current_material++;
+//         }
+//         std::cout << "Using material: " << instance->current_material->first
+//         << std::endl;
+//     }
 //
-//    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
-//        if (instance->current_material == instance->materials.begin()) {
-//            instance->current_material = instance->materials.end();
-//            instance->current_material--;
-//        } else {
-//            instance->current_material--;
-//        }
-//        std::cout << "Using material: " << instance->current_material->first << std::endl;
-//    }
-//}
+//     if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
+//         if (instance->current_material == instance->materials.begin()) {
+//             instance->current_material = instance->materials.end();
+//             instance->current_material--;
+//         } else {
+//             instance->current_material--;
+//         }
+//         std::cout << "Using material: " << instance->current_material->first
+//         << std::endl;
+//     }
+// }
 
-FlatADSShadingApp::FlatADSShadingApp() : torus(0.7f, 0.3f, 30, 30) {
-
-}
-
+FlatADSShadingApp::FlatADSShadingApp() : torus(0.7f, 0.3f, 30, 30) {}
 
 void FlatADSShadingApp::initialise(InputProcessor& input) {
     Application::initialise(input);
 
     program = GLSLProgram();
-    program.compile_shader("shaders/cookbook/adsflat.vert.glsl", GLSLShaderType::VERTEX);
-    program.compile_shader("shaders/cookbook/adsflat.frag.glsl", GLSLShaderType::FRAGMENT);
+    program.compile_shader("shaders/cookbook/adsflat.vert.glsl",
+                           GLSLShaderType::VERTEX);
+    program.compile_shader("shaders/cookbook/adsflat.frag.glsl",
+                           GLSLShaderType::FRAGMENT);
     program.link();
     program.use();
 
     glEnable(GL_DEPTH_TEST);
 
     model = glm::mat4(1.0f);
-    model = glm::rotate(model, glm::radians(-35.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    model = glm::rotate(model, glm::radians(35.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    view = glm::lookAt(glm::vec3(0.0f, 0.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    projection = glm::perspective(glm::radians(70.0f), (float)800/600, 0.3f, 100.0f);
+    model =
+        glm::rotate(model, glm::radians(-35.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    model =
+        glm::rotate(model, glm::radians(35.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    view = glm::lookAt(glm::vec3(0.0f, 0.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f),
+                       glm::vec3(0.0f, 1.0f, 0.0f));
+    projection =
+        glm::perspective(glm::radians(70.0f), (float)800 / 600, 0.3f, 100.0f);
 
     auto world_light = glm::vec4(5.0f, 5.0f, 2.0f, 1.0f);
     program.set_uniform("Light.Position", view * world_light);
     program.set_uniform("Light.Ld", 1.0f, 1.0f, 1.0f);
-//    program.set_uniform("Light.La", 0.4f, 0.4f, 0.4f);
+    //    program.set_uniform("Light.La", 0.4f, 0.4f, 0.4f);
     program.set_uniform("Light.La", 1.0f, 1.0f, 1.0f);
     program.set_uniform("Light.Ls", 1.0f, 1.0f, 1.0f);
 
     materials = std::map<std::string, Material>{
-            std::make_pair("BLACK_PLASTIC", Materials::BLACK_PLASTIC),
-            std::make_pair("BLACK_RUBBER", Materials::BLACK_RUBBER),
-            std::make_pair("BRASS", Materials::BRASS),
-            std::make_pair("BRONZE", Materials::BRONZE),
-            std::make_pair("CHROME", Materials::CHROME),
-            std::make_pair("COPPER", Materials::COPPER),
-            std::make_pair("CYAN_PLASTIC", Materials::CYAN_PLASTIC),
-            std::make_pair("CYAN_RUBBER", Materials::CYAN_RUBBER),
-            std::make_pair("EMERALD", Materials::EMERALD),
-            std::make_pair("GOLD", Materials::GOLD),
-            std::make_pair("GREEN_PLASTIC", Materials::GREEN_PLASTIC),
-            std::make_pair("GREEN_RUBBER", Materials::GREEN_RUBBER),
-            std::make_pair("JADE", Materials::JADE),
-            std::make_pair("OBSIDIAN", Materials::OBSIDIAN),
-            std::make_pair("PEARL", Materials::PEARL),
-            std::make_pair("RED_PLASTIC", Materials::RED_PLASTIC),
-            std::make_pair("RED_RUBBER", Materials::RED_RUBBER),
-            std::make_pair("RUBY", Materials::RUBY),
-            std::make_pair("SILVER", Materials::SILVER),
-            std::make_pair("TURQUOISE", Materials::TURQUOISE),
-            std::make_pair("YELLOW_PLASTIC", Materials::YELLOW_PLASTIC),
-            std::make_pair("YELLOW_RUBBER", Materials::YELLOW_RUBBER),
-            std::make_pair("WHITE_PLASTIC", Materials::WHITE_PLASTIC),
-            std::make_pair("WHITE_RUBBER", Materials::WHITE_RUBBER)
-    };
+        std::make_pair("BLACK_PLASTIC", Materials::BLACK_PLASTIC),
+        std::make_pair("BLACK_RUBBER", Materials::BLACK_RUBBER),
+        std::make_pair("BRASS", Materials::BRASS),
+        std::make_pair("BRONZE", Materials::BRONZE),
+        std::make_pair("CHROME", Materials::CHROME),
+        std::make_pair("COPPER", Materials::COPPER),
+        std::make_pair("CYAN_PLASTIC", Materials::CYAN_PLASTIC),
+        std::make_pair("CYAN_RUBBER", Materials::CYAN_RUBBER),
+        std::make_pair("EMERALD", Materials::EMERALD),
+        std::make_pair("GOLD", Materials::GOLD),
+        std::make_pair("GREEN_PLASTIC", Materials::GREEN_PLASTIC),
+        std::make_pair("GREEN_RUBBER", Materials::GREEN_RUBBER),
+        std::make_pair("JADE", Materials::JADE),
+        std::make_pair("OBSIDIAN", Materials::OBSIDIAN),
+        std::make_pair("PEARL", Materials::PEARL),
+        std::make_pair("RED_PLASTIC", Materials::RED_PLASTIC),
+        std::make_pair("RED_RUBBER", Materials::RED_RUBBER),
+        std::make_pair("RUBY", Materials::RUBY),
+        std::make_pair("SILVER", Materials::SILVER),
+        std::make_pair("TURQUOISE", Materials::TURQUOISE),
+        std::make_pair("YELLOW_PLASTIC", Materials::YELLOW_PLASTIC),
+        std::make_pair("YELLOW_RUBBER", Materials::YELLOW_RUBBER),
+        std::make_pair("WHITE_PLASTIC", Materials::WHITE_PLASTIC),
+        std::make_pair("WHITE_RUBBER", Materials::WHITE_RUBBER)};
 
     current_material = materials.begin();
 }
 
-void FlatADSShadingApp::update(const double &delta, InputProcessor& input) {
+void FlatADSShadingApp::update(const double& delta, InputProcessor& input) {
     Application::update(delta, input);
 
     if (input.is_key_down(GLFW_KEY_ESCAPE)) {
@@ -94,7 +101,7 @@ void FlatADSShadingApp::update(const double &delta, InputProcessor& input) {
     }
 }
 
-void FlatADSShadingApp::render(const double &delta) {
+void FlatADSShadingApp::render(const double& delta) {
     Application::render(delta);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -109,14 +116,12 @@ void FlatADSShadingApp::render(const double &delta) {
     auto mv = view * model;
 
     program.set_uniform("ModelViewMatrix", mv);
-    program.set_uniform("NormalMatrix", glm::mat3(
-            glm::vec3(mv[0]), glm::vec3(mv[1]), glm::vec3(mv[2])
-    ));
+    program.set_uniform(
+        "NormalMatrix",
+        glm::mat3(glm::vec3(mv[0]), glm::vec3(mv[1]), glm::vec3(mv[2])));
     program.set_uniform("MVP", projection * mv);
 
     torus.render();
 }
 
-void FlatADSShadingApp::stop() {
-    Application::stop();
-}
+void FlatADSShadingApp::stop() { Application::stop(); }

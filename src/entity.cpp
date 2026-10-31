@@ -53,7 +53,7 @@ void Entity::add_component(const std::string& name, Component* component) {
     this->components[name] = component;
 }
 
-Entity* Entity::get_child(const std::string &name) {
+Entity* Entity::get_child(const std::string& name) {
     if (this->children.find(name) == this->children.end()) {
         return nullptr;
     }

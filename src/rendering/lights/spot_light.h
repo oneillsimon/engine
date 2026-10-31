@@ -9,7 +9,7 @@
 #include "light.h"
 
 class SpotLight : public Light {
-private:
+  private:
     glm::vec3 position;
     glm::vec3 direction;
     float cut_off;
@@ -17,8 +17,11 @@ private:
 
     Attenuation attenuation;
 
-public:
-    SpotLight(const glm::vec3& position, const glm::vec3& direction, float cut_off, float outer_cut_off, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular, const Attenuation& attenuation);
+  public:
+    SpotLight(const glm::vec3& position, const glm::vec3& direction,
+              float cut_off, float outer_cut_off, const glm::vec3& ambient,
+              const glm::vec3& diffuse, const glm::vec3& specular,
+              const Attenuation& attenuation);
 
     Attenuation get_attenuation() const;
     glm::vec3 get_position() const;
@@ -27,5 +30,4 @@ public:
     float get_outer_cut_off() const;
 };
 
-
-#endif //ENGINE_SPOT_LIGHT_H
+#endif // ENGINE_SPOT_LIGHT_H

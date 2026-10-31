@@ -18,7 +18,7 @@ void scroll_callback(void* window, double x, double y);
 void cursor_position_callback(void* window, double x, double y);
 
 class GlfwInputProcessor : public InputProcessor {
-public:
+  public:
     static const int KEYBOARD_SIZE = 512;
     static const int MOUSE_SIZE = 16;
     static const int NO_STATE = 0;
@@ -45,4 +45,4 @@ public:
     bool is_scrolling(const ScrollDirection& direction) override;
 };
 
-#endif //ENGINE_GLFW_INPUT_PROCESSOR_H
+#endif // ENGINE_GLFW_INPUT_PROCESSOR_H

@@ -18,13 +18,13 @@
 #include "input_processor.h"
 
 class CB_Chapter1_blob_app : public Application {
-private:
+  private:
     GLuint vao_handle{};
-public:
+
+  public:
     void initialise(InputProcessor& input) override;
     void update(const double& delta, InputProcessor& input) override;
     void render(const double& delta) override;
 };
 
-
-#endif //ENGINE_CB_CHAPTER1_BLOB_APP_H
+#endif // ENGINE_CB_CHAPTER1_BLOB_APP_H

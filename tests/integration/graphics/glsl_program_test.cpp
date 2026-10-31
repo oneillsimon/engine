@@ -13,17 +13,18 @@
 TEST(glsl_program, constructor) {
     auto program = GLSLProgram();
     ASSERT_FALSE(program.is_linked()); // Assert program is not linked.
-    ASSERT_EQ(program.get_handle(), 0); // Assert program has not been given OpenGL handle.
+    ASSERT_EQ(program.get_handle(),
+              0); // Assert program has not been given OpenGL handle.
 }
 
 TEST(glsl_program, destructor) {
     const auto shader_name = "shader.vert.glsl";
     auto vert_shader = ""
-                  "#version 410 core\n"
-                  "void main() {\n"
-                  "  gl_Position = vec4(1.0, 1.0, 1.0, 1.0);\n"
-                  "}\n"
-                  "";
+                       "#version 410 core\n"
+                       "void main() {\n"
+                       "  gl_Position = vec4(1.0, 1.0, 1.0, 1.0);\n"
+                       "}\n"
+                       "";
     std::ofstream shader_file(shader_name);
     shader_file << vert_shader;
     shader_file.close();
@@ -45,7 +46,8 @@ TEST(glsl_program, destructor) {
 
     num_shaders = -1;
     glGetProgramiv(program_handle, GL_ATTACHED_SHADERS, &num_shaders);
-    // Number of shader's shouldn't be updated since the program's handle is no longer valid.
+    // Number of shader's shouldn't be updated since the program's handle is no
+    // longer valid.
     ASSERT_EQ(num_shaders, -1);
 
     remove(shader_name);
@@ -80,24 +82,29 @@ TEST(glsl_program, compile_shader_file_not_found) {
 
     auto program = GLSLProgram();
 
-    EXPECT_THROW({
-        try {
-            program.compile_shader(shader_name, GLSLShaderType::VERTEX);
-        } catch (const GLSLException& e) {
-            EXPECT_STREQ(e.what(), std::string("Shader: " + shader_name + "not found.").c_str());
-            throw;
-        }
-    }, GLSLException);
+    EXPECT_THROW(
+        {
+            try {
+                program.compile_shader(shader_name, GLSLShaderType::VERTEX);
+            } catch (const GLSLException& e) {
+                EXPECT_STREQ(e.what(), std::string("Shader: " + shader_name +
+                                                   "not found.")
+                                           .c_str());
+                throw;
+            }
+        },
+        GLSLException);
 }
 
 TEST(glsl_program, compile_shader_shader_compilation_error) {
     const auto shader_name = "shader.vert.glsl";
-    auto vert_shader = ""
-                       "#version 410 core\n"
-                       "void main() \n" // Omit the opening `{` to cause compilation failure.
-                       "  gl_Position = vec4(1.0, 1.0, 1.0, 1.0);\n"
-                       "}\n"
-                       "";
+    auto vert_shader =
+        ""
+        "#version 410 core\n"
+        "void main() \n" // Omit the opening `{` to cause compilation failure.
+        "  gl_Position = vec4(1.0, 1.0, 1.0, 1.0);\n"
+        "}\n"
+        "";
     std::ofstream shader_file(shader_name);
     shader_file << vert_shader;
     shader_file.close();
@@ -106,14 +113,17 @@ TEST(glsl_program, compile_shader_shader_compilation_error) {
 
     auto program = GLSLProgram();
 
-    EXPECT_THROW({
-        try {
-            program.compile_shader(shader_name, GLSLShaderType::VERTEX);
-        } catch (const GLSLException& e) {
-            EXPECT_TRUE(std::string(e.what()).find("syntax error") != std::string::npos);
-            throw;
-        }
-    }, GLSLException);
+    EXPECT_THROW(
+        {
+            try {
+                program.compile_shader(shader_name, GLSLShaderType::VERTEX);
+            } catch (const GLSLException& e) {
+                EXPECT_TRUE(std::string(e.what()).find("syntax error") !=
+                            std::string::npos);
+                throw;
+            }
+        },
+        GLSLException);
     remove(shader_name);
 }
 
@@ -130,20 +140,25 @@ TEST(glsl_program, compile_shader_unable_to_read_file) {
     shader_file.close();
 
     // Make file write only, that is to say unreadable.
-    std::filesystem::permissions(shader_name, std::filesystem::perms::owner_write);
+    std::filesystem::permissions(shader_name,
+                                 std::filesystem::perms::owner_write);
 
     auto window = GlfwWindow("test", 800, 600);
 
     auto program = GLSLProgram();
 
-    EXPECT_THROW({
-        try {
-            program.compile_shader(shader_name, GLSLShaderType::VERTEX);
-        } catch (const GLSLException& e) {
-            EXPECT_STREQ(e.what(), std::string("Unable to open: " + shader_name + ".").c_str());
-            throw;
-        }
-    }, GLSLException);
+    EXPECT_THROW(
+        {
+            try {
+                program.compile_shader(shader_name, GLSLShaderType::VERTEX);
+            } catch (const GLSLException& e) {
+                EXPECT_STREQ(e.what(),
+                             std::string("Unable to open: " + shader_name + ".")
+                                 .c_str());
+                throw;
+            }
+        },
+        GLSLException);
     remove(shader_name.c_str());
 }
 
@@ -176,14 +191,16 @@ TEST(glsl_program, link_without_compiling) {
 
     ASSERT_FALSE(program.is_linked());
 
-    EXPECT_THROW({
-        try {
-            program.link();
-        } catch (const GLSLException& e) {
-            EXPECT_STREQ(e.what(), "Program has not been compiled");
-            throw;
-        }
-    }, GLSLException);
+    EXPECT_THROW(
+        {
+            try {
+                program.link();
+            } catch (const GLSLException& e) {
+                EXPECT_STREQ(e.what(), "Program has not been compiled");
+                throw;
+            }
+        },
+        GLSLException);
 }
 
 TEST(glsl_program, link_failure) {
@@ -207,14 +224,17 @@ TEST(glsl_program, link_failure) {
 
     ASSERT_FALSE(program.is_linked());
 
-    EXPECT_THROW({
-        try {
-            program.link();
-        } catch (const GLSLException& e) {
-            EXPECT_TRUE(std::string(e.what()).find("Program link failed.") != std::string::npos);
-            throw;
-        }
-    }, GLSLException);
+    EXPECT_THROW(
+        {
+            try {
+                program.link();
+            } catch (const GLSLException& e) {
+                EXPECT_TRUE(std::string(e.what()).find(
+                                "Program link failed.") != std::string::npos);
+                throw;
+            }
+        },
+        GLSLException);
 
     remove(shader_name);
 }
@@ -261,14 +281,16 @@ TEST(glsl_program, use_before_link) {
 
     program.compile_shader(shader_name, GLSLShaderType::VERTEX);
 
-    EXPECT_THROW({
-        try{
-            program.use();
-        } catch (const GLSLException& e) {
-            EXPECT_STREQ(e.what(), "Program has not been linked.");
-            throw;
-        }
-    }, GLSLException);
+    EXPECT_THROW(
+        {
+            try {
+                program.use();
+            } catch (const GLSLException& e) {
+                EXPECT_STREQ(e.what(), "Program has not been linked.");
+                throw;
+            }
+        },
+        GLSLException);
 
     program.link();
     EXPECT_NO_THROW(program.use());

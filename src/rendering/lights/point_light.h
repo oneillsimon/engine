@@ -9,17 +9,20 @@
 #include "light.h"
 
 class PointLight : public Light {
-private:
+  private:
     glm::vec3 position;
     Attenuation attenuation;
 
-public:
-    PointLight(const glm::vec3& position, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular, const Attenuation& attenuation);
-    PointLight(const glm::vec3& position, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular, float constant, float linear, float quadratic);
+  public:
+    PointLight(const glm::vec3& position, const glm::vec3& ambient,
+               const glm::vec3& diffuse, const glm::vec3& specular,
+               const Attenuation& attenuation);
+    PointLight(const glm::vec3& position, const glm::vec3& ambient,
+               const glm::vec3& diffuse, const glm::vec3& specular,
+               float constant, float linear, float quadratic);
 
     glm::vec3 get_position() const;
     Attenuation get_attenuation() const;
 };
 
-
-#endif //ENGINE_POINT_LIGHT_H
+#endif // ENGINE_POINT_LIGHT_H

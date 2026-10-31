@@ -4,4 +4,5 @@
 
 #include "glsl_exception.h"
 
-GLSLException::GLSLException(const std::string &message) : runtime_error(message) { }
+GLSLException::GLSLException(const std::string& message)
+    : runtime_error(message) {}

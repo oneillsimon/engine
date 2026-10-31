@@ -6,8 +6,8 @@
 #define ENGINE_MESH_H
 
 class Mesh {
-public:
+  public:
     virtual void render() const = 0;
 };
 
-#endif //ENGINE_MESH_H
+#endif // ENGINE_MESH_H

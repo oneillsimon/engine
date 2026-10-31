@@ -8,9 +8,8 @@
 #include <stdexcept>
 
 class GLSLException : public std::runtime_error {
-public:
+  public:
     explicit GLSLException(const std::string& message);
 };
 
-
-#endif //ENGINE_GLSL_EXCEPTION_H
+#endif // ENGINE_GLSL_EXCEPTION_H

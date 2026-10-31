@@ -9,9 +9,10 @@
 #include "input_processor.h"
 
 class Application {
-private:
+  private:
     bool close_requested;
-public:
+
+  public:
     Application();
     ~Application() = default;
 
@@ -25,4 +26,4 @@ public:
     bool is_close_requested() const;
 };
 
-#endif //ENGINE_APPLICATION_H
+#endif // ENGINE_APPLICATION_H

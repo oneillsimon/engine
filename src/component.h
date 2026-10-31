@@ -8,7 +8,7 @@
 #include "input_processor.h"
 
 class Component {
-public:
+  public:
     Component();
 
     virtual ~Component();
@@ -18,5 +18,4 @@ public:
     virtual void render(double delta);
 };
 
-
-#endif //ENGINE_COMPONENT_H
+#endif // ENGINE_COMPONENT_H

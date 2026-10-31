@@ -4,78 +4,62 @@
 
 #include "teapot.h"
 
-void
-Teapot::generate_patches(std::vector<GLfloat> &points, std::vector<GLfloat> &normals, std::vector<GLfloat> &tex_coords,
-                         std::vector<GLuint> &elements, int grid) {
-    std::vector<GLfloat> b(4 * (grid + 1)); // Pre-computed Bernstein basis functions.
-    std::vector<GLfloat> db(4 * (grid + 1)); // Pre-computed derivatives of basis functions.
+void Teapot::generate_patches(std::vector<GLfloat>& points,
+                              std::vector<GLfloat>& normals,
+                              std::vector<GLfloat>& tex_coords,
+                              std::vector<GLuint>& elements, int grid) {
+    std::vector<GLfloat> b(
+        4 * (grid + 1)); // Pre-computed Bernstein basis functions.
+    std::vector<GLfloat> db(
+        4 * (grid + 1)); // Pre-computed derivatives of basis functions.
 
     int index = 0;
     int element_index = 0;
     int tex_coord_index = 0;
 
-    // Pre-compute the basis function (Bernstein polynomials) and their derivatives.
+    // Pre-compute the basis function (Bernstein polynomials) and their
+    // derivatives.
     compute_basis_functions(b, db, grid);
 
     // Build each patch.
     // The rim.
-    build_patch_reflect(
-            0, b, db, points, normals, tex_coords, elements, index, element_index,
-            tex_coord_index, grid, true, true
-    );
+    build_patch_reflect(0, b, db, points, normals, tex_coords, elements, index,
+                        element_index, tex_coord_index, grid, true, true);
 
     // The body.
-    build_patch_reflect(
-            1, b, db, points, normals, tex_coords, elements, index, element_index,
-            tex_coord_index, grid, true, true
-    );
-    build_patch_reflect(
-            2, b, db, points, normals, tex_coords, elements, index, element_index,
-            tex_coord_index, grid, true, true
-    );
+    build_patch_reflect(1, b, db, points, normals, tex_coords, elements, index,
+                        element_index, tex_coord_index, grid, true, true);
+    build_patch_reflect(2, b, db, points, normals, tex_coords, elements, index,
+                        element_index, tex_coord_index, grid, true, true);
 
     // The lid.
-    build_patch_reflect(
-            3, b, db, points, normals, tex_coords, elements, index, element_index,
-            tex_coord_index, grid, true, true
-    );
-    build_patch_reflect(
-            4, b, db, points, normals, tex_coords, elements, index, element_index,
-            tex_coord_index, grid, true, true
-    );
+    build_patch_reflect(3, b, db, points, normals, tex_coords, elements, index,
+                        element_index, tex_coord_index, grid, true, true);
+    build_patch_reflect(4, b, db, points, normals, tex_coords, elements, index,
+                        element_index, tex_coord_index, grid, true, true);
 
     // The bottom.
-    build_patch_reflect(
-            5, b, db, points, normals, tex_coords, elements, index, element_index,
-            tex_coord_index, grid, true, true
-    );
+    build_patch_reflect(5, b, db, points, normals, tex_coords, elements, index,
+                        element_index, tex_coord_index, grid, true, true);
 
     // The handle.
-    build_patch_reflect(
-            6, b, db, points, normals, tex_coords, elements, index, element_index,
-            tex_coord_index, grid, false, true
-    );
-    build_patch_reflect(
-            7, b, db, points, normals, tex_coords, elements, index, element_index,
-            tex_coord_index, grid, false, true
-    );
+    build_patch_reflect(6, b, db, points, normals, tex_coords, elements, index,
+                        element_index, tex_coord_index, grid, false, true);
+    build_patch_reflect(7, b, db, points, normals, tex_coords, elements, index,
+                        element_index, tex_coord_index, grid, false, true);
 
     // The spout.
-    build_patch_reflect(
-            8, b, db, points, normals, tex_coords, elements, index, element_index,
-            tex_coord_index, grid, false, true
-    );
-    build_patch_reflect(
-            9, b, db, points, normals, tex_coords, elements, index, element_index,
-            tex_coord_index, grid, false, true
-    );
-
+    build_patch_reflect(8, b, db, points, normals, tex_coords, elements, index,
+                        element_index, tex_coord_index, grid, false, true);
+    build_patch_reflect(9, b, db, points, normals, tex_coords, elements, index,
+                        element_index, tex_coord_index, grid, false, true);
 }
 
-void Teapot::build_patch_reflect(int patch_number, std::vector<GLfloat> &b, std::vector<GLfloat> &db,
-                                 std::vector<GLfloat> &v, std::vector<GLfloat> &n, std::vector<GLfloat> &tc,
-                                 std::vector<GLuint> &el, int &index, int &element_index, int &tex_coord_index,
-                                 int grid, bool reflect_x, bool reflect_y) {
+void Teapot::build_patch_reflect(
+    int patch_number, std::vector<GLfloat>& b, std::vector<GLfloat>& db,
+    std::vector<GLfloat>& v, std::vector<GLfloat>& n, std::vector<GLfloat>& tc,
+    std::vector<GLuint>& el, int& index, int& element_index,
+    int& tex_coord_index, int grid, bool reflect_x, bool reflect_y) {
     glm::vec3 patch[4][4];
     glm::vec3 patch_reverse[4][4];
 
@@ -83,52 +67,46 @@ void Teapot::build_patch_reflect(int patch_number, std::vector<GLfloat> &b, std:
     get_patch(patch_number, patch_reverse, true);
 
     // Patch without modification.
-    build_patch(
-            patch, b, db, v, n, tc, el, index, element_index, tex_coord_index, grid,
-            glm::mat3(1.0F), true
-            );
+    build_patch(patch, b, db, v, n, tc, el, index, element_index,
+                tex_coord_index, grid, glm::mat3(1.0F), true);
 
     // Patch reflected in x.
     if (reflect_x) {
-        build_patch(
-                patch_reverse, b, db, v, n, tc, el, index, element_index, tex_coord_index,
-                grid, glm::mat3(
-                        glm::vec3(-1.0F, 0.0F, 0.0F),
-                        glm::vec3(0.0F, 1.0F, 0.0F),
-                        glm::vec3(0.0F, 0.0F, 1.0F)
-                        ), false
-                );
+        build_patch(patch_reverse, b, db, v, n, tc, el, index, element_index,
+                    tex_coord_index, grid,
+                    glm::mat3(glm::vec3(-1.0F, 0.0F, 0.0F),
+                              glm::vec3(0.0F, 1.0F, 0.0F),
+                              glm::vec3(0.0F, 0.0F, 1.0F)),
+                    false);
     }
 
     // Patch reflected in y.
     if (reflect_y) {
-        build_patch(
-                patch_reverse, b, db, v, n, tc, el, index, element_index, tex_coord_index,
-                grid, glm::mat3(
-                        glm::vec3(1.0F, 0.0F, 0.0F),
-                        glm::vec3(0.0F, -1.0F, 0.0F),
-                        glm::vec3(0.0F, 0.0F, 1.0F)
-                ), false
-        );
+        build_patch(patch_reverse, b, db, v, n, tc, el, index, element_index,
+                    tex_coord_index, grid,
+                    glm::mat3(glm::vec3(1.0F, 0.0F, 0.0F),
+                              glm::vec3(0.0F, -1.0F, 0.0F),
+                              glm::vec3(0.0F, 0.0F, 1.0F)),
+                    false);
     }
 
     // Patch reflected in x and y.
     if (reflect_x && reflect_y) {
-        build_patch(
-                patch_reverse, b, db, v, n, tc, el, index, element_index, tex_coord_index,
-                grid, glm::mat3(
-                        glm::vec3(-1.0F, 0.0F, 0.0F),
-                        glm::vec3(0.0F, -1.0F, 0.0F),
-                        glm::vec3(0.0F, 0.0F, 1.0F)
-                ), true
-        );
+        build_patch(patch_reverse, b, db, v, n, tc, el, index, element_index,
+                    tex_coord_index, grid,
+                    glm::mat3(glm::vec3(-1.0F, 0.0F, 0.0F),
+                              glm::vec3(0.0F, -1.0F, 0.0F),
+                              glm::vec3(0.0F, 0.0F, 1.0F)),
+                    true);
     }
 }
 
-void Teapot::build_patch(glm::vec3 (*patch)[4], std::vector<GLfloat> &b, std::vector<GLfloat> &db,
-                                 std::vector<GLfloat> &v, std::vector<GLfloat> &n, std::vector<GLfloat> &tc,
-                                 std::vector<GLuint> &el, int &index, int &element_index, int &tex_coord_index,
-                                 int grid, glm::mat3 reflect, bool invert_normal) {
+void Teapot::build_patch(glm::vec3 (*patch)[4], std::vector<GLfloat>& b,
+                         std::vector<GLfloat>& db, std::vector<GLfloat>& v,
+                         std::vector<GLfloat>& n, std::vector<GLfloat>& tc,
+                         std::vector<GLuint>& el, int& index,
+                         int& element_index, int& tex_coord_index, int grid,
+                         glm::mat3 reflect, bool invert_normal) {
     int start_index = index / 3;
     float tc_factor = 1.0F / (float)grid;
 
@@ -175,27 +153,36 @@ void Teapot::build_patch(glm::vec3 (*patch)[4], std::vector<GLfloat> &b, std::ve
     }
 }
 
-void Teapot::get_patch(int patch_number, glm::vec3 (*patch)[4], bool reverse_v) {
+void Teapot::get_patch(int patch_number, glm::vec3 (*patch)[4],
+                       bool reverse_v) {
     for (auto u = 0; u < 4; u++) {
         for (auto v = 0; v < 4; v++) {
             if (reverse_v) {
                 patch[u][v] = glm::vec3(
-                        TeapotData::cpdata[TeapotData::patchdata[patch_number][u * 4 + (3 - v)]][0],
-                        TeapotData::cpdata[TeapotData::patchdata[patch_number][u * 4 + (3 - v)]][1],
-                        TeapotData::cpdata[TeapotData::patchdata[patch_number][u * 4 + (3 - v)]][2]
-                        );
+                    TeapotData::cpdata[TeapotData::patchdata[patch_number]
+                                                            [u * 4 + (3 - v)]]
+                                      [0],
+                    TeapotData::cpdata[TeapotData::patchdata[patch_number]
+                                                            [u * 4 + (3 - v)]]
+                                      [1],
+                    TeapotData::cpdata[TeapotData::patchdata[patch_number]
+                                                            [u * 4 + (3 - v)]]
+                                      [2]);
             } else {
                 patch[u][v] = glm::vec3(
-                        TeapotData::cpdata[TeapotData::patchdata[patch_number][u * 4 + v]][0],
-                        TeapotData::cpdata[TeapotData::patchdata[patch_number][u * 4 + v]][1],
-                        TeapotData::cpdata[TeapotData::patchdata[patch_number][u * 4 + v]][2]
-                );
+                    TeapotData::cpdata[TeapotData::patchdata[patch_number]
+                                                            [u * 4 + v]][0],
+                    TeapotData::cpdata[TeapotData::patchdata[patch_number]
+                                                            [u * 4 + v]][1],
+                    TeapotData::cpdata[TeapotData::patchdata[patch_number]
+                                                            [u * 4 + v]][2]);
             }
         }
     }
 }
 
-void Teapot::compute_basis_functions(std::vector<GLfloat> &b, std::vector<GLfloat> &db, int grid) {
+void Teapot::compute_basis_functions(std::vector<GLfloat>& b,
+                                     std::vector<GLfloat>& db, int grid) {
     float inc = 1.0F / (float)grid;
 
     for (auto i = 0; i <= grid; i++) {
@@ -216,9 +203,10 @@ void Teapot::compute_basis_functions(std::vector<GLfloat> &b, std::vector<GLfloa
     }
 }
 
-glm::vec3 Teapot::evaluate(int grid_u, int grid_v, std::vector<GLfloat> &b, glm::vec3 (*patch)[4]) {
+glm::vec3 Teapot::evaluate(int grid_u, int grid_v, std::vector<GLfloat>& b,
+                           glm::vec3 (*patch)[4]) {
     glm::vec3 p(0.0F, 0.0F, 0.0F);
-    for (auto i = 0; i< 4; i++) {
+    for (auto i = 0; i < 4; i++) {
         for (auto j = 0; j < 4; j++) {
             p += patch[i][j] * b[grid_u * 4 + i] * b[grid_v * 4 + j];
         }
@@ -226,7 +214,9 @@ glm::vec3 Teapot::evaluate(int grid_u, int grid_v, std::vector<GLfloat> &b, glm:
     return p;
 }
 
-glm::vec3 Teapot::evaluate_normal(int grid_u, int grid_v, std::vector<GLfloat> &b, std::vector<GLfloat> &db,
+glm::vec3 Teapot::evaluate_normal(int grid_u, int grid_v,
+                                  std::vector<GLfloat>& b,
+                                  std::vector<GLfloat>& db,
                                   glm::vec3 (*patch)[4]) {
     glm::vec3 du(0.0F, 0.0F, 0.0F);
     glm::vec3 dv(0.0F, 0.0F, 0.0F);
@@ -246,7 +236,8 @@ glm::vec3 Teapot::evaluate_normal(int grid_u, int grid_v, std::vector<GLfloat> &
     return normal;
 }
 
-void Teapot::move_lid(int grid, std::vector<GLfloat> &p, const glm::mat4 &lid_transform) {
+void Teapot::move_lid(int grid, std::vector<GLfloat>& p,
+                      const glm::mat4& lid_transform) {
     int start = 3 * 12 * (grid + 1) * (grid + 1);
     int end = 3 * 20 * (grid + 1) * (grid + 1);
 
@@ -260,7 +251,7 @@ void Teapot::move_lid(int grid, std::vector<GLfloat> &p, const glm::mat4 &lid_tr
     }
 }
 
-Teapot::Teapot(int grid, const glm::mat4 &lid_transform) {
+Teapot::Teapot(int grid, const glm::mat4& lid_transform) {
     int vertices = 32 * (grid + 1) * (grid + 1);
     int faces = grid * grid * 32;
 

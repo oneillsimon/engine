@@ -12,11 +12,11 @@
 #include "input_processor.h"
 
 class Entity {
-private:
+  private:
     std::map<const std::string, Entity*> children;
     std::map<const std::string, Component*> components;
 
-public:
+  public:
     Entity();
     ~Entity();
 
@@ -29,7 +29,7 @@ public:
 
     Entity* get_child(const std::string& name);
 
-    template<class ComponentClass>
+    template <class ComponentClass>
     ComponentClass* get_component(const std::string& name) {
         if (this->components.find(name) == this->components.end()) {
             return nullptr;
@@ -41,5 +41,4 @@ public:
     std::map<const std::string, Component*> all_components() const;
 };
 
-
-#endif //ENGINE_ENTITY_H
+#endif // ENGINE_ENTITY_H

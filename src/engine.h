@@ -12,18 +12,19 @@
 #include "rendering/window.h"
 
 class Engine {
-private:
+  private:
     bool running;
     double frame_rate;
 
     void run();
 
-protected:
+  protected:
     Application* application;
     std::unique_ptr<Window> window;
 
-public:
-    Engine(Application* application, std::unique_ptr<Window> window, double frame_rate);
+  public:
+    Engine(Application* application, std::unique_ptr<Window> window,
+           double frame_rate);
     ~Engine();
 
     bool is_running() const;
@@ -31,4 +32,4 @@ public:
     void stop();
 };
 
-#endif //ENGINE_ENGINE_H
+#endif // ENGINE_ENGINE_H

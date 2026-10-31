@@ -7,7 +7,7 @@
 #include <engine.h>
 
 class EngineTestTestApplication : public Application {
-public:
+  public:
     int update_counter = 0;
     int stop_counter = 0;
     double last_update_delta = 0;
@@ -20,9 +20,7 @@ public:
         this->update_counter++;
     }
 
-    void render(const double& delta) override {
-        Application::render(delta);
-    }
+    void render(const double& delta) override { Application::render(delta); }
 
     void stop() override {
         Application::stop();
@@ -31,22 +29,23 @@ public:
 };
 
 class TestWindow : public Window {
-public:
-    TestWindow(std::string title, const unsigned int& width, const unsigned int& height): Window(title, width, height) {}
+  public:
+    TestWindow(std::string title, const unsigned int& width,
+               const unsigned int& height)
+        : Window(title, width, height) {}
 
     void update() {};
     void swap_buffers() {};
 
-    void request_close() {
-        this->close_requested = true;
-    }
+    void request_close() { this->close_requested = true; }
 };
 
-class TestWindowClosesAfterNFrames: public TestWindow {
-public:
+class TestWindowClosesAfterNFrames : public TestWindow {
+  public:
     int close_after_frames;
     int counter;
-    TestWindowClosesAfterNFrames(int closes_after_n_frames) : TestWindow(std::string(), 0, 0) {
+    TestWindowClosesAfterNFrames(int closes_after_n_frames)
+        : TestWindow(std::string(), 0, 0) {
         this->close_after_frames = closes_after_n_frames;
         this->counter = 0;
     }
@@ -62,7 +61,8 @@ public:
 TEST(engine_test, frame_rate) {
     auto application = new EngineTestTestApplication();
     float frame_rate = 120.0f;
-    auto window = std::unique_ptr<TestWindow>(new TestWindowClosesAfterNFrames(1));
+    auto window =
+        std::unique_ptr<TestWindow>(new TestWindowClosesAfterNFrames(1));
 
     auto e = Engine(application, std::move(window), frame_rate);
     e.start();
@@ -75,7 +75,8 @@ TEST(engine_test, frame_rate) {
 TEST(engine_test, window_close_stops_engine) {
     auto close_after_n_window_updates = 2;
     auto application = new EngineTestTestApplication();
-    auto window = std::make_unique<TestWindowClosesAfterNFrames>(close_after_n_window_updates);
+    auto window = std::make_unique<TestWindowClosesAfterNFrames>(
+        close_after_n_window_updates);
     auto window_raw_ptr = window.get();
     auto e = Engine(application, std::move(window), 60.0f);
 

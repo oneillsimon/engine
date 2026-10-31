@@ -26,19 +26,20 @@ enum GLSLShaderType {
 };
 
 class GLSLProgram {
-private:
+  private:
     int handle;
     bool linked;
     std::map<std::string, int> uniform_locations;
 
     int get_uniform_location(const std::string& name);
-    static bool file_exists(const std::string& filename) ;
+    static bool file_exists(const std::string& filename);
 
-public:
+  public:
     GLSLProgram();
     ~GLSLProgram();
 
-    void compile_shader(const std::string& filename, GLSLShaderType shader_type);
+    void compile_shader(const std::string& filename,
+                        GLSLShaderType shader_type);
 
     void link();
     void use() const;
@@ -47,8 +48,10 @@ public:
     [[nodiscard]] int get_handle() const;
     [[nodiscard]] bool is_linked() const;
 
-    void bind_attribute_location(GLuint location, const std::string& name) const;
-    void bind_fragment_data_location(GLuint location, const std::string& name) const;
+    void bind_attribute_location(GLuint location,
+                                 const std::string& name) const;
+    void bind_fragment_data_location(GLuint location,
+                                     const std::string& name) const;
 
     void set_uniform(const std::string& name, float x, float y, float z);
     void set_uniform(const std::string& name, const glm::vec2& v);
@@ -61,8 +64,7 @@ public:
     void set_uniform(const std::string& name, bool b);
     void set_uniform(const std::string& name, GLuint value);
 
-    [[nodiscard]] static std::string get_type_string(GLenum type) ;
+    [[nodiscard]] static std::string get_type_string(GLenum type);
 };
 
-
-#endif //ENGINE_GLSL_PROGRAM_H
+#endif // ENGINE_GLSL_PROGRAM_H

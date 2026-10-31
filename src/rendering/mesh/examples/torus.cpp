@@ -5,7 +5,8 @@
 #include <iostream>
 #include "torus.h"
 
-Torus::Torus(float outer_radius, float inner_radius, unsigned int number_of_sides, unsigned int number_of_rings) {
+Torus::Torus(float outer_radius, float inner_radius,
+             unsigned int number_of_sides, unsigned int number_of_rings) {
     auto faces = number_of_sides * number_of_rings;
 
     // One extra ring to duplicate first one.
@@ -48,11 +49,9 @@ Torus::Torus(float outer_radius, float inner_radius, unsigned int number_of_side
             tex_index += 2;
 
             // Normalize.
-            auto length = sqrt(
-                    normals[index] * normals[index] +
-                    normals[index + 1] * normals[index + 1] +
-                    normals[index + 2] * normals[index + 2]
-                    );
+            auto length = sqrt(normals[index] * normals[index] +
+                               normals[index + 1] * normals[index + 1] +
+                               normals[index + 2] * normals[index + 2]);
 
             normals[index] /= length;
             normals[index + 1] /= length;
@@ -79,5 +78,5 @@ Torus::Torus(float outer_radius, float inner_radius, unsigned int number_of_side
         }
     }
 
-    init_buffers(&elements, &points, & normals, &tex_coords);
+    init_buffers(&elements, &points, &normals, &tex_coords);
 }

@@ -6,17 +6,14 @@
 #include <iostream>
 #include "engine.h"
 
-Engine::Engine(Application* application, std::unique_ptr<Window> window, double frame_rate) :
-    application(application),
-    running(false),
-    window(std::move(window)),
-    frame_rate(1.0 / frame_rate) {
+Engine::Engine(Application* application, std::unique_ptr<Window> window,
+               double frame_rate)
+    : application(application), running(false), window(std::move(window)),
+      frame_rate(1.0 / frame_rate) {
     assert(("Frame rate must be greater than zero.", frame_rate > 0));
 }
 
-Engine::~Engine() {
-    delete application;
-}
+Engine::~Engine() { delete application; }
 
 void Engine::run() {
     this->running = true;
@@ -40,15 +37,25 @@ void Engine::run() {
 
             should_render = true;
 
-            if (this->window->is_close_requested() || this->application->is_close_requested()) {
-                std::cout << "Close requested from " << (this->window->is_close_requested() ? "the window" : "not the window") << std::endl;
-                std::cout << "Close requested from " << (this->application->is_close_requested() ? "the app" : "not the app") << std::endl;
+            if (this->window->is_close_requested() ||
+                this->application->is_close_requested()) {
+                std::cout << "Close requested from "
+                          << (this->window->is_close_requested()
+                                  ? "the window"
+                                  : "not the window")
+                          << std::endl;
+                std::cout << "Close requested from "
+                          << (this->application->is_close_requested()
+                                  ? "the app"
+                                  : "not the app")
+                          << std::endl;
                 this->stop();
                 should_render = false;
                 break;
             }
 
-            this->application->update(frame_rate, *this->window->get_input_processor());
+            this->application->update(frame_rate,
+                                      *this->window->get_input_processor());
 
             unprocessed_time -= frame_rate;
         }
@@ -61,9 +68,7 @@ void Engine::run() {
     }
 }
 
-bool Engine::is_running() const {
-    return this->running;
-}
+bool Engine::is_running() const { return this->running; }
 
 void Engine::start() {
     if (!this->is_running()) {

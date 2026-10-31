@@ -10,8 +10,8 @@
 #include "input_processor.h"
 
 class Window {
-private:
-protected:
+  private:
+  protected:
     void* window;
     unsigned int width;
     unsigned int height;
@@ -19,8 +19,9 @@ protected:
     bool close_requested;
     InputProcessor* input_processor;
 
-public:
-    Window(std::string  title, const unsigned int& width, const unsigned int& height);
+  public:
+    Window(std::string title, const unsigned int& width,
+           const unsigned int& height);
     virtual ~Window();
 
     virtual void update();
@@ -32,4 +33,4 @@ public:
     unsigned int get_height() const;
 };
 
-#endif //ENGINE_WINDOW_H
+#endif // ENGINE_WINDOW_H

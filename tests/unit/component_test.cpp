@@ -8,7 +8,7 @@
 #include <rendering/window.h>
 
 class TestComponent : Component {
-public:
+  public:
     bool is_initialised = false;
     bool is_updated = false;
     mutable bool is_rendered = false;

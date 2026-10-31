@@ -12,7 +12,9 @@ TEST(glfw_window_test, window_size) {
     ASSERT_EQ(600, window.get_height());
 
     int glfw_width, glfw_height;
-    glfwGetWindowSize(static_cast<GLFWwindow*>(window.get_input_processor()->get_window()), &glfw_width, &glfw_height);
+    glfwGetWindowSize(
+        static_cast<GLFWwindow*>(window.get_input_processor()->get_window()),
+        &glfw_width, &glfw_height);
 
     ASSERT_EQ(window.get_width(), glfw_width);
     ASSERT_EQ(window.get_height(), glfw_height);
@@ -24,7 +26,9 @@ TEST(glfw_window_test, should_close_flag) {
     // Assert the window should not be immediately closed.
     ASSERT_FALSE(window.is_close_requested());
 
-    glfwSetWindowShouldClose(static_cast<GLFWwindow*>(window.get_input_processor()->get_window()), GLFW_TRUE);
+    glfwSetWindowShouldClose(
+        static_cast<GLFWwindow*>(window.get_input_processor()->get_window()),
+        GLFW_TRUE);
 
     // Window hasn't been updated so should close flag hasn't changed.
     ASSERT_FALSE(window.is_close_requested());

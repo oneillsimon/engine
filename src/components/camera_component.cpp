@@ -11,19 +11,20 @@ const float DEFAULT_CAMERA_SPEED = 2.5F;
 const float DEFAULT_CAMERA_SENSITIVITY = 0.1F;
 const float DEFAULT_CAMERA_ZOOM = 45.0F;
 
-CameraComponent::CameraComponent(const glm::vec3 &position, const glm::vec3 &up, const float &yaw, const float &pitch) :
-    position(position), up(up), yaw(yaw), pitch(pitch), front(glm::vec3(0.0F, 0.0F, -1.0F)),
-    speed(DEFAULT_CAMERA_SPEED), sensitivity(DEFAULT_CAMERA_SENSITIVITY), zoom(DEFAULT_CAMERA_ZOOM) {
+CameraComponent::CameraComponent(const glm::vec3& position, const glm::vec3& up,
+                                 const float& yaw, const float& pitch)
+    : position(position), up(up), yaw(yaw), pitch(pitch),
+      front(glm::vec3(0.0F, 0.0F, -1.0F)), speed(DEFAULT_CAMERA_SPEED),
+      sensitivity(DEFAULT_CAMERA_SENSITIVITY), zoom(DEFAULT_CAMERA_ZOOM) {
     this->world_up = glm::vec3(0.0F, 1.0F, 0.0F);
 }
 
 void CameraComponent::update_vectors() {
     // Calculate the new new_front vector.
     auto new_front = glm::vec3(
-            cos(glm::radians(this->yaw)) * cos(glm::radians(this->pitch)),
-            sin(glm::radians(this->pitch)),
-            sin(glm::radians(this->yaw)) * cos(glm::radians(this->pitch))
-    );
+        cos(glm::radians(this->yaw)) * cos(glm::radians(this->pitch)),
+        sin(glm::radians(this->pitch)),
+        sin(glm::radians(this->yaw)) * cos(glm::radians(this->pitch)));
 
     this->front = glm::normalize(new_front);
 
@@ -61,15 +62,15 @@ void CameraComponent::cursor_position_callback(double x, double y) {
 void CameraComponent::initialise(InputProcessor& input) {
     int width;
     int height;
-    glfwGetWindowSize(static_cast<GLFWwindow*>(input.get_window()), &width, &height);
+    glfwGetWindowSize(static_cast<GLFWwindow*>(input.get_window()), &width,
+                      &height);
     this->cursor_coords = glm::vec2(width / 2, height / 2);
 
-//    input.capture_input();
+    //    input.capture_input();
     input.on_cursor_position(&CameraComponent::cursor_position_callback, this);
     input.on_scroll(&CameraComponent::scroll_callback, this);
     this->update_vectors();
 }
-
 
 void CameraComponent::update(double delta, InputProcessor& input) {
     Component::update(delta, input);
@@ -103,26 +104,16 @@ glm::vec2 CameraComponent::get_cursor_coordinates() const {
     return this->cursor_coords;
 }
 
-float CameraComponent::get_pitch() const {
-    return this->pitch;
-}
+float CameraComponent::get_pitch() const { return this->pitch; }
 
-glm::vec3 CameraComponent::get_front() const {
-    return this->front;
-}
+glm::vec3 CameraComponent::get_front() const { return this->front; }
 
-glm::vec3 CameraComponent::get_position() const {
-    return this->position;
-}
+glm::vec3 CameraComponent::get_position() const { return this->position; }
 
-glm::vec3 CameraComponent::get_up() const {
-    return this->up;
-}
+glm::vec3 CameraComponent::get_up() const { return this->up; }
 
 glm::mat4 CameraComponent::get_view_matrix() const {
     return glm::lookAt(this->position, this->position + this->front, this->up);
 }
 
-float CameraComponent::get_yaw() const {
-    return this->yaw;
-}
+float CameraComponent::get_yaw() const { return this->yaw; }

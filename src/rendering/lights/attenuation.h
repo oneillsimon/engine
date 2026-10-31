@@ -5,14 +5,13 @@
 #ifndef ENGINE_ATTENUATION_H
 #define ENGINE_ATTENUATION_H
 
-
 class Attenuation {
-private:
+  private:
     float constant;
     float linear;
     float quadratic;
 
-public:
+  public:
     Attenuation(float k, float l, float q);
 
     float get_constant() const;
@@ -20,5 +19,4 @@ public:
     float get_quadratic() const;
 };
 
-
-#endif //ENGINE_ATTENUATION_H
+#endif // ENGINE_ATTENUATION_H

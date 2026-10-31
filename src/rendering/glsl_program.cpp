@@ -6,7 +6,7 @@
 
 #include "glsl_program.h"
 
-int GLSLProgram::get_uniform_location(const std::string &name) {
+int GLSLProgram::get_uniform_location(const std::string& name) {
     auto position = uniform_locations.find(name);
 
     if (position == uniform_locations.end()) {
@@ -15,15 +15,13 @@ int GLSLProgram::get_uniform_location(const std::string &name) {
     return uniform_locations[name];
 }
 
-bool GLSLProgram::file_exists(const std::string &filename) {
-    struct stat info {};
+bool GLSLProgram::file_exists(const std::string& filename) {
+    struct stat info{};
     auto result = stat(filename.c_str(), &info);
     return result == 0;
 }
 
-GLSLProgram::GLSLProgram() : handle(0), linked(false) {
-
-}
+GLSLProgram::GLSLProgram() : handle(0), linked(false) {}
 
 GLSLProgram::~GLSLProgram() {
     if (handle == 0) {
@@ -49,7 +47,8 @@ GLSLProgram::~GLSLProgram() {
     delete[] shader_names;
 }
 
-void GLSLProgram::compile_shader(const std::string &filename, GLSLShaderType shader_type) {
+void GLSLProgram::compile_shader(const std::string& filename,
+                                 GLSLShaderType shader_type) {
     if (!file_exists(filename)) {
         throw GLSLException("Shader: " + filename + "not found.");
     }
@@ -94,10 +93,11 @@ void GLSLProgram::compile_shader(const std::string &filename, GLSLShaderType sha
             int written = 0;
             glGetShaderInfoLog(shader_handle, length, &written, c_log);
             log = c_log;
-            delete []c_log;
+            delete[] c_log;
         }
 
-        std::string message = (filename.empty() ? "" : filename + ": ") + "Shader compilation failed.";
+        std::string message = (filename.empty() ? "" : filename + ": ") +
+                              "Shader compilation failed.";
         message += " " + log;
         throw GLSLException(message);
     }
@@ -172,43 +172,42 @@ void GLSLProgram::validate() const {
     }
 }
 
-int GLSLProgram::get_handle() const {
-    return handle;
-}
+int GLSLProgram::get_handle() const { return handle; }
 
-bool GLSLProgram::is_linked() const {
-    return linked;
-}
+bool GLSLProgram::is_linked() const { return linked; }
 
-void GLSLProgram::bind_attribute_location(GLuint location, const std::string &name) const {
+void GLSLProgram::bind_attribute_location(GLuint location,
+                                          const std::string& name) const {
     glBindAttribLocation(handle, location, name.c_str());
 }
 
-void GLSLProgram::bind_fragment_data_location(GLuint location, const std::string &name) const {
+void GLSLProgram::bind_fragment_data_location(GLuint location,
+                                              const std::string& name) const {
     glBindFragDataLocation(handle, location, name.c_str());
 }
 
-void GLSLProgram::set_uniform(const std::string& name, float x, float y, float z) {
+void GLSLProgram::set_uniform(const std::string& name, float x, float y,
+                              float z) {
     glUniform3f(get_uniform_location(name), x, y, z);
 }
 
-void GLSLProgram::set_uniform(const std::string& name, const glm::vec2 &v) {
+void GLSLProgram::set_uniform(const std::string& name, const glm::vec2& v) {
     glUniform2f(get_uniform_location(name), v.x, v.y);
 }
 
-void GLSLProgram::set_uniform(const std::string& name, const glm::vec3 &v) {
+void GLSLProgram::set_uniform(const std::string& name, const glm::vec3& v) {
     this->set_uniform(name, v.x, v.y, v.z);
 }
 
-void GLSLProgram::set_uniform(const std::string& name, const glm::vec4 &v) {
+void GLSLProgram::set_uniform(const std::string& name, const glm::vec4& v) {
     glUniform4f(get_uniform_location(name), v.x, v.y, v.z, v.w);
 }
 
-void GLSLProgram::set_uniform(const std::string& name, const glm::mat3 &m) {
+void GLSLProgram::set_uniform(const std::string& name, const glm::mat3& m) {
     glUniformMatrix3fv(get_uniform_location(name), 1, GL_FALSE, &m[0][0]);
 }
 
-void GLSLProgram::set_uniform(const std::string& name, const glm::mat4 &m) {
+void GLSLProgram::set_uniform(const std::string& name, const glm::mat4& m) {
     glUniformMatrix4fv(get_uniform_location(name), 1, GL_FALSE, &m[0][0]);
 }
 
@@ -229,31 +228,32 @@ void GLSLProgram::set_uniform(const std::string& name, GLuint value) {
 }
 
 std::string GLSLProgram::get_type_string(GLenum type) {
-    //TODO: Is there a better way to do this? Should come up with a more comprehensive mapping.
+    // TODO: Is there a better way to do this? Should come up with a more
+    // comprehensive mapping.
     switch (type) {
-        case GL_FLOAT:
-            return "float";
-        case GL_FLOAT_VEC2:
-            return "vec2";
-        case GL_FLOAT_VEC3:
-            return "vec3";
-        case GL_FLOAT_VEC4:
-            return "vec4";
-        case GL_DOUBLE:
-            return "double";
-        case GL_INT:
-            return "int";
-        case GL_UNSIGNED_INT:
-            return "unsigned int";
-        case GL_BOOL:
-            return "bool";
-        case GL_FLOAT_MAT2:
-            return "mat2";
-        case GL_FLOAT_MAT3:
-            return "mat3";
-        case GL_FLOAT_MAT4:
-            return "mat4";
-        default:
-            return "?";
+    case GL_FLOAT:
+        return "float";
+    case GL_FLOAT_VEC2:
+        return "vec2";
+    case GL_FLOAT_VEC3:
+        return "vec3";
+    case GL_FLOAT_VEC4:
+        return "vec4";
+    case GL_DOUBLE:
+        return "double";
+    case GL_INT:
+        return "int";
+    case GL_UNSIGNED_INT:
+        return "unsigned int";
+    case GL_BOOL:
+        return "bool";
+    case GL_FLOAT_MAT2:
+        return "mat2";
+    case GL_FLOAT_MAT3:
+        return "mat3";
+    case GL_FLOAT_MAT4:
+        return "mat4";
+    default:
+        return "?";
     }
 }

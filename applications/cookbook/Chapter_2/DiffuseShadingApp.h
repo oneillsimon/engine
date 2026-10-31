@@ -14,7 +14,7 @@
 #include "rendering/mesh/examples/torus.h"
 
 class DiffuseShadingApp : public Application {
-private:
+  private:
     GLSLProgram program;
     Torus torus;
 
@@ -24,7 +24,8 @@ private:
 
     float reflectivity = 1.0f;
     float intensity = 1.0f;
-public:
+
+  public:
     DiffuseShadingApp();
     void initialise(InputProcessor& input) override;
     void update(const double& delta, InputProcessor& input) override;
@@ -32,5 +33,4 @@ public:
     void stop() override;
 };
 
-
-#endif //ENGINE_DIFFUSESHADINGAPP_H
+#endif // ENGINE_DIFFUSESHADINGAPP_H

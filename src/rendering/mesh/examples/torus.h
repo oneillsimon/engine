@@ -12,9 +12,9 @@
 #include "rendering/mesh/triangle_mesh.h"
 
 class Torus : public TriangleMesh {
-public:
-    Torus(float outer_radius, float inner_radius, unsigned int number_of_sides, unsigned int number_of_rings);
+  public:
+    Torus(float outer_radius, float inner_radius, unsigned int number_of_sides,
+          unsigned int number_of_rings);
 };
 
-
-#endif //ENGINE_TORUS_H
+#endif // ENGINE_TORUS_H

@@ -8,14 +8,14 @@
 #include "light.h"
 
 class DirectionalLight : public Light {
-private:
+  private:
     glm::vec3 direction;
 
-public:
-    DirectionalLight(const glm::vec3 &direction, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular);
+  public:
+    DirectionalLight(const glm::vec3& direction, const glm::vec3& ambient,
+                     const glm::vec3& diffuse, const glm::vec3& specular);
 
     glm::vec3 get_direction() const;
 };
 
-
-#endif //ENGINE_DIRECTIONAL_LIGHT_H
+#endif // ENGINE_DIRECTIONAL_LIGHT_H

@@ -9,24 +9,24 @@
 #include <rendering/window.h>
 
 class ApplicationTestTestApplication : public Application {
-public:
+  public:
     ApplicationTestTestApplication() : Application() {}
 };
 
 class TestWindow : public Window {
-public:
-    TestWindow(std::string title, const unsigned int& width, const unsigned int& height): Window(title, width, height) {}
+  public:
+    TestWindow(std::string title, const unsigned int& width,
+               const unsigned int& height)
+        : Window(title, width, height) {}
 
     void update() {};
     void swap_buffers() {};
 
-    void request_close() {
-        this->close_requested = true;
-    }
+    void request_close() { this->close_requested = true; }
 };
 
 class TestComponent : public Component {
-public:
+  public:
     bool is_initialised = false;
     bool is_updated = false;
     mutable bool is_rendered = false;
@@ -53,7 +53,8 @@ TEST(application_test, initialises_components) {
     auto application = ApplicationTestTestApplication();
     application.root->add_component("test", new TestComponent());
 
-    auto* test_component = application.root->get_component<TestComponent>("test");
+    auto* test_component =
+        application.root->get_component<TestComponent>("test");
     ASSERT_FALSE(test_component->is_initialised);
 
     auto window = TestWindow("", 0, 0);
@@ -66,7 +67,8 @@ TEST(application_test, updates_components) {
     auto application = ApplicationTestTestApplication();
     application.root->add_component("test", new TestComponent());
 
-    auto* test_component = application.root->get_component<TestComponent>("test");
+    auto* test_component =
+        application.root->get_component<TestComponent>("test");
     ASSERT_FALSE(test_component->is_updated);
 
     auto window = TestWindow("", 0, 0);
@@ -80,7 +82,8 @@ TEST(application_test, renders_components) {
     auto application = ApplicationTestTestApplication();
     application.root->add_component("test", new TestComponent());
 
-    auto* test_component = application.root->get_component<TestComponent>("test");
+    auto* test_component =
+        application.root->get_component<TestComponent>("test");
     ASSERT_FALSE(test_component->is_rendered);
 
     auto window = TestWindow("", 0, 0);

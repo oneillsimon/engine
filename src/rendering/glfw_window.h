@@ -13,12 +13,13 @@
 #include "window.h"
 
 class GlfwWindow : public Window {
-public:
-    GlfwWindow(std::string  title, const unsigned int& width, const unsigned int& height);
+  public:
+    GlfwWindow(std::string title, const unsigned int& width,
+               const unsigned int& height);
     ~GlfwWindow() override;
 
     void update() override;
     void swap_buffers() override;
 };
 
-#endif //ENGINE_GLFW_WINDOW_H
+#endif // ENGINE_GLFW_WINDOW_H

@@ -12,10 +12,8 @@
 
 std::string demangle(const char* name);
 
-template<class T>
-std::string type(const T& t) {
+template <class T> std::string type(const T& t) {
     return demangle(typeid(t).name());
 }
 
-
-#endif //ENGINE_SWIG_UTILS_H
+#endif // ENGINE_SWIG_UTILS_H

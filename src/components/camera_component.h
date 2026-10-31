@@ -11,7 +11,7 @@
 #include "component.h"
 
 class CameraComponent : public Component {
-private:
+  private:
     // Camera attributes.
     glm::vec3 position;
     glm::vec3 front;
@@ -30,7 +30,7 @@ private:
     void scroll_callback(double x, double y);
     void cursor_position_callback(double x, double y);
 
-public:
+  public:
     constexpr static glm::vec3 DEFAULT_POSITION = glm::vec3(0.0F, 0.0F, 3.0F);
     constexpr static glm::vec3 DEFAULT_UP = glm::vec3(0.0F, 1.0F, 0.0F);
     constexpr static float DEFAULT_YAW = -90.0F;
@@ -41,12 +41,10 @@ public:
     float sensitivity;
     float zoom;
 
-    explicit CameraComponent(
-            const glm::vec3& position = DEFAULT_POSITION,
-            const glm::vec3& up = DEFAULT_UP,
-            const float& yaw = DEFAULT_YAW,
-            const float& pitch = DEFAULT_PITCH
-    );
+    explicit CameraComponent(const glm::vec3& position = DEFAULT_POSITION,
+                             const glm::vec3& up = DEFAULT_UP,
+                             const float& yaw = DEFAULT_YAW,
+                             const float& pitch = DEFAULT_PITCH);
 
     void initialise(InputProcessor& input) override;
     void update(double delta, InputProcessor& input) override;
@@ -60,5 +58,4 @@ public:
     float get_yaw() const;
 };
 
-
-#endif //ENGINE_CAMERA_COMPONENT_H
+#endif // ENGINE_CAMERA_COMPONENT_H

@@ -15,15 +15,17 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
 
-GlfwWindow::GlfwWindow(std::string title, const unsigned int& width, const unsigned int& height) :
-        Window(std::move(title), width, height) {
+GlfwWindow::GlfwWindow(std::string title, const unsigned int& width,
+                       const unsigned int& height)
+    : Window(std::move(title), width, height) {
 
 #ifdef ENGINE_USE_HEADLESS_GL
     glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_NULL);
 #endif
 
     if (glfwInit() == GLFW_FALSE) {
-        throw std::runtime_error("Failed to initialize GLFW. Code: " + std::to_string(glfwGetError(nullptr)));
+        throw std::runtime_error("Failed to initialize GLFW. Code: " +
+                                 std::to_string(glfwGetError(nullptr)));
     }
 
 #ifdef ENGINE_USE_HEADLESS_GL
@@ -35,7 +37,8 @@ GlfwWindow::GlfwWindow(std::string title, const unsigned int& width, const unsig
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    this->window = glfwCreateWindow(this->width, this->height, this->title.c_str(), nullptr, nullptr);
+    this->window = glfwCreateWindow(this->width, this->height,
+                                    this->title.c_str(), nullptr, nullptr);
     if (!this->window) {
         throw std::runtime_error("Failed to create GLFW window.");
     }
@@ -47,18 +50,18 @@ GlfwWindow::GlfwWindow(std::string title, const unsigned int& width, const unsig
     }
 
     glViewport(0, 0, this->width, this->height);
-    glfwSetFramebufferSizeCallback(static_cast<GLFWwindow*>(this->window), framebuffer_size_callback);
+    glfwSetFramebufferSizeCallback(static_cast<GLFWwindow*>(this->window),
+                                   framebuffer_size_callback);
 
     this->input_processor = new GlfwInputProcessor(this->window);
 }
 
-GlfwWindow::~GlfwWindow() {
-    glfwTerminate();
-}
+GlfwWindow::~GlfwWindow() { glfwTerminate(); }
 
 void GlfwWindow::update() {
     glfwPollEvents();
-    this->close_requested = glfwWindowShouldClose(static_cast<GLFWwindow*>(this->window)) != 0;
+    this->close_requested =
+        glfwWindowShouldClose(static_cast<GLFWwindow*>(this->window)) != 0;
 }
 
 void GlfwWindow::swap_buffers() {

@@ -17,7 +17,7 @@
 #include "rendering/mesh/examples/torus.h"
 
 class FlatADSShadingApp : public Application {
-private:
+  private:
     GLSLProgram program;
     Torus torus;
 
@@ -25,7 +25,7 @@ private:
     glm::mat4 view;
     glm::mat4 projection;
 
-public:
+  public:
     std::map<std::string, Material> materials;
     std::map<std::string, Material>::iterator current_material;
 
@@ -36,5 +36,4 @@ public:
     void stop() override;
 };
 
-
-#endif //ENGINE_FLATADSSHADINGAPP_H
+#endif // ENGINE_FLATADSSHADINGAPP_H

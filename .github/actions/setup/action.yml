@@ -33,7 +33,7 @@ runs:
         fi
         
         if [ "${{ inputs.install-static-analysis-tools }}" == "true" ]; then
-          brew install clang-format@22
+          brew install clang-format
         fi
 
     - name: Configure environment

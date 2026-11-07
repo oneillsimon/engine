@@ -32,8 +32,7 @@ class EngineTestTestApplication : public Application {
 
 class TestWindow : public Window {
   public:
-    TestWindow(std::string title,
-               const unsigned int& width,
+    TestWindow(std::string title, const unsigned int& width,
                const unsigned int& height)
         : Window(title, width, height) {}
 

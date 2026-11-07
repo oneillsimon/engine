@@ -51,14 +51,31 @@ if(ENGINE_USE_HEADLESS_GL)
     target_compile_definitions(engine PRIVATE ENGINE_USE_HEADLESS_GL)
 endif()
 
-set(SHADERS_DIR shaders)
-set(TEXTURES_DIR resources/textures)
+add_custom_target(copy-resources ALL)
 
-add_custom_target(
-    copy-resources
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/${SHADERS_DIR} ${CMAKE_CURRENT_BINARY_DIR}/../${SHADERS_DIR}
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/${TEXTURES_DIR} ${CMAKE_CURRENT_BINARY_DIR}/../${TEXTURES_DIR}
-)
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${SHADERS_DIR}")
+    add_custom_command(
+            TARGET copy-resources POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${CMAKE_CURRENT_SOURCE_DIR}/${SHADERS_DIR}"
+            "${CMAKE_CURRENT_BINARY_DIR}/../${SHADERS_DIR}"
+            COMMENT "Copying shaders..."
+    )
+else()
+    message(STATUS "Shaders directory not found; skipping copy.")
+endif()
+
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${TEXTURES_DIR}")
+    add_custom_command(
+            TARGET copy-resources POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${CMAKE_CURRENT_SOURCE_DIR}/${TEXTURES_DIR}"
+            "${CMAKE_CURRENT_BINARY_DIR}/../${TEXTURES_DIR}"
+            COMMENT "Copying textures..."
+    )
+else()
+    message(STATUS "Textures directory not found; skipping copy.")
+endif()
 
 add_dependencies(engine copy-resources)
 

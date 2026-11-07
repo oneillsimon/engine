@@ -20,14 +20,14 @@ runs:
     - name: Run unit tests
       if: inputs.unit == 'true'
       shell: bash
-      run: ctest --test-dir build --label-regex '^unit' --output-on-failure --no-tests=error
+      run: ctest --test-dir build-ci --label-regex '^unit' --output-on-failure --no-tests=error
 
     - name: Run graphics tests
       if: inputs.graphics == 'true'
       shell: bash
-      run: ctest --test-dir build --label-regex '^graphics$' --output-on-failure --no-tests=error
+      run: ctest --test-dir build-ci --label-regex '^graphics$' --output-on-failure --no-tests=error
 
     - name: Run scripting tests
       if: inputs.scripting == 'true'
       shell: bash
-      run: ctest --test-dir build --label-regex '^scripting$' --output-on-failure --no-tests=error
+      run: ctest --test-dir build-ci --label-regex '^scripting$' --output-on-failure --no-tests=error

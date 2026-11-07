@@ -30,4 +30,5 @@ cmakelint
 # Config and Assets
 git ls-files '*.glsl' | xargs glslangValidator
 git ls-files '*.lua' | xargs luacheck
+git ls-files "*.sh" | xargs shellcheck
 actionlint

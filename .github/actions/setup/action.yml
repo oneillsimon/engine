@@ -13,6 +13,10 @@ inputs:
     description: 'Whether to install mesa with pkgconf'
     required: false
     default: 'false'
+  coverage:
+    description: 'Enable code coverage instrumentation (installs llvm tools)'
+    required: false
+    default: 'false'
 
 runs:
   using: 'composite'
@@ -28,9 +32,13 @@ runs:
           brew install mesa pkgconf
         fi
 
+        if [ "${{ inputs.coverage }}" == "true" ]; then
+          brew install llvm
+        fi
+
     - name: Configure environment
       shell: bash
       run: |
         if [ "${{ inputs.install-base-dependencies }}" == "true" ]; then
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DENGINE_USE_HEADLESS_GL=${{ inputs.headless }}
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DENGINE_USE_HEADLESS_GL=${{ inputs.headless }} -DENGINE_ENABLE_COVERAGE=${{ inputs.coverage }}
         fi

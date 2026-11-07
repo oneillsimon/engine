@@ -2,6 +2,17 @@ cmake_minimum_required(VERSION 3.16)
 project(engine VERSION 1.0.0)
 
 option(ENGINE_USE_HEADLESS_GL "Use headless GLFW Null with EGL" OFF)
+option(ENGINE_ENABLE_COVERAGE "Enable code coverage instrumentation" OFF)
+
+if(ENGINE_ENABLE_COVERAGE)
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+        add_compile_options(-fprofile-instr-generate -fcoverage-mapping)
+        add_link_options(-fprofile-instr-generate)
+    else()
+        add_compile_options(--coverage)
+        add_link_options(--coverage)
+    endif()
+endif()
 
 set(CMAKE_CXX_STANDARD 20)
 

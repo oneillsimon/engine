@@ -1,0 +1,40 @@
+name: 'Code Coverage'
+description: 'Runs the test suite with coverage instrumentation and reports results'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run tests
+      shell: bash
+      env:
+        LLVM_PROFILE_FILE: ${{ github.workspace }}/build/coverage-%p.profraw
+      run: ctest --test-dir build --output-on-failure --no-tests=error
+
+    - name: Merge profiles
+      shell: bash
+      run: |
+        llvm_bin=$(brew --prefix llvm)/bin
+        "${llvm_bin}/llvm-profdata" merge -sparse build/coverage-*.profraw -o build/coverage.profdata
+
+    - name: Coverage summary
+      shell: bash
+      run: |
+        llvm_bin=$(brew --prefix llvm)/bin
+        "${llvm_bin}/llvm-cov" report build/tests_unit build/tests_integration_graphics build/tests_integration_scripting \
+            -instr-profile=build/coverage.profdata \
+            -ignore-filename-regex='_deps|/tests/|/extern/'
+
+    - name: Generate HTML report
+      shell: bash
+      run: |
+        llvm_bin=$(brew --prefix llvm)/bin
+        "${llvm_bin}/llvm-cov" show build/tests_unit build/tests_integration_graphics build/tests_integration_scripting \
+            -instr-profile=build/coverage.profdata \
+            -ignore-filename-regex='_deps|/tests/|/extern/' \
+            -format=html -output-dir=build/coverage-html
+
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-html
+        path: build/coverage-html

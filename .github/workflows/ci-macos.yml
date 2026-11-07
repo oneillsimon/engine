@@ -68,3 +68,25 @@ jobs:
           graphics: 'true'
           scripting: 'true'
           unit: 'true'
+
+  coverage:
+    needs: static-analysis
+    permissions:
+      contents: read
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup
+        with:
+          headless: 'ON'
+          install-mesa: 'true'
+          coverage: 'true'
+
+      - name: Build Project
+        uses: ./.github/actions/build
+
+      - name: Run Tests and Report Coverage
+        uses: ./.github/actions/coverage

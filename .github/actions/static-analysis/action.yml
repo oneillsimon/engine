@@ -7,14 +7,7 @@ runs:
     - name: Install dependencies
       shell: bash
       run: |
-        brew install \
-            actionlint \
-            llvm \
-            glslang \
-            luacheck \
-            shellcheck \
-            swig
-        pip install cmake-format cmakelint
+        brew bundle --file=Brewfile.dev
         echo "$(brew --prefix llvm)/bin" >> "$GITHUB_PATH"
 
     - name: actionlint
@@ -41,7 +34,7 @@ runs:
 
     - name: cmake-format
       shell: bash
-      run: cmake-format --check
+      run: cmakefmt --check
 
     - name: clang-tidy
       shell: bash

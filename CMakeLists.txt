@@ -13,7 +13,7 @@ add_subdirectory(swig)
 add_subdirectory(applications)
 
 if(BUILD_TESTING)
-    add_subdirectory(tests)
+  add_subdirectory(tests)
 endif()
 
 add_executable(engine-exe main.cpp)

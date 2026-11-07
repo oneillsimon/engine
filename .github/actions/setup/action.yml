@@ -33,5 +33,5 @@ runs:
       shell: bash
       run: |
         if [ "${{ inputs.install-base-dependencies }}" == "true" ]; then
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DENGINE_USE_HEADLESS_GL=${{ inputs.headless }}
+          cmake -S . -B build-ci -DCMAKE_BUILD_TYPE=Debug -DBUILD_TESTING=ON -DENGINE_USE_HEADLESS_GL=${{ inputs.headless }}
         fi

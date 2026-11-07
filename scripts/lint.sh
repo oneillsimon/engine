@@ -19,7 +19,7 @@ project_files | xargs run-clang-tidy -p build-tidy -header-filter='^(src|tests|a
 swig -lua -c++ -Werror -o /tmp/swig_wrap.cxx swig/swig.i
 
 # CMake Tools
-cmakefmt --check --path-regex "^(?!(build-ci|build-tidy)/).*" .
+cmakefmt --check --path-regex "^(?!(build-ci|build-tidy)\/).*" .
 cmakelint
 
 # Config and Assets

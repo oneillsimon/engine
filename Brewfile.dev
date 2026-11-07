@@ -6,5 +6,5 @@ brew 'actionlint'
 brew 'shellcheck'
 brew 'glslang'
 brew 'luacheck'
-brew 'cmakefmt/cmakefmt/cmakefmt'
+brew 'cmakefmt/cmakefmt/cmakefmt', trusted: true
 brew 'cmake-lint'

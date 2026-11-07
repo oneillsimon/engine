@@ -38,25 +38,6 @@ add_library(
         rendering/stb_image_implementation.cpp
         rendering/window.h
         rendering/window.cpp
-        rendering/lights/attenuation.h
-        rendering/lights/attenuation.cpp
-        rendering/lights/directional_light.h
-        rendering/lights/directional_light.cpp
-        rendering/lights/light.h
-        rendering/lights/light.cpp
-        rendering/lights/point_light.h
-        rendering/lights/point_light.cpp
-        rendering/lights/spot_light.h
-        rendering/lights/spot_light.cpp
-        rendering/material/material.h
-        rendering/material/material.cpp
-        rendering/mesh/mesh.h
-        rendering/mesh/examples/teapot.cpp
-        rendering/mesh/examples/teapot.h
-        rendering/mesh/examples/torus.cpp
-        rendering/mesh/examples/torus.h
-        rendering/mesh/triangle_mesh.h
-        rendering/mesh/triangle_mesh.cpp
 
         scripting/lua.h
         scripting/lua.cpp

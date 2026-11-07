@@ -6,6 +6,8 @@
 
 #include "glsl_program.h"
 
+#include <vector>
+
 int GLSLProgram::get_uniform_location(const std::string& name) {
     auto position = uniform_locations.find(name);
 
@@ -32,19 +34,22 @@ GLSLProgram::~GLSLProgram() {
     GLint num_shaders = 0;
     glGetProgramiv(handle, GL_ATTACHED_SHADERS, &num_shaders);
 
-    // Get the names of the shaders.
-    auto* shader_names = new GLuint[num_shaders];
-    glGetAttachedShaders(handle, num_shaders, nullptr, shader_names);
+    try {
+        if (num_shaders > 0) {
+            std::vector<GLuint> shader_names(num_shaders);
+            glGetAttachedShaders(handle, num_shaders, nullptr, shader_names.data());
 
-    // Delete each shader.
-    for (auto i = 0; i < num_shaders; i++) {
-        glDeleteShader(shader_names[i]);
+            // Delete each shader.
+            for (GLint i = 0; i < num_shaders; i++) {
+                glDeleteShader(shader_names[i]);
+            }
+        }
+    } catch (std::exception& e) {
+        std::cerr << e.what() << std::endl;
     }
 
     // Delete the program.
     glDeleteProgram(handle);
-
-    delete[] shader_names;
 }
 
 void GLSLProgram::compile_shader(const std::string& filename,

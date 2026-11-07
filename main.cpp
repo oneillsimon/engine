@@ -10,12 +10,6 @@
 
 #include "src/scripting/lua.h"
 
-#include "applications/cookbook/Chapter_1/CB_Chapter1_blob_app.h"
-#include "applications/cookbook/Chapter_2/DiffuseShadingApp.h"
-#include "applications/cookbook/Chapter_2/ADSShadingApp.h"
-#include "applications/cookbook/Chapter_2/TwoSideShadingApp.h"
-// #include "applications/cookbook/Chapter_2/FlatADSShadingApp.h"
-#include "applications/cookbook/Chapter_2/DiscardShadingApp.h"
 #include "src/engine.h"
 #include "src/rendering/glfw_window.h"
 
@@ -37,7 +31,7 @@ int main(int argc, char** argv) {
     }
 
     lua_State* L = luaL_newstate();
-    luaL_openlibs(L);
+    luaL_openlibs(L); // NOLINT(bugprone-signed-bitwise)
     luaopen_engine(L);
 
     //    std::cout << v4<< std::endl;

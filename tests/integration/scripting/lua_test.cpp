@@ -12,7 +12,7 @@
 
 TEST(lua_test, load_file) {
     lua_State* L = luaL_newstate();
-    luaL_openlibs(L);
+    luaL_openlibs(L); // NOLINT(bugprone-signed-bitwise)
 
     // Create a simple lua file.
     std::ofstream lua_file;
@@ -29,7 +29,7 @@ TEST(lua_test, load_file) {
 
 TEST(lua_test, load_file_not_found) {
     lua_State* L = luaL_newstate();
-    luaL_openlibs(L);
+    luaL_openlibs(L); // NOLINT(bugprone-signed-bitwise)
 
     EXPECT_THROW(load_file(L, "does_not_exist.lua"), lua_exception);
 

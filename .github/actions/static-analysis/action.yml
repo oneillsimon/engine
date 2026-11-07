@@ -10,6 +10,7 @@ runs:
         brew install \
             actionlint \
             clang-format \
+            clang-tidy \
             glslang \
             luacheck \
             shellcheck \
@@ -41,6 +42,13 @@ runs:
     - name: cmake-format
       shell: bash
       run: cmake-format --check
+
+    - name: clang-tidy
+      shell: bash
+      run: |
+        cmake -S . -B build-tidy -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+        git ls-files 'src/*.cpp' 'tests/*.cpp' 'applications/*.cpp' main.cpp \
+        | xargs run-clang-tidy -p build-tidy -header-filter='^(src|tests|applications|swig)/'
 
     - name: cmakelint
       shell: bash

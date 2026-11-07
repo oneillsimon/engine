@@ -6,7 +6,7 @@
 #define ENGINE_INPUT_PROCESSOR_H
 
 #include <functional>
-#include <iostream>
+#include <vector>
 
 enum ScrollDirection { UP, DOWN, LEFT, RIGHT, ANY };
 

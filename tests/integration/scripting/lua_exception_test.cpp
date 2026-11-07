@@ -9,7 +9,7 @@
 
 TEST(lua_exception_test, throw_exception) {
     lua_State* L = luaL_newstate();
-    luaL_openlibs(L);
+    luaL_openlibs(L); // NOLINT(bugprone-signed-bitwise)
 
     std::string exception_str = std::string();
 

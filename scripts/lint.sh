@@ -24,8 +24,8 @@ rm -rf build-tidy
 swig -lua -c++ -Werror -o /tmp/swig_wrap.cxx swig/swig.i
 
 # CMake Tools
-cmake_files | cmakefmt --files-from - --list-input-files
-cmakelint
+cmake_files | cmakefmt --in-place --files-from -
+cmake_files | xargs -0 cmakelint --filter=-whitespace/indent
 
 # Config and Assets
 git ls-files '*.glsl' | xargs glslangValidator

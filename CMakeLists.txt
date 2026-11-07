@@ -22,3 +22,8 @@ target_link_libraries(engine PUBLIC extern engine-swig-bindings)
 target_link_libraries(engine-swig-bindings PUBLIC engine)
 
 target_link_libraries(engine-exe PUBLIC engine applications)
+
+add_custom_target(
+  lint
+  COMMAND scripts/lint.sh
+  WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")

@@ -10,43 +10,6 @@ runs:
         brew bundle --file=Brewfile.dev
         echo "$(brew --prefix llvm)/bin" >> "$GITHUB_PATH"
 
-    - name: actionlint
+    - name: lint
       shell: bash
-      run: actionlint
-
-    - name: clang-format
-      shell: bash
-      run: |
-        git ls-files \
-        'applications/*.cpp' 'applications/*.h' \
-        'src/*.cpp' 'src/*.h' \
-        'swig/*.cpp' 'swig/*.h' \
-        'tests/*.cpp' 'tests/*.h' \
-        'main.cpp' | xargs clang-format --dry-run --Werror
-
-    - name: glslValidator
-      shell: bash
-      run: git ls-files '*.glsl' | xargs glslangValidator
-
-    - name: luacheck
-      shell: bash
-      run: git ls-files '*.lua' | xargs luacheck
-
-    - name: cmake-format
-      shell: bash
-      run: cmakefmt --check
-
-    - name: clang-tidy
-      shell: bash
-      run: |
-        cmake -S . -B build-tidy -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-        git ls-files 'src/*.cpp' 'tests/*.cpp' 'applications/*.cpp' main.cpp \
-        | xargs run-clang-tidy -p build-tidy -header-filter='^(src|tests|applications|swig)/'
-
-    - name: cmakelint
-      shell: bash
-      run: cmakelint
-
-    - name: swig
-      shell: bash
-      run: swig -lua -c++ -Werror -o /tmp/swig_wrap.cxx swig/swig.i
+      run: scripts/lint.sh

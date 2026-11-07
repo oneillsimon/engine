@@ -21,11 +21,12 @@ runs:
       shell: bash
       run: |
         if [ "${{ inputs.install-base-dependencies }}" == "true" ]; then
-          brew install cmake lua swig
+          brew bundle
         fi
         
         if [ "${{ inputs.install-mesa }}" == "true" ]; then
-          brew install mesa pkgconf
+          brew bundle --file=Brewfile.dev
+          echo "$(brew --prefix llvm)/bin" >> "$GITHUB_PATH"
         fi
 
     - name: Configure environment

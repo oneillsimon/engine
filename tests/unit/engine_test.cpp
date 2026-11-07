@@ -32,7 +32,8 @@ class EngineTestTestApplication : public Application {
 
 class TestWindow : public Window {
   public:
-    TestWindow(std::string title, const unsigned int& width,
+    TestWindow(std::string title,
+               const unsigned int& width,
                const unsigned int& height)
         : Window(title, width, height) {}
 
@@ -79,7 +80,8 @@ TEST(engine_test, frame_rate_greater_than_0) {
     float frame_rate = 0.0f;
     auto window = std::make_unique<TestWindow>(std::string(), 0, 0);
 
-    EXPECT_THROW(Engine(application, std::move(window), frame_rate), std::invalid_argument);
+    EXPECT_THROW(Engine(application, std::move(window), frame_rate),
+                 std::invalid_argument);
 }
 
 TEST(engine_test, window_close_stops_engine) {

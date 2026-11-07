@@ -1,5 +1,8 @@
+AlignAfterOpenBracket: true
 BasedOnStyle: LLVM
+BinPackArguments: false
+BinPackParameters: OnePerLine
+DerivePointerAlignment: false
 IndentWidth: 4
 PointerAlignment: Left
-DerivePointerAlignment: false
 SortIncludes: Never

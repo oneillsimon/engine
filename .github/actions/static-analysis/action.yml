@@ -10,7 +10,6 @@ runs:
         brew install \
             actionlint \
             clang-format \
-            clang-tidy \
             glslang \
             luacheck \
             shellcheck \

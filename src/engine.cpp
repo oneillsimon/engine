@@ -9,8 +9,7 @@
 Engine::Engine(Application* application, std::unique_ptr<Window> window,
                double frame_rate)
     : application(application), running(false), window(std::move(window)),
-      frame_rate(1.0 / frame_rate) {
-}
+      frame_rate(1.0 / frame_rate) {}
 
 Engine::~Engine() { delete application; }
 

@@ -37,7 +37,8 @@ GLSLProgram::~GLSLProgram() {
     try {
         if (num_shaders > 0) {
             std::vector<GLuint> shader_names(num_shaders);
-            glGetAttachedShaders(handle, num_shaders, nullptr, shader_names.data());
+            glGetAttachedShaders(handle, num_shaders, nullptr,
+                                 shader_names.data());
 
             // Delete each shader.
             for (GLint i = 0; i < num_shaders; i++) {

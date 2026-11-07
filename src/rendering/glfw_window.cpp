@@ -37,7 +37,8 @@ GlfwWindow::GlfwWindow(std::string title, const unsigned int& width,
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    this->window = glfwCreateWindow(static_cast<int>(this->width), static_cast<int>(this->height),
+    this->window = glfwCreateWindow(static_cast<int>(this->width),
+                                    static_cast<int>(this->height),
                                     this->title.c_str(), nullptr, nullptr);
     if (!this->window) {
         throw std::runtime_error("Failed to create GLFW window.");
@@ -49,7 +50,8 @@ GlfwWindow::GlfwWindow(std::string title, const unsigned int& width,
         throw std::runtime_error("Failed to initialize GLAD.");
     }
 
-    glViewport(0, 0, static_cast<int>(this->width), static_cast<int>(this->height));
+    glViewport(0, 0, static_cast<int>(this->width),
+               static_cast<int>(this->height));
     glfwSetFramebufferSizeCallback(static_cast<GLFWwindow*>(this->window),
                                    framebuffer_size_callback);
 

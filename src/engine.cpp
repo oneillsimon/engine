@@ -2,14 +2,17 @@
 // Created by simon on 14/11/2020.
 //
 
-#include <cassert>
 #include <iostream>
 #include "engine.h"
 
 Engine::Engine(Application* application, std::unique_ptr<Window> window,
                double frame_rate)
     : application(application), running(false), window(std::move(window)),
-      frame_rate(1.0 / frame_rate) {}
+      frame_rate(1.0 / frame_rate) {
+    if (frame_rate <= 0) {
+        throw std::invalid_argument("Frame rate must be greater than 0.");
+    }
+}
 
 Engine::~Engine() { delete application; }
 

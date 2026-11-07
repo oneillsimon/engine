@@ -6,6 +6,8 @@
 
 #include <engine.h>
 
+#include <memory>
+
 class EngineTestTestApplication : public Application {
   public:
     int update_counter = 0;
@@ -70,6 +72,14 @@ TEST(engine_test, frame_rate) {
     EXPECT_EQ(application->last_update_delta, 1.0 / frame_rate);
     EXPECT_GT(application->update_counter, 0);
     ASSERT_FALSE(e.is_running());
+}
+
+TEST(engine_test, frame_rate_greater_than_0) {
+    auto application = new EngineTestTestApplication();
+    float frame_rate = 0.0f;
+    auto window = std::make_unique<TestWindow>(std::string(), 0, 0);
+
+    EXPECT_THROW(Engine(application, std::move(window), frame_rate), std::invalid_argument);
 }
 
 TEST(engine_test, window_close_stops_engine) {

@@ -9,7 +9,7 @@ runs:
       run: |
         brew install \
             actionlint \
-            clang-format \
+            llvm \
             glslang \
             luacheck \
             shellcheck \
